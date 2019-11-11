@@ -6,7 +6,7 @@ using lonefire.Models;
 
 namespace lonefire.Extensions
 {
-    //Override default Password Hasher for compatibility
+    //Override default Password Hasher for old system compatibility
     public class LfPasswordHasher : IPasswordHasher<ApplicationUser>
     {
         public string HashPassword(string password)
@@ -40,7 +40,7 @@ namespace lonefire.Extensions
             MD5 md5 = MD5.Create();
             byte[] inputBytes = Encoding.UTF8.GetBytes(input);
             byte[] hash = md5.ComputeHash(inputBytes);
-
+            md5.Dispose();
             //Convert byte array to hex string
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < hash.Length; i++)

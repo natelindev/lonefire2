@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using lonefire.Models.UtilModels;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace lonefire.Models
 {
@@ -12,10 +14,10 @@ namespace lonefire.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
-        [StringLength(128, ErrorMessage = "{0} must have a length between {1} and {2} ", MinimumLength = 0)]
+        [StringLength(128, MinimumLength = 0)]
         public string Title { get; set; }
 
-        [StringLength(128, ErrorMessage = "{0} must have a length between {1} and {2} ", MinimumLength = 0)]
+        [StringLength(128, MinimumLength = 0)]
         public string TitleZh { get; set; }
 
         [Required]
@@ -43,7 +45,7 @@ namespace lonefire.Models
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (Title == null && TitleZh == null)
-                yield return new ValidationResult("Title must not be empty");
+                yield return new ValidationResult($"{Startup.Localizer["Title"]} {Startup.Localizer["must not be empty"]}");
         }
     }
 }

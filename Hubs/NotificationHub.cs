@@ -8,7 +8,7 @@ namespace lonefire.Hubs
 {
     public class NotificationHub : Hub
     {
-        public async Task SendMessage(string message)
+        public async Task SendAll(string message)
         {
             await Clients.All.SendAsync(message);
         }

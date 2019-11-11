@@ -1,0 +1,53 @@
+﻿{
+  "Reset Password": {
+    "Values": {
+      "en-US": "Reset Password",
+      "zh-CN": "重置密码"
+    }
+  },
+  "Click here to reset password": {
+    "Values": {
+      "en-US": "Click here to reset password",
+      "zh-CN": "点击此处来重置密码"
+    }
+  },
+  "link": {
+    "Values": {
+      "en-US": "link",
+      "zh-CN": "链接"
+    }
+  },
+  "A code must be supplied for password reset.": {
+    "Values": {
+      "en-US": "A code must be supplied for password reset.",
+      "zh-CN": "重置密码时必须提供一个号码"
+    }
+  },
+  "Failed to get user": {
+    "Values": {
+      "en-US": "Failed to get user",
+      "zh-CN": "获取用户失败"
+    }
+  },
+  "Login successful": {
+    "Values": {
+      "en-US": "Login successful",
+      "zh-CN": "登陆成功"
+    }
+  },
+  "Account locked out": {
+    "Values": {
+      "en-US": "Account locked out",
+      "zh-CN": "账户被锁定"
+    }
+  },
+  "Invalid credentials": {
+    "Values": {
+      "en-US": "Invalid credentials",
+      "zh-CN": "用户名或密码错误"
+    }
+  }
+
+
+
+}

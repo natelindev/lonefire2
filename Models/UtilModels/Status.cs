@@ -1,4 +1,4 @@
-namespace lonefire.Models
+namespace lonefire.Models.UtilModels
 {
     public class Status
     {

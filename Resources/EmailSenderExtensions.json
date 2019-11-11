@@ -1,0 +1,14 @@
+﻿{
+  "Confirm Email": {
+    "Values": {
+      "en-US": "Confirm your email",
+      "zh-CN": "邮箱确认"
+    }
+  },
+  "Please confirm your email": {
+    "Values": {
+      "en-US": "Please confirm your email",
+      "zh-CN": "请确认你的邮箱"
+    }
+  }
+}

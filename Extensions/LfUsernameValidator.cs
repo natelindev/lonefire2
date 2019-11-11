@@ -6,16 +6,22 @@ using Microsoft.Extensions.Localization;
 
 namespace lonefire.Extensions
 {
-    //Override default Username Validator
+    //Override default Username Validator to allow arbitrary username rules
     public class LfUsernameValidator<TUser> : IUserValidator<TUser>
        where TUser : IdentityUser
     {
-       
+        private readonly IStringLocalizer _localizer;
+
+        public LfUsernameValidator(IStringLocalizer localizer)
+        {
+            _localizer = localizer;
+        }
+
         public Task<IdentityResult> ValidateAsync(UserManager<TUser> manager,
                                                   TUser user)
         {
-            if (!user.UserName.Contains(Startup.Configuration["ReservedNames.Admin"]) 
-                && !user.UserName.Contains(Startup.Configuration["ReservedNames.Admin"))
+            if (!user.UserName.Contains(_localizer[Constants.AdminName]) 
+                && !user.UserName.Contains(_localizer[Constants.EmptyUserName]))
             {
                 return Task.FromResult(IdentityResult.Success);
             }
@@ -24,8 +30,8 @@ namespace lonefire.Extensions
             return Task.FromResult(
                      IdentityResult.Failed(new IdentityError
                      {
-                         Code = "非法用户名",
-                         Description = "用户名包含系统预留字段"
+                         Code = _localizer["Invalid Username"],
+                         Description = _localizer["Username contains reserved field"]
                      }));
         }
     }

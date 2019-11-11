@@ -1,0 +1,26 @@
+﻿{
+  "must not be empty": {
+    "Values": {
+      "en-US": "must not be empty",
+      "zh-CN": "不能为空"
+    }
+  },
+  "TagName": {
+    "Values": {
+      "en-US": "TagName",
+      "zh-CN": "标签名"
+    }
+  },
+  "Content": {
+    "Values": {
+      "en-US": "Content",
+      "zh-CN": "内容"
+    }
+  },
+  "Title": {
+    "Values": {
+      "en-US": "Title",
+      "zh-CN": "标题"
+    }
+  }
+}

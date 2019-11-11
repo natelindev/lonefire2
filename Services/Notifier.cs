@@ -1,31 +1,20 @@
 ﻿using System;
+using System.Threading.Tasks;
 using lonefire.Hubs;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 
 namespace lonefire.Services
 {
     public class Notifier : INotifier
     {
-        private readonly ILogger _logger;
         private readonly NotificationHub _hub;
 
         public Notifier(
-            ILogger logger,
-            IConfiguration configuration,
-            IHttpContextAccessor httpContextAccessor,
             NotificationHub hub
             )
         {
-            _logger = logger;
-            _hub = hub;
-            _httpContextAccessor = httpContextAccessor;
-
+            _hub = hub;   
         }
-
-        private static IHttpContextAccessor _httpContextAccessor;
-        public static HttpContext Current => _httpContextAccessor.HttpContext;
 
         public NotificationLevel DefaultLevel => MapNotificationLevel(Startup.Configuration.GetValue<string>("Notification.NotificationLevel"));
 
@@ -36,11 +25,11 @@ namespace lonefire.Services
         }
 
         // Notify on specified level
-        public async void Notify(string message, NotificationLevel level)
+        public void Notify(string message, NotificationLevel level)
         {
             if (level >= DefaultLevel)
             {
-                await _hub.SendMessage("[" + level + "]" + message);
+                _ = _hub.SendAll("[" + level + "]" + message);
             }
         }
 
@@ -56,7 +45,6 @@ namespace lonefire.Services
             // fallback level
             return NotificationLevel.Info;
         }
-
     }
 
 
@@ -98,11 +86,11 @@ namespace lonefire.Services
         public static NotificationLevel[] GetNotificationLevels()
         {
             var levels = new NotificationLevel[5];
-            levels[0] = NotificationLevel.Debug;
-            levels[1] = NotificationLevel.Info;
-            levels[2] = NotificationLevel.Success;
-            levels[3] = NotificationLevel.Warn;
-            levels[4] = NotificationLevel.Error;
+            levels[0] = Debug;
+            levels[1] = Info;
+            levels[2] = Success;
+            levels[3] = Warn;
+            levels[4] = Error;
             return levels;
         }
 

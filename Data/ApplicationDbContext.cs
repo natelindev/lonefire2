@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace lonefire.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
         public ApplicationDbContext(DbContextOptions options)
             : base(options)

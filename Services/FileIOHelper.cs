@@ -10,14 +10,14 @@ namespace lonefire.Services
 {
     public class FileIoHelper : IFileIoHelper
     {
-        private readonly INotifier _toaster;
+        private readonly INotifier _notifier;
         private readonly IConfiguration _config;
         public FileIoHelper(
-            INotifier toaster,
+            INotifier notifier,
             IConfiguration config
             )
         {
-            _toaster = toaster;
+            _notifier = notifier;
             _config = config;
         }
 
@@ -82,7 +82,7 @@ namespace lonefire.Services
         {
             if (src == null || dst == null || src.Length > 512 || dst.Length > 512)
             {
-                _toaster.ToastInfo("文件夹移动或重命名失败: 目标不存在 或 文件夹名格式错误");
+                _notifier.Notify("文件夹移动或重命名失败: 目标不存在 或 文件夹名格式错误");
                 return false;
             }
             else
@@ -90,12 +90,12 @@ namespace lonefire.Services
                 try
                 {
                     Directory.Move(src, dst);
-                    _toaster.ToastInfo("文件夹移动或重命名成功");
+                    _notifier.Notify("文件夹移动或重命名成功");
                     return true;
                 }
                 catch (Exception)
                 {
-                    _toaster.ToastInfo("文件夹移动或重命名失败: IO错误");
+                    _notifier.Notify("文件夹移动或重命名失败: IO错误");
                     return false;
                 }
             }
@@ -108,7 +108,7 @@ namespace lonefire.Services
         {
             if (file == null || file.FileName.Length > fileNameLengthLimit)
             {
-                _toaster.ToastInfo("文件上传失败: 文件不存在 或 文件名格式错误");
+                _notifier.Notify("文件上传失败: 文件不存在 或 文件名格式错误");
                 return null;
             }
 
@@ -158,7 +158,7 @@ namespace lonefire.Services
         {
             if (file == null || file.FileName.Length > fileNameLengthLimit)
             {
-                _toaster.ToastInfo("文件上传失败: 文件不存在 或 文件名格式错误");
+                _notifier.Notify("文件上传失败: 文件不存在 或 文件名格式错误");
                 return null;
             }
 
@@ -187,7 +187,7 @@ namespace lonefire.Services
                 }
                 catch (Exception)
                 {
-                    _toaster.ToastInfo("目录 " + Path.Combine(Directory.GetCurrentDirectory(), savePath) + " 创建失败");
+                    _notifier.Notify("目录 " + Path.Combine(Directory.GetCurrentDirectory(), savePath) + " 创建失败");
                     return null;
                 }
                 var filePath = Path.Combine(Directory.GetCurrentDirectory(), savePath, fileName);
@@ -196,17 +196,17 @@ namespace lonefire.Services
                     try
                     {
                         await file.CopyToAsync(stream);
-                        _toaster.ToastInfo("文件 " + fileName + " 上传成功");
+                        _notifier.Notify("文件 " + fileName + " 上传成功");
                     }
                     catch (Exception)
                     {
-                        _toaster.ToastInfo("文件 " + fileName + " 上传失败: IO错误");
+                        _notifier.Notify("文件 " + fileName + " 上传失败: IO错误");
                         return null;
                     }
                     return fileName;
                 }
             }
-            _toaster.ToastInfo("文件 " + fileName + " 上传失败: 文件名格式错误");
+            _notifier.Notify("文件 " + fileName + " 上传失败: 文件名格式错误");
             return null;
         }
 
@@ -216,7 +216,7 @@ namespace lonefire.Services
             var match = Regex.Match(fileToDelete, validateRegex, RegexOptions.IgnoreCase);
             if (fileToDelete == null || fileToDelete.Length > fileNameLengthLimit || !match.Success)
             {
-                _toaster.ToastInfo("文件 " + fileToDelete + "删除失败: 文件名格式错误");
+                _notifier.Notify("文件 " + fileToDelete + "删除失败: 文件名格式错误");
             }
 
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), fileToDeletePath, fileToDelete);
@@ -228,19 +228,19 @@ namespace lonefire.Services
                 {
                     // If file found, delete it    
                     System.IO.File.Delete(filePath);
-                    _toaster.ToastInfo("文件删除成功");
+                    _notifier.Notify("文件删除成功");
                     return true;
                 }
                 else
                 {
-                    _toaster.ToastInfo("文件 " + fileToDelete + "删除失败: 文件不存在");
+                    _notifier.Notify("文件 " + fileToDelete + "删除失败: 文件不存在");
                     return false;
 
                 }
             }
             catch (Exception)
             {
-                _toaster.ToastInfo("文件 " + fileToDelete + " 删除失败: IO错误");
+                _notifier.Notify("文件 " + fileToDelete + " 删除失败: IO错误");
                 return false;
             }
         }
@@ -260,12 +260,12 @@ namespace lonefire.Services
             try
             {
                 Directory.Delete(path, true);
-                _toaster.ToastInfo("文件夹 " + path + " 删除成功");
+                _notifier.Notify("文件夹 " + path + " 删除成功");
                 return true;
             }
             catch (Exception)
             {
-                _toaster.ToastInfo("文件夹 " + path + " 删除失败: IO错误");
+                _notifier.Notify("文件夹 " + path + " 删除失败: IO错误");
                 return false;
             }
         }

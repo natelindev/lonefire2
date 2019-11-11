@@ -1,9 +1,6 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace lonefire.Models
+namespace lonefire.Models.UtilModels
 {
-    public class ErrorViewModel
+    public class SystemErrorModel
     {
         public int StatusCode { get; set; }
 

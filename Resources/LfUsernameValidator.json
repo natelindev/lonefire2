@@ -1,0 +1,26 @@
+﻿{
+  "Admin": {
+    "Values": {
+      "en-US": "General",
+      "zh-CN": "管理员"
+    }
+  },
+  "EmptyUser": {
+    "Values": {
+      "en-US": "EmptyUser",
+      "zh-CN": "异次元用户"
+    }
+  },
+  "Invalid Username": {
+    "Values": {
+      "en-US": "Invalid Username",
+      "zh-CN": "非法用户名"
+    }
+  },
+  "Reseved field": {
+    "Values": {
+      "en-US": "Username contains reserved field",
+      "zh-CN": "用户名包含系统保留字"
+    }
+  }
+}

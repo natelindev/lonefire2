@@ -8,7 +8,6 @@ namespace lonefire.Models
 {
     public class Comment
     {
-        [Display(Name = "编号")]
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
@@ -37,7 +36,7 @@ namespace lonefire.Models
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (Content == null && ContentZh == null)
-                yield return new ValidationResult("Content must not be empty");
+                yield return new ValidationResult($"{Startup.Localizer["Content"]} {Startup.Localizer["must not be empty"]}");
         }
     }
 }

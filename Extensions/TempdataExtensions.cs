@@ -31,8 +31,7 @@ namespace lonefire.Extensions
             if(o == null)
             {
                 //Create
-                List<T> list = new List<T>();
-                list.Add(value);
+                List<T> list = new List<T>{value};
                 tempData[key] = JsonConvert.SerializeObject(list);
             }
             else

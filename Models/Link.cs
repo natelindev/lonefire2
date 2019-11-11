@@ -14,13 +14,13 @@ namespace lonefire.Models
         public Guid Id { get; set; }
 
         [Required]
-        [StringLength(512, ErrorMessage = "{0} must have a length between {1} and {2} ", MinimumLength = 0)]
+        [StringLength(512, MinimumLength = 0)]
         public string Url { get; set; }
 
-        [StringLength(256, ErrorMessage = "{0} must have a length between {1} and {2} ", MinimumLength = 0)]
+        [StringLength(256, MinimumLength = 0)]
         public string Description { get; set; }
 
-        [StringLength(256, ErrorMessage = "{0} must have a length between {1} and {2} ", MinimumLength = 0)]
+        [StringLength(256, MinimumLength = 0)]
         public string DescriptionZh { get; set; }
 
         public string IconUrl { get; set; }

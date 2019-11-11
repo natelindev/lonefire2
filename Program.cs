@@ -21,14 +21,7 @@ namespace lonefire
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.ConfigureAppConfiguration(
-                            (hostingContext, config) =>
-                            {
-                                //Load Additional Json configs
-                                config.SetBasePath(Directory.GetCurrentDirectory());
-                                config.AddJsonFile("db_string.json", optional: false, reloadOnChange: true);
-                            })
-                        .UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>();
                 });
     }
 }

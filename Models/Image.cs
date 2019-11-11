@@ -12,11 +12,11 @@ namespace lonefire.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
-        [StringLength(512, ErrorMessage = "{0} must have a length between {1} and {2} ", MinimumLength = 0)]
+        [StringLength(512, MinimumLength = 0)]
         public string Path { get; set; }
 
         [Required]
-        [StringLength(256, ErrorMessage = "{0} must have a length between {1} and {2} ", MinimumLength = 0)]
+        [StringLength(256, MinimumLength = 0)]
         public string Filename { get; set; }
 
         public DateTimeOffset CreateTime { get; set; }
