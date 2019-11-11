@@ -90,10 +90,19 @@ namespace lonefire.Controllers
         [HttpGet]
         public async Task<ActionResult<Article>> Get([FromQuery] string title)
         {
-            var userId = _userManager.GetUserId(User).ToGuid();
-            var article = await _context.Article.Where(a => (a.Status == Status.Approved ||
-            a.Owner == userId) && a.Title == title || a.TitleZh == title).FirstOrDefaultAsync();
-            return Ok(article);
+            try
+            {
+                var userId = _userManager.GetUserId(User).ToGuid();
+                var article = await _context.Article.Where(a => (a.Status == Status.Approved ||
+                a.Owner == userId) && a.Title == title || a.TitleZh == title).FirstOrDefaultAsync();
+                return Ok(article);
+            }
+            catch(Exception)
+            {
+                _logger.LogError($"Read Aritle {title} Failed");
+                return StatusCode(500);
+            }
+            
         }
 
         // GET: Api/Article/Like
@@ -129,21 +138,52 @@ namespace lonefire.Controllers
 
             var isAuthorized = await _aus.AuthorizeAsync(
                                                   User, articleToUpdate,
-                                                  opeartion);
+                                                  ArticleOperations.Patch);
 
             if (!isAuthorized.Succeeded)
             {
                 return Forbid();
             }
 
-           
-        }
-
-
-        // GET: Article/Create
-        public IActionResult Create()
-        {
-            return View();
+            //Only admin can change owner, LikeCount, ViewCount
+            if (User.IsInRole(Constants.AdministratorsRole))
+            {
+                if(await TryUpdateModelAsync(articleToUpdate, "",
+                 a => a.Title, a => a.TitleZh, a => a.Content, a => a.ContentZH,
+                 a => a.Status, a => a.HeaderImg,
+                 a => a.ViewCount, a => a.LikeCount, a => a.Owner
+                ))
+                {
+                    try
+                    {
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (Exception)
+                    {
+                        _logger.LogWarning($"Update Article {id} failed");
+                        return StatusCode(500, $"Update Article {id} failed");
+                    }
+                }
+            }
+            else
+            {
+                if(await TryUpdateModelAsync(articleToUpdate, "",
+                 a => a.Title, a => a.TitleZh, a => a.Content, a => a.ContentZH,
+                 a => a.Status, a => a.HeaderImg
+                ))
+                {
+                    try
+                    {
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (Exception)
+                    {
+                        _logger.LogWarning($"Update Article {id} failed");
+                        return StatusCode(500, $"Update Article {id} failed");
+                    }
+                }
+            }
+            return Ok();
         }
 
         // POST: Article/Create

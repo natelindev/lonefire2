@@ -46,7 +46,7 @@ namespace lonefire.Controllers
         //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginModel model)
         {
-            
+
             // Lockout enabled
             var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: true);
             DateTimeOffset? endTime = null;
@@ -69,8 +69,12 @@ namespace lonefire.Controllers
             if (result.IsLockedOut)
             {
                 _logger.LogWarning($"User {model.UserName} attempted to login while locked out.");
-                return StatusCode(423, new { message = _localizer["Account locked out"], lockoutEnd =
-                    endTime?.ToLocalTime() });
+                return StatusCode(423, new
+                {
+                    message = _localizer["Account locked out"],
+                    lockoutEnd =
+                    endTime?.ToLocalTime()
+                });
             }
 
             _logger.LogWarning($"User {model.UserName} failed to login.");
@@ -83,7 +87,7 @@ namespace lonefire.Controllers
         //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterModel model)
         {
-          
+
             var user = new ApplicationUser { UserName = model.UserName };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
@@ -145,7 +149,7 @@ namespace lonefire.Controllers
             // For more information on how to enable account confirmation and password reset please
             // visit https://go.microsoft.com/fwlink/?LinkID=532713
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var callbackUrl = Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
+            var callbackUrl = Url.ResetPasswordCallbackLink(user.Id.ToString(), code, Request.Scheme);
             await _emailSender.SendEmailAsync(model.Email, _localizer["Reset Password"],
                 $"{_localizer["Click here to reset password"]} <a href='{callbackUrl}'>{_localizer["link"]}</a>");
             return Ok();

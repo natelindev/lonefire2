@@ -22,5 +22,12 @@
       "en-US": "Title",
       "zh-CN": "标题"
     }
+  },
+  "HeaderImg must be one of Images": {
+    "Values": {
+      "en-US": "HeaderImg must be one of Images",
+      "zh-CN": "标题图片必须在图片列表中选择"
+    }
   }
+
 }

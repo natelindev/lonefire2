@@ -23,8 +23,10 @@ namespace lonefire.Models
         [Required]
         public Guid Owner { get; set; }
 
+        [Url]
         public string Website { get; set; }
 
+        [EmailAddress]
         public string Email { get; set; }
 
         [ForeignKey("ParentId")]

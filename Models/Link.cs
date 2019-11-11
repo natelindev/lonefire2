@@ -14,15 +14,17 @@ namespace lonefire.Models
         public Guid Id { get; set; }
 
         [Required]
-        [StringLength(512, MinimumLength = 0)]
+        [Url]
+        [StringLength(512)]
         public string Url { get; set; }
 
-        [StringLength(256, MinimumLength = 0)]
+        [StringLength(256)]
         public string Description { get; set; }
 
-        [StringLength(256, MinimumLength = 0)]
+        [StringLength(256)]
         public string DescriptionZh { get; set; }
 
+        [Url]
         public string IconUrl { get; set; }
 
         public DateTimeOffset CreateTime { get; set; }

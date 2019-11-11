@@ -14,16 +14,17 @@ namespace lonefire.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
-        [StringLength(128, MinimumLength = 0)]
+        [StringLength(128)]
         public string Title { get; set; }
 
-        [StringLength(128, MinimumLength = 0)]
+        [StringLength(128)]
         public string TitleZh { get; set; }
 
         [Required]
         public Guid Owner { get; set; }
 
         public string Content { get; set; }
+        public string ContentZH { get; set; }
 
         public Status Status { get; set; }
 
@@ -46,6 +47,9 @@ namespace lonefire.Models
         {
             if (Title == null && TitleZh == null)
                 yield return new ValidationResult($"{Startup.Localizer["Title"]} {Startup.Localizer["must not be empty"]}");
+
+            if (!Images.Contains(HeaderImg))
+                yield return new ValidationResult($"{Startup.Localizer["HeaderImg must be one of Images"]}");
         }
     }
 }

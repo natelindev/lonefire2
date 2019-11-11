@@ -12,16 +12,15 @@ namespace lonefire.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
-        [StringLength(512, MinimumLength = 0)]
+        [StringLength(512)]
         public string Path { get; set; }
 
         [Required]
-        [StringLength(256, MinimumLength = 0)]
+        [StringLength(256)]
         public string Filename { get; set; }
 
         public DateTimeOffset CreateTime { get; set; }
         public DateTimeOffset EditTime { get; set; }
-
 
         //These are for lazy loading, Not yet implemented so not mapped
         [NotMapped]
