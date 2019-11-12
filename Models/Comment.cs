@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using lonefire.Models;
@@ -28,6 +29,9 @@ namespace lonefire.Models
 
         [EmailAddress]
         public string Email { get; set; }
+
+        [DefaultValue(0)]
+        public int LikeCount { get; set; }
 
         [ForeignKey("ParentId")]
         public List<Comment> Comments { get; set; }

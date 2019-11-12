@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using lonefire.Models.UtilModels;
@@ -23,6 +24,9 @@ namespace lonefire.Models
         public string ContentZh { get; set; }
 
         public Status Status { get; set; }
+
+        [DefaultValue(0)]
+        public int LikeCount { get; set; }
 
         public DateTimeOffset CreateTime { get; set; }
         public DateTimeOffset EditTime { get; set; }

@@ -32,12 +32,14 @@ namespace lonefire.Controllers
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ILogger<AccountController> logger,
+            IStringLocalizer localizer,
             INotifier notifier)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _localizer = localizer;
             _notifier = notifier;
         }
 

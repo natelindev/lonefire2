@@ -24,7 +24,7 @@ namespace lonefire.Models
         public Guid Owner { get; set; }
 
         public string Content { get; set; }
-        public string ContentZH { get; set; }
+        public string ContentZh { get; set; }
 
         public Status Status { get; set; }
 

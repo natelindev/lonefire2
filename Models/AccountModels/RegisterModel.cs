@@ -11,11 +11,9 @@ namespace lonefire.Models.AccountModels
         [Required]
         [StringLength(64, MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "密码")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Required]
         [Compare("Password")]
         public string ConfirmPassword { get; set; }
     }
