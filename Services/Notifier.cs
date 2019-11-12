@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Threading.Tasks;
 using lonefire.Hubs;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
 
 namespace lonefire.Services
 {
     public class Notifier : INotifier
     {
-        private readonly NotificationHub _hub;
+        private readonly IHubContext<NotificationHub> _hub;
 
         public Notifier(
-            NotificationHub hub
+            IHubContext<NotificationHub> hub
             )
         {
             _hub = hub;   
@@ -29,7 +30,7 @@ namespace lonefire.Services
         {
             if (level >= DefaultLevel)
             {
-                _ = _hub.SendAll("[" + level + "]" + message);
+                _ = _hub.Clients.All.SendAsync("[" + level + "]" + message);
             }
         }
 

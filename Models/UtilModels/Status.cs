@@ -1,9 +1,12 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace lonefire.Models.UtilModels
 {
     public class Status
     {
         private Status(string value) { Value = value; }
 
+        [Key]
         public string Value { get; private set; }
 
         public static Status Submitted => new Status("Submitted");

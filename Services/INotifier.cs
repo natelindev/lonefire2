@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
-using lonefire.Models;
-using Microsoft.AspNetCore.Mvc;
 
 namespace lonefire.Services
 {

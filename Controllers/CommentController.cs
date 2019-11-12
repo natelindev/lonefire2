@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using Askmethat.Aspnet.JsonLocalizer.Localizer;
 using lonefire.Authorization;
 using lonefire.Data;
 using lonefire.Models;
@@ -30,7 +31,7 @@ namespace lonefire.Controllers
         private readonly INotifier _notifier;
         private readonly IConfiguration _config;
         private readonly ILogger<CommentController> _logger;
-        private readonly IStringLocalizer _localizer;
+        private readonly IJsonStringLocalizer _localizer;
 
         public CommentController(
         ApplicationDbContext context,
@@ -39,7 +40,7 @@ namespace lonefire.Controllers
             IFileIoHelper ioHelper,
             INotifier notifier,
             IConfiguration config,
-            IStringLocalizer localizer,
+            IJsonStringLocalizer localizer,
             ILogger<CommentController> logger
             )
         {

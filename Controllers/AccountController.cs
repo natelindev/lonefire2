@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using Askmethat.Aspnet.JsonLocalizer.Localizer;
 using lonefire.Models;
 using lonefire.Models.AccountModels;
 using lonefire.Services;
@@ -18,21 +21,21 @@ namespace lonefire.Controllers
     [Produces(MediaTypeNames.Application.Json)]
     [Route("[controller]/[action]")]
     [ApiController]
-    public class AccountController : Controller
+    public class AccountController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
-        private readonly ILogger _logger;
+        private readonly ILogger<AccountController> _logger;
         private readonly INotifier _notifier;
-        private readonly IStringLocalizer _localizer;
+        private readonly IJsonStringLocalizer _localizer;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ILogger<AccountController> logger,
-            IStringLocalizer localizer,
+            IJsonStringLocalizer localizer,
             INotifier notifier)
         {
             _userManager = userManager;
@@ -41,6 +44,10 @@ namespace lonefire.Controllers
             _logger = logger;
             _localizer = localizer;
             _notifier = notifier;
+            _localizer.ClearMemCache(new List<CultureInfo>()
+            {
+               new CultureInfo("en-US")
+            });
         }
 
         [HttpPost]

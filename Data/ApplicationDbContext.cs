@@ -39,13 +39,13 @@ namespace lonefire.Data
             builder.Entity<Link>().ToTable("Links");
             builder.Entity<Image>().ToTable("Images");
 
-            builder.Entity<IdentityUserRole<string>>().ToTable("UserRoles");
-            builder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins");
-            builder.Entity<IdentityUserClaim<string>>().ToTable("UserClaims");
-            builder.Entity<IdentityRole<string>>().ToTable("Roles");
-            builder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins");
-            builder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
-            builder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");
+            builder.Entity<IdentityUserRole<Guid>>().ToTable("UserRoles");
+            builder.Entity<IdentityUserLogin<Guid>>().ToTable("UserLogins");
+            builder.Entity<IdentityUserClaim<Guid>>().ToTable("UserClaims");
+            builder.Entity<IdentityRole<Guid>>().ToTable("Roles");
+            builder.Entity<IdentityUserLogin<Guid>>().ToTable("UserLogins");
+            builder.Entity<IdentityRoleClaim<Guid>>().ToTable("RoleClaims");
+            builder.Entity<IdentityUserToken<Guid>>().ToTable("UserTokens");
         }
 
     }     

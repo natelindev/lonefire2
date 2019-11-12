@@ -5,6 +5,7 @@ using System.Text;
 using Askmethat.Aspnet.JsonLocalizer.Extensions;
 using lonefire.Data;
 using lonefire.Hubs;
+using lonefire.Models;
 using lonefire.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,13 +16,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Localization;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace lonefire
 {
     public class Startup
     {
-        public Startup(IHostEnvironment env, IStringLocalizer localizer)
+        public Startup(IHostEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
@@ -30,12 +31,10 @@ namespace lonefire
 
             Configuration = builder.Build();
             Environment = env;
-            Localizer = localizer;
         }
 
         public static IConfigurationRoot Configuration { get; set; }
         public static IHostEnvironment Environment { get; set; }
-        public static IStringLocalizer Localizer { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -44,11 +43,11 @@ namespace lonefire
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddSignalR();
+
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IFileIoHelper, FileIoHelper>();
             services.AddTransient<INotifier, Notifier>();
-
-            services.AddControllers().AddControllersAsServices();
 
             // Add Identity
             services.Configure<IdentityOptions>(options =>
@@ -70,6 +69,12 @@ namespace lonefire
                 options.User.RequireUniqueEmail = false;
             });
 
+            services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddLogging();
+
             services.ConfigureApplicationCookie(options =>
             {
                 // Cookie settings
@@ -83,9 +88,10 @@ namespace lonefire
 
             services.AddJsonLocalization(options =>
             {
-                options.CacheDuration = TimeSpan.FromMinutes(15);
                 options.ResourcesPath = "Resources";
+                options.UseBaseName = false;
                 options.FileEncoding = Encoding.GetEncoding("ISO-8859-1");
+                options.CacheDuration = TimeSpan.FromMinutes(15);
                 options.SupportedCultureInfos = new HashSet<CultureInfo>()
                 {
                   new CultureInfo("en-US"),
@@ -113,8 +119,7 @@ namespace lonefire
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddSignalR();
-
+            services.AddControllers().AddControllersAsServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

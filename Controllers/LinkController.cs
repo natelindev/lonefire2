@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using Askmethat.Aspnet.JsonLocalizer.Localizer;
 using lonefire.Data;
 using lonefire.Models;
 using lonefire.Services;
@@ -22,12 +25,12 @@ namespace lonefire.Controllers
         private readonly ApplicationDbContext _context;   
         private readonly INotifier _notifier;
         private readonly ILogger<ArticleController> _logger;
-        private readonly IStringLocalizer _localizer;
+        private readonly IJsonStringLocalizer _localizer;
 
         public LinkController(
         ApplicationDbContext context,
-            INotifier notifier, 
-            IStringLocalizer localizer,
+            INotifier notifier,
+            IJsonStringLocalizer localizer,
             ILogger<ArticleController> logger
             )
         {
@@ -35,6 +38,10 @@ namespace lonefire.Controllers
             _notifier = notifier;
             _localizer = localizer;
             _logger = logger;
+            _localizer.ClearMemCache(new List<CultureInfo>()
+            {
+               new CultureInfo("en-US")
+            });
         }
 
         // GET: /Link

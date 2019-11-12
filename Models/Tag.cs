@@ -29,7 +29,7 @@ namespace lonefire.Models
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (TagName == null && TagNameZh == null)
-                yield return new ValidationResult($"{Startup.Localizer["TagName"]} {Startup.Localizer["must not be empty"]}");
+                yield return new ValidationResult("TagName must not be empty");
         }
 
     }

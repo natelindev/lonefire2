@@ -46,10 +46,10 @@ namespace lonefire.Models
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (Title == null && TitleZh == null)
-                yield return new ValidationResult($"{Startup.Localizer["Title"]} {Startup.Localizer["must not be empty"]}");
+                yield return new ValidationResult("Title must not be empty");
 
             if (!Images.Contains(HeaderImg))
-                yield return new ValidationResult($"{Startup.Localizer["HeaderImg must be one of Images"]}");
+                yield return new ValidationResult("HeaderImg must be one of Images");
         }
     }
 }
