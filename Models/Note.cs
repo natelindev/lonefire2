@@ -9,8 +9,7 @@ namespace lonefire.Models
 {
     public class Note
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
         public string Title { get; set; }
@@ -27,6 +26,9 @@ namespace lonefire.Models
 
         [DefaultValue(0)]
         public int LikeCount { get; set; }
+
+        [InverseProperty("Note")]
+        public List<Image> Images;
 
         public DateTimeOffset CreateTime { get; set; }
         public DateTimeOffset EditTime { get; set; }

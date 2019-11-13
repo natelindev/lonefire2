@@ -9,13 +9,11 @@ namespace lonefire.Models
 {
     public class Comment
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
         public virtual Article Article { get; set; }
 
-        [Required]
         public Guid? ParentId { get; set; }
 
         public string Content { get; set; }

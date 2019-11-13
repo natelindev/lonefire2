@@ -8,9 +8,11 @@ namespace lonefire.Models
 {
     public class Tag
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
+
+        public Guid? ArticleId { get; set; }
+        public Guid? NoteId { get; set; }
 
         public string TagName { get; set; }
 
@@ -25,6 +27,11 @@ namespace lonefire.Models
 
         public DateTimeOffset CreateTime { get; set; }
         public DateTimeOffset EditTime { get; set; }
+
+        [ForeignKey("ArticleId")]
+        public virtual Article Article { get; set; }
+        [ForeignKey("NoteId")]
+        public virtual Note Note { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

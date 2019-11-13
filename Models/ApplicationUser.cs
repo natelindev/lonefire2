@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
 namespace lonefire.Models
@@ -11,6 +12,7 @@ namespace lonefire.Models
         public string Description { get; set; }
         public string DescriptionZh { get; set; }
 
+        [ForeignKey("AvartarId")]
         public Image Avatar { get; set; }
 
         public DateTimeOffset RegisterTime { get; set; }

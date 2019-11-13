@@ -10,8 +10,7 @@ namespace lonefire.Models
 {
     public class Article
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
         [StringLength(128)]
@@ -28,6 +27,7 @@ namespace lonefire.Models
 
         public Status Status { get; set; }
 
+        [InverseProperty("Article")]
         public Image HeaderImg { get; set; }
 
         [DefaultValue(0)]
@@ -37,6 +37,7 @@ namespace lonefire.Models
         public int LikeCount { get; set; }
 
         public List<Image> Images;
+
         public List<Comment> Comments;
         public List<Tag> Tags;
 
