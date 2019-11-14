@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using lonefire.Models.UtilModels;
 
 namespace lonefire.Models
 {
@@ -10,9 +11,6 @@ namespace lonefire.Models
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-
-        public Guid? ArticleId { get; set; }
-        public Guid? NoteId { get; set; }
 
         public string TagName { get; set; }
 
@@ -28,10 +26,9 @@ namespace lonefire.Models
         public DateTimeOffset CreateTime { get; set; }
         public DateTimeOffset EditTime { get; set; }
 
-        [ForeignKey("ArticleId")]
-        public virtual Article Article { get; set; }
-        [ForeignKey("NoteId")]
-        public virtual Note Note { get; set; }
+        //Navigation
+        public virtual List<ArticleTag> ArticleTags { get; set; }
+        public virtual List<NoteTag> NoteTags { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

@@ -3,6 +3,8 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 using System.Drawing;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
+using lonefire.Models.UtilModels;
 
 namespace lonefire.Models
 {
@@ -11,9 +13,6 @@ namespace lonefire.Models
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
-        public Guid? ArticleId { get; set; }
-        public Guid? NoteId { get; set; }
-
         [StringLength(512)]
         public string Path { get; set; }
 
@@ -21,25 +20,20 @@ namespace lonefire.Models
         [StringLength(256)]
         public string Filename { get; set; }
 
+        //Image lazy loading
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public string Color { get; set; }
+
         public DateTimeOffset CreateTime { get; set; }
         public DateTimeOffset EditTime { get; set; }
 
-        public virtual Article Article { get; set; }
-
-        [ForeignKey("ArticleId")]
-        public virtual Article Articles { get; set; }
-
-        [ForeignKey("NoteId")]
+        //Navigation
         public virtual Note Note { get; set; }
+        public virtual ApplicationUser UserAvatar { get; set; }
+        public virtual Article Article { get; set; }
+        public virtual List<ArticleImage> ArticleImages { get; set; }
+        public virtual List<NoteImage> NoteImages { get; set; }
 
-        [InverseProperty("Avatar")]
-        public virtual ApplicationUser ApplicationUser { get; set; }
-
-        //Image lazy loading
-        public int Width { get; set; }
-
-        public int Height { get; set; }
-
-        public string Color { get; set; }
     }
 }

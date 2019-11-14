@@ -38,7 +38,7 @@ namespace lonefire.Authorization
                 return Task.CompletedTask;
             }
 
-            if (resource.Owner == _userManager.GetUserId(context.User).ToGuid())
+            if (resource.OwnerId == _userManager.GetUserId(context.User).ToGuid())
             {
                 context.Succeed(requirement);
             }

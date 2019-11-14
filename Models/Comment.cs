@@ -12,15 +12,14 @@ namespace lonefire.Models
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
-        public virtual Article Article { get; set; }
-
         public Guid? ParentId { get; set; }
+        public Guid? ArticleId { get; set; }
 
         public string Content { get; set; }
         public string ContentZh { get; set; }
 
         [Required]
-        public Guid Owner { get; set; }
+        public Guid OwnerId { get; set; }
 
         [Url]
         public string Website { get; set; }
@@ -31,16 +30,20 @@ namespace lonefire.Models
         [DefaultValue(0)]
         public int LikeCount { get; set; }
 
-        [ForeignKey("ParentId")]
-        public List<Comment> Comments { get; set; }
-
         public DateTimeOffset CreateTime { get; set; }
         public DateTimeOffset EditTime { get; set; }
+
+        // Navigation
+        public virtual ApplicationUser Owner { get; set; }
+        public virtual Article Article { get; set; }
+        public virtual List<Comment> Comments { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (Content == null && ContentZh == null)
                 yield return new ValidationResult("Content must not be empty");
         }
+
+      
     }
 }

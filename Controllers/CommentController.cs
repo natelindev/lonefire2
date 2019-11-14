@@ -116,15 +116,11 @@ namespace lonefire.Controllers
 
                 var userId = _userManager.GetUserId(User).ToGuid();
 
-                if (User.IsInRole(Constants.AdministratorsRole))
+                if (!User.IsInRole(Constants.AdministratorsRole))
                 {
                     //Only admin can change comment owner
-                    comment.Owner = comment.Owner;
-                }
-                else
-                {
-                    //Use current user as author
-                    comment.Owner = userId;
+                    //others use current user as author
+                    comment.OwnerId = userId;
                 }
 
                 _context.Add(comment);

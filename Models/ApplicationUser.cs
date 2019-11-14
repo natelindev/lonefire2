@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
@@ -6,17 +8,22 @@ namespace lonefire.Models
 {
     public class ApplicationUser : IdentityUser<Guid>
     {
+        [StringLength(128)]
         public string Name { get; set; }
+        [StringLength(128)]
         public string NameZh { get; set; }
 
         public string Description { get; set; }
         public string DescriptionZh { get; set; }
 
-        [ForeignKey("AvartarId")]
-        public Image Avatar { get; set; }
+        public Guid? AvatarId { get; set; }
 
         public DateTimeOffset RegisterTime { get; set; }
-
         public DateTimeOffset? LastLoginTime { get; set; }
+
+        // Navigation
+        public virtual Image Avatar { get; set; }
+        public virtual List<Article> Articles { get; set; }
+        public virtual List<Note> Notes { get; set; }
     }
 }

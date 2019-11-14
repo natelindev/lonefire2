@@ -70,7 +70,7 @@ namespace lonefire.Controllers
             try
             {
                 var userId = _userManager.GetUserId(User).ToGuid();
-                var articles = await _context.Article.Where(a => (a.Status == Status.Approved || a.Owner == userId))
+                var articles = await _context.Article.Where(a => (a.Status == Status.Approved || a.OwnerId == userId))
                                 .ToListAsync();
                 return Ok(articles);
             }
@@ -90,7 +90,7 @@ namespace lonefire.Controllers
             try
             {
                 var userId = _userManager.GetUserId(User).ToGuid();
-                var article = await _context.Article.Where(a => (a.Status == Status.Approved || a.Owner == userId) && a.Id == id)
+                var article = await _context.Article.Where(a => (a.Status == Status.Approved || a.OwnerId == userId) && a.Id == id)
                                 .FirstOrDefaultAsync();
 
                 if (article == null)
@@ -119,7 +119,7 @@ namespace lonefire.Controllers
             {
                 var userId = _userManager.GetUserId(User).ToGuid();
                 var article = await _context.Article.Where(a => (a.Status == Status.Approved ||
-                a.Owner == userId) && a.Title == title || a.TitleZh == title).FirstOrDefaultAsync();
+                a.OwnerId == userId) && a.Title == title || a.TitleZh == title).FirstOrDefaultAsync();
                 return Ok(article);
             }
             catch (Exception)
@@ -174,7 +174,7 @@ namespace lonefire.Controllers
                 string title = originArticle.Title ?? originArticle.TitleZh;
                 var random = new Random();
                 var aritlces = await _context.Article
-                    .Where(a => a.Title != title && a.TitleZh != title && (a.Status == Status.Approved || a.Owner == userId))
+                    .Where(a => a.Title != title && a.TitleZh != title && (a.Status == Status.Approved || a.OwnerId == userId))
                     .OrderBy(s => random.Next()).Take(number).ToListAsync();
 
                 return Ok(aritlces);
@@ -212,13 +212,12 @@ namespace lonefire.Controllers
                 if (canApprove.Succeeded)
                 {
                     //Only Mod can change article owner & Does not need Approving
-                    article.Owner = article.Owner;
                     article.Status = Status.Approved;
                 }
                 else
                 {
                     //Use current user as author
-                    article.Owner = userId;
+                    article.OwnerId = userId;
                     article.Status = Status.Submitted;
                 }
 
@@ -242,7 +241,7 @@ namespace lonefire.Controllers
             try
             {
                 var userId = _userManager.GetUserId(User).ToGuid();
-                var article = await _context.Article.Where(a => (a.Status == Status.Approved || a.Owner == userId) && a.Id == id)
+                var article = await _context.Article.Where(a => (a.Status == Status.Approved || a.OwnerId == userId) && a.Id == id)
                                     .FirstOrDefaultAsync();
 
                 if (article == null)
@@ -288,7 +287,7 @@ namespace lonefire.Controllers
             {
                 if (await TryUpdateModelAsync(articleToUpdate, "",
                  a => a.Title, a => a.TitleZh, a => a.Content, a => a.ContentZh,
-                 a => a.Status, a => a.HeaderImg,
+                 a => a.Status, a => a.HeaderImageId,
                  a => a.ViewCount, a => a.LikeCount, a => a.Owner
                 ))
                 {
@@ -309,7 +308,7 @@ namespace lonefire.Controllers
             {
                 if (await TryUpdateModelAsync(articleToUpdate, "",
                  a => a.Title, a => a.TitleZh, a => a.Content, a => a.ContentZh,
-                 a => a.Status, a => a.HeaderImg
+                 a => a.Status, a => a.HeaderImageId
                 ))
                 {
                     try
@@ -350,8 +349,8 @@ namespace lonefire.Controllers
                 try
                 {
 
-                    var tags = article.Tags;
-                    var images = article.Images;
+                    var tags = article.ArticleTags;
+                    var images = article.ArticleImages;
 
                     // Remove article
                     _context.Article.Remove(article);
@@ -360,18 +359,14 @@ namespace lonefire.Controllers
                     // Remove Tags
                     foreach (var tag in tags)
                     {
-                        tag.TagCount--;
-                        if (tag.TagCount == 0)
-                        {
-                            _context.Tag.Remove(tag);
-                        }
+                        _context.ArticleTag.Remove(tag);
                     }
                     await _context.SaveChangesAsync();
 
                     // Remove Images
                     foreach (var image in images)
                     {
-                        _context.Image.Remove(image);
+                        _context.ArticleImage.Remove(image);
                     }
                     await _context.SaveChangesAsync();
 
