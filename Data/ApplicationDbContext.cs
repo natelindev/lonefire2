@@ -154,6 +154,30 @@ namespace lonefire.Data
             builder.Entity<IdentityRoleClaim<Guid>>().ToTable("RoleClaims");
             builder.Entity<IdentityUserToken<Guid>>().ToTable("UserTokens");
         }
+        
+        // Auto Model CreateTime EditTime updates
+        public override int SaveChanges()
+        {
+            var AddedEntities = ChangeTracker.Entries<IEntityDate>().Where(E => E.State == EntityState.Added).ToList();
 
+            AddedEntities.ForEach(E =>
+            {
+                E.Property(x => x.CreateTime).CurrentValue = DateTimeOffset.Now;
+                E.Property(x => x.CreateTime).IsModified = true;
+            });
+
+            var ModifiedEntities = ChangeTracker.Entries<IEntityDate>().Where(E => E.State == EntityState.Modified).ToList();
+
+            ModifiedEntities.ForEach(E =>
+            {
+                E.Property(x => x.EditTime).CurrentValue = DateTime.UtcNow;
+                E.Property(x => x.EditTime).IsModified = true;
+
+                E.Property(x => x.EditTime).CurrentValue = E.Property(x => x.CreateTime).OriginalValue;
+                E.Property(x => x.EditTime).IsModified = false;
+            });
+
+            return base.SaveChanges();
+        }
     }     
 }

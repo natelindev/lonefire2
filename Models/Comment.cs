@@ -7,7 +7,7 @@ using lonefire.Models;
 
 namespace lonefire.Models
 {
-    public class Comment
+    public class Comment : IEntityDate
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }

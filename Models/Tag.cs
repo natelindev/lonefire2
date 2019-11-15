@@ -7,7 +7,7 @@ using lonefire.Models.UtilModels;
 
 namespace lonefire.Models
 {
-    public class Tag
+    public class Tag : IEntityDate
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }

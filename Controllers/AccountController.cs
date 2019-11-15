@@ -68,7 +68,7 @@ namespace lonefire.Controllers
                 // Record LastLoginTime Time
                 if (user != null)
                 {
-                    user.LastLoginTime = DateTimeOffset.UtcNow;
+                    user.LastLoginTime = DateTimeOffset.Now;
                     await _userManager.UpdateAsync(user);
                 }
                 _logger.LogInformation($"User {model.UserName} logged in.");

@@ -8,7 +8,7 @@ using lonefire.Models.UtilModels;
 
 namespace lonefire.Models
 {
-    public class Image
+    public class Image : IEntityDate
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }

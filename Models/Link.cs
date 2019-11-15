@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace lonefire.Models
 {
-    public class Link
+    public class Link : IEntityDate
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }

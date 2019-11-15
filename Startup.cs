@@ -79,7 +79,7 @@ namespace lonefire
             {
                 // Cookie settings
                 options.Cookie.HttpOnly = true; //Prevent JS from accessing cookies
-                options.Cookie.Expiration = TimeSpan.FromDays(30);
+                options.ExpireTimeSpan = TimeSpan.FromDays(30);
 
                 options.LoginPath = "/Account/Login";
                 options.AccessDeniedPath = "/Account/AccessDenied";
