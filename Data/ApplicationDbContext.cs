@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using lonefire.Models.UtilModels;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace lonefire.Data
 {
@@ -15,6 +16,8 @@ namespace lonefire.Data
         public ApplicationDbContext(DbContextOptions options)
             : base(options)
         {
+            ChangeTracker.Tracked += OnEntityTracked;
+            ChangeTracker.StateChanged += OnEntityStateChanged;
         }
 
         public virtual DbSet<Article> Article { get; set; }
@@ -154,30 +157,18 @@ namespace lonefire.Data
             builder.Entity<IdentityRoleClaim<Guid>>().ToTable("RoleClaims");
             builder.Entity<IdentityUserToken<Guid>>().ToTable("UserTokens");
         }
-        
+
         // Auto Model CreateTime EditTime updates
-        public override int SaveChanges()
+        void OnEntityTracked(object sender, EntityTrackedEventArgs e)
         {
-            var AddedEntities = ChangeTracker.Entries<IEntityDate>().Where(E => E.State == EntityState.Added).ToList();
-
-            AddedEntities.ForEach(E =>
-            {
-                E.Property(x => x.CreateTime).CurrentValue = DateTimeOffset.Now;
-                E.Property(x => x.CreateTime).IsModified = true;
-            });
-
-            var ModifiedEntities = ChangeTracker.Entries<IEntityDate>().Where(E => E.State == EntityState.Modified).ToList();
-
-            ModifiedEntities.ForEach(E =>
-            {
-                E.Property(x => x.EditTime).CurrentValue = DateTime.UtcNow;
-                E.Property(x => x.EditTime).IsModified = true;
-
-                E.Property(x => x.EditTime).CurrentValue = E.Property(x => x.CreateTime).OriginalValue;
-                E.Property(x => x.EditTime).IsModified = false;
-            });
-
-            return base.SaveChanges();
+            if (!e.FromQuery && e.Entry.State == EntityState.Added && e.Entry.Entity is IEntityDate entity)
+                entity.CreateTime = DateTimeOffset.Now;
         }
-    }     
+
+        void OnEntityStateChanged(object sender, EntityStateChangedEventArgs e)
+        {
+            if (e.NewState == EntityState.Modified && e.Entry.Entity is IEntityDate entity)
+                entity.EditTime = DateTimeOffset.Now;
+        }
+    }
 }
