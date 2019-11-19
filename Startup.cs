@@ -16,7 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using ScottBrady91.AspNetCore.Identity;
 
 namespace lonefire
 {
@@ -72,6 +72,11 @@ namespace lonefire
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddScoped<IPasswordHasher<ApplicationUser>, Argon2PasswordHasher<ApplicationUser>>();
+            services.Configure<Argon2PasswordHasherOptions>(options => {
+                options.Strength = Argon2HashStrength.Moderate;
+            });
 
             services.AddLogging();
 
