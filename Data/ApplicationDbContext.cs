@@ -51,6 +51,15 @@ namespace lonefire.Data
             builder.Entity<NoteImage>().ToTable("NoteImages");
             builder.Entity<NoteTag>().ToTable("NoteTags");
 
+
+            builder.Entity<Article>().HasData(
+               new Article
+               {
+                   Id = Guid.NewGuid(),
+                   Title = "Test Article",
+                   Content = "Sample Article content"
+               }
+           );
             // Article Image many to many
             builder.Entity<ArticleImage>()
                 .HasKey(ai => new { ai.ArticleId, ai.ImageId });

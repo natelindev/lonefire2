@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using Askmethat.Aspnet.JsonLocalizer.Extensions;
 using lonefire.Data;
@@ -48,6 +49,8 @@ namespace lonefire
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IFileIoHelper, FileIoHelper>();
             services.AddTransient<INotifier, Notifier>();
+            services.AddTransient<SeedData>();
+
 
             // Add Identity
             services.Configure<IdentityOptions>(options =>
@@ -128,7 +131,7 @@ namespace lonefire
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostEnvironment env, SeedData seed)
         {
             if (env.IsDevelopment())
             {
@@ -140,6 +143,8 @@ namespace lonefire
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            seed.SeedAdminUser();
 
             app.UseHttpsRedirection();
 
