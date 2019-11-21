@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 public class SeedData
 {
@@ -19,7 +20,7 @@ public class SeedData
         _logger = logger;
     }
 
-    public async void SeedAdminUser()
+    public async Task SeedAdminUser()
     {
         _context.Database.EnsureCreated();
 

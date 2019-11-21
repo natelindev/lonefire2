@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using lonefire.Data;
+using lonefire.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 
@@ -8,7 +9,7 @@ namespace lonefire.Extensions
 {
     //Override default Username Validator to allow arbitrary username rules
     public class LfUsernameValidator<TUser> : IUserValidator<TUser>
-       where TUser : IdentityUser
+       where TUser : ApplicationUser
     {
         private readonly IStringLocalizer _localizer;
 

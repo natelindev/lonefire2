@@ -1,21 +1,22 @@
 ﻿using lonefire.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using lonefire.Models.UtilModels;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.Extensions.Logging;
 
 namespace lonefire.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
-        public ApplicationDbContext(DbContextOptions options)
+        private readonly ILoggerFactory _loggerFactory;
+
+        public ApplicationDbContext(DbContextOptions options, ILoggerFactory loggerFactory)
             : base(options)
         {
+            _loggerFactory = loggerFactory;
             ChangeTracker.Tracked += OnEntityTracked;
             ChangeTracker.StateChanged += OnEntityStateChanged;
         }
@@ -172,12 +173,20 @@ namespace lonefire.Data
         {
             if (!e.FromQuery && e.Entry.State == EntityState.Added && e.Entry.Entity is IEntityDate entity)
                 entity.CreateTime = DateTimeOffset.Now;
+            if (!e.FromQuery && e.Entry.State == EntityState.Added && e.Entry.Entity is ApplicationUser user)
+                user.RegisterTime = DateTimeOffset.Now;
         }
 
         void OnEntityStateChanged(object sender, EntityStateChangedEventArgs e)
         {
             if (e.NewState == EntityState.Modified && e.Entry.Entity is IEntityDate entity)
                 entity.EditTime = DateTimeOffset.Now;
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseLoggerFactory(_loggerFactory);
         }
     }
 }

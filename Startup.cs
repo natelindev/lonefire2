@@ -8,6 +8,7 @@ using lonefire.Data;
 using lonefire.Hubs;
 using lonefire.Models;
 using lonefire.Services;
+using lonefire.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -18,6 +19,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ScottBrady91.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 
 namespace lonefire
 {
@@ -36,13 +39,15 @@ namespace lonefire
 
         public static IConfigurationRoot Configuration { get; set; }
         public static IHostEnvironment Environment { get; set; }
+        private static readonly LoggerFactory ConsoleLoggerFactory = new LoggerFactory(new[] { new ConsoleLoggerProvider((_) => true)) });
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             // DB connection
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"))
+                       .UseLoggerFactory(ConsoleLoggerFactory));
 
             services.AddSignalR();
 
@@ -51,6 +56,11 @@ namespace lonefire
             services.AddTransient<INotifier, Notifier>();
             services.AddTransient<SeedData>();
 
+            services.AddTransient<IUserValidator<ApplicationUser>, LfUsernameValidator<ApplicationUser>>();
+            services.AddTransient<IPasswordHasher<ApplicationUser>, Argon2PasswordHasher<ApplicationUser>>();
+            services.Configure<Argon2PasswordHasherOptions>(options => {
+                options.Strength = Argon2HashStrength.Moderate;
+            });
 
             // Add Identity
             services.Configure<IdentityOptions>(options =>
@@ -75,11 +85,6 @@ namespace lonefire
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-
-            services.AddScoped<IPasswordHasher<ApplicationUser>, Argon2PasswordHasher<ApplicationUser>>();
-            services.Configure<Argon2PasswordHasherOptions>(options => {
-                options.Strength = Argon2HashStrength.Moderate;
-            });
 
             services.AddLogging();
 
@@ -131,7 +136,7 @@ namespace lonefire
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostEnvironment env, SeedData seed)
+        public void Configure(IApplicationBuilder app, IHostEnvironment env, SeedData seed, ApplicationDbContext context)
         {
             if (env.IsDevelopment())
             {
@@ -144,7 +149,7 @@ namespace lonefire
                 app.UseHsts();
             }
 
-            seed.SeedAdminUser();
+            var _ = seed.SeedAdminUser();
 
             app.UseHttpsRedirection();
 
