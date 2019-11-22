@@ -63,8 +63,8 @@ namespace lonefire
             services.AddTransient<IUserValidator<ApplicationUser>, LfUsernameValidator<ApplicationUser>>();
             services.AddScoped<IPasswordHasher<ApplicationUser>, LfPasswordHasher>();
 
-            services.Configure<Argon2PasswordHasherOptions>(options => {
-                options.Strength = Argon2HashStrength.Moderate;
+            services.Configure<LfPasswordHasherOptions>(options => {
+                options.HashFunction = LfHashFunction.Argon2;
             });
 
             // Add Identity
