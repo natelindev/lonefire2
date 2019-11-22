@@ -13,7 +13,9 @@ namespace lonefire.Models
         [StringLength(128)]
         public string NameZh { get; set; }
 
+        [StringLength(1024)]
         public string Description { get; set; }
+        [StringLength(1024)]
         public string DescriptionZh { get; set; }
 
         public Guid? AvatarId { get; set; }

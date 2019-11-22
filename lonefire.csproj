@@ -20,6 +20,6 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.0.0" />
     <PackageReference Include="Askmethat.Aspnet.JsonLocalizer" Version="2.2.0-preview3" />
-    <PackageReference Include="ScottBrady91.AspNetCore.Identity.Argon2PasswordHasher" Version="1.1.0" />
+    <PackageReference Include="Sodium.Core" Version="1.2.1" />
   </ItemGroup>
 </Project>

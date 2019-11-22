@@ -18,9 +18,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ScottBrady91.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
 
 namespace lonefire
 {
@@ -39,7 +37,13 @@ namespace lonefire
 
         public static IConfigurationRoot Configuration { get; set; }
         public static IHostEnvironment Environment { get; set; }
-        private static readonly LoggerFactory ConsoleLoggerFactory = new LoggerFactory(new[] { new ConsoleLoggerProvider((_) => true)) });
+        private static readonly ILoggerFactory ConsoleLoggerFactory = LoggerFactory.Create(builder =>
+        {
+            builder.AddFilter("Microsoft", LogLevel.Warning)
+                   .AddFilter("System", LogLevel.Warning)
+                   .AddFilter("lonefire.Program", LogLevel.Debug)
+                   .AddConsole();
+        });
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -57,7 +61,8 @@ namespace lonefire
             services.AddTransient<SeedData>();
 
             services.AddTransient<IUserValidator<ApplicationUser>, LfUsernameValidator<ApplicationUser>>();
-            services.AddTransient<IPasswordHasher<ApplicationUser>, Argon2PasswordHasher<ApplicationUser>>();
+            services.AddScoped<IPasswordHasher<ApplicationUser>, LfPasswordHasher>();
+
             services.Configure<Argon2PasswordHasherOptions>(options => {
                 options.Strength = Argon2HashStrength.Moderate;
             });

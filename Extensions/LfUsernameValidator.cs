@@ -21,8 +21,8 @@ namespace lonefire.Extensions
         public Task<IdentityResult> ValidateAsync(UserManager<TUser> manager,
                                                   TUser user)
         {
-            if (!user.UserName.Contains(_localizer[Constants.AdminName]) 
-                && !user.UserName.Contains(_localizer[Constants.EmptyUserName]))
+            if (!user.UserName.Contains(Constants.AdminName) 
+                && !user.UserName.Contains(Constants.EmptyUserName))
             {
                 return Task.FromResult(IdentityResult.Success);
             }
