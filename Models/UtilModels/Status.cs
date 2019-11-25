@@ -37,6 +37,7 @@ namespace lonefire.Models.UtilModels
             }
             return Unknown;
         }
+
         public static implicit operator string(Status status) { return status.Value; }
     }
 

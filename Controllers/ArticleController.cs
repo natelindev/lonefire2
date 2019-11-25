@@ -83,11 +83,11 @@ namespace lonefire.Controllers
             }
         }
 
-        // GET: /Article/?id={id}
-        [HttpGet]
+        // GET: /Article/{id}
+        [HttpGet("{id}")]
         [AllowAnonymous]
         [ExactQueryParam("id")]
-        public async Task<IActionResult> Get(Guid id)
+        public async Task<IActionResult> Get([FromRoute] Guid id)
         {
             try
             {
@@ -112,11 +112,10 @@ namespace lonefire.Controllers
             }
         }
 
-        // GET: /Article/?title={id}
-        [HttpGet]
+        // GET: /Article/{title}
+        [HttpGet("{title}")]
         [AllowAnonymous]
-        [ExactQueryParam("title")]
-        public async Task<ActionResult<Article>> Get([FromQuery] string title)
+        public async Task<ActionResult<Article>> Get([FromRoute] string title)
         {
             try
             {
