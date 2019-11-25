@@ -22,26 +22,38 @@ namespace lonefire.Extensions
         public string HashPassword(ApplicationUser user, string password)
         {
             if (password == null) throw new ArgumentNullException(nameof(password));
-            return options.HashFunction switch
+            switch (options.HashFunction)
             {
-                LfHashFunction.Argon2 => PasswordHash.ArgonHashString(password, options.Argon2Option.OpsLimit, options.Argon2Option.MemLimit),
-                LfHashFunction.SCrypt => PasswordHash.ScryptHashString(password, options.SCryptOption.OpsLimit, options.SCryptOption.MemLimit),
-                LfHashFunction.MD5 => CalcMd5(password),
-                _ => throw new IndexOutOfRangeException(),
-            };
+                case LfHashFunction.Argon2:
+                    return PasswordHash.ArgonHashString(password, options.Argon2Option.OpsLimit, options.Argon2Option.MemLimit).TrimEnd('\0');
+                case LfHashFunction.SCrypt:
+                    return PasswordHash.ScryptHashString(password, options.SCryptOption.OpsLimit, options.SCryptOption.MemLimit).TrimEnd('\0');
+                case LfHashFunction.MD5:
+                    return CalcMd5(password);
+                default:
+                    throw new IndexOutOfRangeException();
+            }
         }
 
         public PasswordVerificationResult VerifyHashedPassword(string hashedPassword, string providedPassword)
         {
             if (hashedPassword == null) throw new ArgumentNullException(nameof(hashedPassword));
             if (providedPassword == null) throw new ArgumentNullException(nameof(providedPassword));
-            var isValid = options.HashFunction switch
+            bool isValid;
+            switch (options.HashFunction)
             {
-                LfHashFunction.MD5 => hashedPassword.Equals(CalcMd5(providedPassword)),
-                LfHashFunction.Argon2 => PasswordHash.ArgonHashStringVerify(hashedPassword, providedPassword),
-                LfHashFunction.SCrypt => PasswordHash.ScryptHashStringVerify(hashedPassword, providedPassword),
-                _ => throw new IndexOutOfRangeException(),
-            };
+                case LfHashFunction.Argon2:
+                    isValid = PasswordHash.ArgonHashStringVerify(hashedPassword, providedPassword);
+                    break;
+                case LfHashFunction.SCrypt:
+                    isValid = PasswordHash.ScryptHashStringVerify(hashedPassword, providedPassword);
+                    break;
+                case LfHashFunction.MD5:
+                    isValid = hashedPassword.Equals(CalcMd5(providedPassword));
+                    break;
+                default:
+                    throw new IndexOutOfRangeException();
+            }
             return isValid ? PasswordVerificationResult.Success : PasswordVerificationResult.Failed;
         }
 

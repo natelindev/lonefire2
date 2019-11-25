@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Askmethat.Aspnet.JsonLocalizer.Localizer;
 using lonefire.Authorization;
 using lonefire.Data;
+using lonefire.Extensions;
 using lonefire.Models;
 using lonefire.Models.UtilModels;
 using lonefire.Services;
@@ -70,27 +71,28 @@ namespace lonefire.Controllers
             try
             {
                 var userId = _userManager.GetUserId(User).ToGuid();
-                var articles = await _context.Article.Where(a => (a.Status == Status.Approved || a.OwnerId == userId))
+                var articles = await _context.Article.Where(a => (a.StatusValue == Status.Approved || a.OwnerId == userId))
                                 .ToListAsync();
                 return Ok(articles);
             }
-            catch (Exception)
+            catch (Exception err)
             {
-                _logger.LogError("Get all articles Failed");
+                _logger.LogError($"Get all articles Failed {err.StackTrace}");
                 _notifier.Notify(_localizer["Get all articles Failed"]);
                 return StatusCode(500);
             }
         }
 
-        // GET: /Article/{id}
-        [HttpGet("{id}")]
+        // GET: /Article/?id={id}
+        [HttpGet]
         [AllowAnonymous]
+        [ExactQueryParam("id")]
         public async Task<IActionResult> Get(Guid id)
         {
             try
             {
                 var userId = _userManager.GetUserId(User).ToGuid();
-                var article = await _context.Article.Where(a => (a.Status == Status.Approved || a.OwnerId == userId) && a.Id == id)
+                var article = await _context.Article.Where(a => (a.StatusValue == Status.Approved || a.OwnerId == userId) && a.Id == id)
                                 .FirstOrDefaultAsync();
 
                 if (article == null)
@@ -110,15 +112,16 @@ namespace lonefire.Controllers
             }
         }
 
-        // GET: /Article/{title}
-        [HttpGet("{title}")]
+        // GET: /Article/?title={id}
+        [HttpGet]
         [AllowAnonymous]
+        [ExactQueryParam("title")]
         public async Task<ActionResult<Article>> Get([FromQuery] string title)
         {
             try
             {
                 var userId = _userManager.GetUserId(User).ToGuid();
-                var article = await _context.Article.Where(a => (a.Status == Status.Approved ||
+                var article = await _context.Article.Where(a => (a.StatusValue == Status.Approved ||
                 a.OwnerId == userId) && a.Title == title || a.TitleZh == title).FirstOrDefaultAsync();
                 return Ok(article);
             }
@@ -174,7 +177,7 @@ namespace lonefire.Controllers
                 string title = originArticle.Title ?? originArticle.TitleZh;
                 var random = new Random();
                 var aritlces = await _context.Article
-                    .Where(a => a.Title != title && a.TitleZh != title && (a.Status == Status.Approved || a.OwnerId == userId))
+                    .Where(a => a.Title != title && a.TitleZh != title && (a.StatusValue == Status.Approved || a.OwnerId == userId))
                     .OrderBy(s => random.Next()).Take(number).ToListAsync();
 
                 return Ok(aritlces);
@@ -241,7 +244,7 @@ namespace lonefire.Controllers
             try
             {
                 var userId = _userManager.GetUserId(User).ToGuid();
-                var article = await _context.Article.Where(a => (a.Status == Status.Approved || a.OwnerId == userId) && a.Id == id)
+                var article = await _context.Article.Where(a => (a.StatusValue == Status.Approved || a.OwnerId == userId) && a.Id == id)
                                     .FirstOrDefaultAsync();
 
                 if (article == null)
@@ -287,7 +290,7 @@ namespace lonefire.Controllers
             {
                 if (await TryUpdateModelAsync(articleToUpdate, "",
                  a => a.Title, a => a.TitleZh, a => a.Content, a => a.ContentZh,
-                 a => a.Status, a => a.HeaderImageId,
+                 a => a.StatusValue, a => a.HeaderImageId,
                  a => a.ViewCount, a => a.LikeCount, a => a.Owner
                 ))
                 {
@@ -308,7 +311,7 @@ namespace lonefire.Controllers
             {
                 if (await TryUpdateModelAsync(articleToUpdate, "",
                  a => a.Title, a => a.TitleZh, a => a.Content, a => a.ContentZh,
-                 a => a.Status, a => a.HeaderImageId
+                 a => a.StatusValue, a => a.HeaderImageId
                 ))
                 {
                     try

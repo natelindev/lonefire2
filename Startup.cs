@@ -41,7 +41,7 @@ namespace lonefire
         {
             builder.AddFilter("Microsoft", LogLevel.Warning)
                    .AddFilter("System", LogLevel.Warning)
-                   .AddFilter("lonefire.Program", LogLevel.Debug)
+                   .AddFilter("lonefire", LogLevel.Debug)
                    .AddConsole();
         });
 
