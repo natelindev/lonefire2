@@ -75,9 +75,9 @@ namespace lonefire.Controllers
                                 .ToListAsync();
                 return Ok(articles);
             }
-            catch (Exception err)
+            catch (Exception e)
             {
-                _logger.LogError($"Get all articles Failed {err.StackTrace}");
+                _logger.LogError($"Get all articles Failed {e.Message}");
                 _notifier.Notify(_localizer["Get all articles Failed"]);
                 return StatusCode(500);
             }
@@ -104,9 +104,9 @@ namespace lonefire.Controllers
 
                 return Ok(article);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                _logger.LogError($"Get article {id} failed");
+                _logger.LogError($"Get article {id} failed {e.Message}");
                 _notifier.Notify(_localizer["Get article failed"]);
                 return StatusCode(500);
             }
@@ -124,9 +124,9 @@ namespace lonefire.Controllers
                 a.OwnerId == userId) && a.Title == title || a.TitleZh == title).FirstOrDefaultAsync();
                 return Ok(article);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                _logger.LogError($"Get article {title} Failed");
+                _logger.LogError($"Get article {title} Failed {e.Message}");
                 _notifier.Notify(_localizer["Get article failed"]);
                 return StatusCode(500);
             }
@@ -149,9 +149,9 @@ namespace lonefire.Controllers
 
                 return Ok(comments);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                _logger.LogError($"Get aritlce comments for {id} failed");
+                _logger.LogError($"Get aritlce comments for {id} failed {e.Message}");
                 _notifier.Notify(_localizer["Get aritlce comments failed"]);
                 return StatusCode(500);
             }
@@ -181,9 +181,9 @@ namespace lonefire.Controllers
 
                 return Ok(aritlces);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                _logger.LogError($"Get related articles for {id} failed");
+                _logger.LogError($"Get related articles for {id} failed {e.Message}");
                 _notifier.Notify(_localizer["Get related articles failed"]);
                 return StatusCode(500);
             }
@@ -227,9 +227,9 @@ namespace lonefire.Controllers
                 await _context.SaveChangesAsync();
                 return Created($"Article/{article.Id}", article);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                _logger.LogError($"Post article {article.Title ?? article.TitleZh} failed");
+                _logger.LogError($"Post article {article.Title ?? article.TitleZh} failed {e.Message}");
                 _notifier.Notify(_localizer["Create article failed"]);
                 return StatusCode(500);
             }
@@ -256,9 +256,9 @@ namespace lonefire.Controllers
                 await _context.SaveChangesAsync();
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                _logger.LogError($"Like article {id} Failed");
+                _logger.LogError($"Like article {id} Failed {e.Message}");
                 _notifier.Notify(_localizer["Like article failed"]);
                 return StatusCode(500);
             }
@@ -318,9 +318,9 @@ namespace lonefire.Controllers
                         await _context.SaveChangesAsync();
                         return NoContent();
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
-                        _logger.LogError($"Patch article {id} failed");
+                        _logger.LogError($"Patch article {id} failed {e.Message}");
                         _notifier.Notify(_localizer["Update article failed"]);
                         return StatusCode(500);
                     }
@@ -376,9 +376,9 @@ namespace lonefire.Controllers
                     // when disposed if either commands fails
                     transaction.Commit();
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    _logger.LogError($"Delete article {id} failed");
+                    _logger.LogError($"Delete article {id} failed {e.Message}");
                     _notifier.Notify(_localizer["Delete article failed"]);
                     return StatusCode(500);
                 }

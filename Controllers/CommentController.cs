@@ -67,9 +67,9 @@ namespace lonefire.Controllers
                 var comments = await _context.Comment.ToListAsync();
                 return Ok(comments);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                _logger.LogError("Get all comments Failed");
+                _logger.LogError($"Get all comments Failed {e.StackTrace}");
                 _notifier.Notify(_localizer["Get all comments Failed"]);
                 return StatusCode(500);
             }
@@ -92,9 +92,9 @@ namespace lonefire.Controllers
                 }
                 return Ok(comment);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                _logger.LogError($"Get comment {id} failed");
+                _logger.LogError($"Get comment {id} failed {e.StackTrace}");
                 _notifier.Notify(_localizer["Get comment failed"]);
                 return StatusCode(500);
             }
@@ -127,9 +127,9 @@ namespace lonefire.Controllers
                 await _context.SaveChangesAsync();
                 return Created($"Comment/{comment.Id}", comment);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                _logger.LogError($"Post comment {comment.ParentId} failed");
+                _logger.LogError($"Post comment {comment.ParentId} failed {e.Message}");
                 _notifier.Notify(_localizer["Create comment failed"]);
                 return StatusCode(500);
             }
@@ -156,9 +156,9 @@ namespace lonefire.Controllers
                 await _context.SaveChangesAsync();
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                _logger.LogError($"Like comment {id} Failed");
+                _logger.LogError($"Like comment {id} Failed {e.Message}");
                 _notifier.Notify(_localizer["Like comment failed"]);
                 return StatusCode(500);
             }
@@ -197,9 +197,9 @@ namespace lonefire.Controllers
                         await _context.SaveChangesAsync();
                         return NoContent();
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
-                        _logger.LogError($"Patch comment {id} failed");
+                        _logger.LogError($"Patch comment {id} failed {e.Message}");
                         _notifier.Notify(_localizer["Update comment failed"]);
                         return StatusCode(500);
                     }
@@ -217,9 +217,9 @@ namespace lonefire.Controllers
                         await _context.SaveChangesAsync();
                         return NoContent();
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
-                        _logger.LogError($"Patch comment {id} failed");
+                        _logger.LogError($"Patch comment {id} failed {e.Message}");
                         _notifier.Notify(_localizer["Update comment failed"]);
                         return StatusCode(500);
                     }

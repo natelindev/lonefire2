@@ -54,9 +54,9 @@ namespace lonefire.Controllers
                 var tags = await _context.Tag.ToListAsync();
                 return Ok(tags);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                _logger.LogError("Get all tags failed");
+                _logger.LogError($"Get all tags failed {e.Message}");
                 _notifier.Notify(_localizer["Get all tags failed"]);
                 return StatusCode(500);
             }
@@ -77,9 +77,9 @@ namespace lonefire.Controllers
                 }
                 return Ok(tag);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                _logger.LogError($"Get tag {id} failed");
+                _logger.LogError($"Get tag {id} failed {e.Message}");
                 _notifier.Notify(_localizer["Get tag failed"]);
                 return StatusCode(500);
             }
@@ -95,9 +95,9 @@ namespace lonefire.Controllers
                 await _context.SaveChangesAsync();
                 return Created($"/Tag/{tag.Id}", tag);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                _logger.LogError($"Post tag {tag.TagName ?? tag.TagNameZh} failed");
+                _logger.LogError($"Post tag {tag.TagName ?? tag.TagNameZh} failed {e.Message}");
                 _notifier.Notify(_localizer["Create tag failed"]);
                 return StatusCode(500);
             }
@@ -120,9 +120,9 @@ namespace lonefire.Controllers
                 await _context.SaveChangesAsync();
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                _logger.LogError($"Add tag count to {id} failed");
+                _logger.LogError($"Add tag count to {id} failed {e.Message}");
                 _notifier.Notify(_localizer["Add tag count failed"]);
                 return StatusCode(500);
             }
@@ -138,9 +138,9 @@ namespace lonefire.Controllers
                 await _context.SaveChangesAsync();
                 return Created($"/Tag/{tag.Id}", tag);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                _logger.LogError($"Put tag {tag.TagName ?? tag.TagNameZh} failed");
+                _logger.LogError($"Put tag {tag.TagName ?? tag.TagNameZh} failed {e.Message}");
                 _notifier.Notify(_localizer["Update tag failed"]);
                 return StatusCode(500);
             }
@@ -160,9 +160,9 @@ namespace lonefire.Controllers
                     await _context.SaveChangesAsync();
                     return NoContent();
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    _logger.LogError($"Patch tag {id} failed");
+                    _logger.LogError($"Patch tag {id} failed {e.Message}");
                     _notifier.Notify(_localizer["Update tag failed"]);
                     return StatusCode(500);
                 }
@@ -186,9 +186,9 @@ namespace lonefire.Controllers
                 await _context.SaveChangesAsync();
                 return NoContent();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                _logger.LogError($"Delete tag {id} failed");
+                _logger.LogError($"Delete tag {id} failed {e.Message}");
                 _notifier.Notify(_localizer["Delete tag failed"]);
                 return StatusCode(500);
             }

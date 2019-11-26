@@ -54,9 +54,9 @@ namespace lonefire.Controllers
                 var links = await _context.Link.ToListAsync();
                 return Ok(links);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                _logger.LogError("Get all links failed");
+                _logger.LogError($"Get all links failed {e.Message}");
                 _notifier.Notify(_localizer["Get all links Failed"]);
                 return StatusCode(500);
             }
@@ -77,9 +77,9 @@ namespace lonefire.Controllers
                 }
                 return Ok(link);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                _logger.LogError($"Get link {id} failed");
+                _logger.LogError($"Get link {id} failed {e.Message}");
                 _notifier.Notify(_localizer["Get link failed"]);
                 return StatusCode(500);
             }
@@ -95,9 +95,9 @@ namespace lonefire.Controllers
                 await _context.SaveChangesAsync();
                 return Created($"/Link/{link.Id}", link);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                _logger.LogError($"Post link {link.Url} failed");
+                _logger.LogError($"Post link {link.Url} failed {e.Message}");
                 _notifier.Notify(_localizer["Create link failed"]);
                 return StatusCode(500);
             }
@@ -113,9 +113,9 @@ namespace lonefire.Controllers
                 await _context.SaveChangesAsync();
                 return Created($"/Link/{link.Id}", link);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                _logger.LogError($"Put link {link.Url} failed");
+                _logger.LogError($"Put link {link.Url} failed {e.Message}");
                 _notifier.Notify(_localizer["Update link failed"]);
                 return StatusCode(500);
             }
@@ -135,9 +135,9 @@ namespace lonefire.Controllers
                     await _context.SaveChangesAsync();
                     return NoContent();
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    _logger.LogError($"Patch link {id} failed");
+                    _logger.LogError($"Patch link {id} failed {e.Message}");
                     _notifier.Notify(_localizer["Update link failed"]);
                     return StatusCode(500);
                 }
@@ -161,9 +161,9 @@ namespace lonefire.Controllers
                 await _context.SaveChangesAsync();
                 return NoContent();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                _logger.LogError($"Delete link {id} failed");
+                _logger.LogError($"Delete link {id} failed {e.Message}");
                 _notifier.Notify(_localizer["Delete link failed"]);
                 return StatusCode(500);
             }
