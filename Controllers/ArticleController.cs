@@ -18,6 +18,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace lonefire.Controllers
 {
@@ -83,36 +84,8 @@ namespace lonefire.Controllers
             }
         }
 
-        // GET: /Article/{id}
-        [HttpGet("{id}")]
-        [AllowAnonymous]
-        [ExactQueryParam("id")]
-        public async Task<IActionResult> Get([FromRoute] Guid id)
-        {
-            try
-            {
-                var userId = _userManager.GetUserId(User).ToGuid();
-                var article = await _context.Article.Where(a => (a.StatusValue == Status.Approved || a.OwnerId == userId) && a.Id == id)
-                                .FirstOrDefaultAsync();
-
-                if (article == null)
-                {
-                    return NotFound();
-                }
-                article.ViewCount++;
-                await _context.SaveChangesAsync();
-
-                return Ok(article);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"Get article {id} failed {e.Message}");
-                _notifier.Notify(_localizer["Get article failed"]);
-                return StatusCode(500);
-            }
-        }
-
         // GET: /Article/{title}
+        // supports thre
         [HttpGet("{title}")]
         [AllowAnonymous]
         public async Task<ActionResult<Article>> Get([FromRoute] string title)
@@ -120,9 +93,57 @@ namespace lonefire.Controllers
             try
             {
                 var userId = _userManager.GetUserId(User).ToGuid();
-                var article = await _context.Article.Where(a => (a.StatusValue == Status.Approved ||
-                a.OwnerId == userId) && a.Title == title || a.TitleZh == title).FirstOrDefaultAsync();
-                return Ok(article);
+                
+                Guid? id = null;
+                Article article = null;
+                if (title.IsBase64UrlString())
+                {
+                    // base64 only
+                    id = title.Base64UrlDecode();
+
+                } 
+                else if (title.IsGuid())
+                {
+                    // raw guid
+                    id = title.ToGuid();
+                }
+                else if (title.Split('-').Last().IsBase64UrlString())
+                {
+                    // title-base64guid
+                    id = title.Split('-').Last().Base64UrlDecode();
+                }
+
+                // use id
+                try
+                {
+                    if (id != null)
+                    {
+                        // use id 
+                        article = await _context.Article.Where(a => (a.StatusValue == Status.Approved || a.OwnerId == userId) && a.Id == id)
+                                    .FirstOrDefaultAsync();
+                    }
+                    else
+                    {
+                        // title only
+                        article = await _context.Article.Where(a => (a.StatusValue == Status.Approved ||
+                        a.OwnerId == userId) && a.Title == title || a.TitleZh == title).FirstOrDefaultAsync();
+                    }
+
+                    if (article == null)
+                    {
+                        return NoContent();
+                    }
+                    article.ViewCount++;
+                    await _context.SaveChangesAsync();
+
+                    return Ok(article);
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError($"Get article {id} failed {e.Message}");
+                    _notifier.Notify(_localizer["Get article failed"]);
+                    return StatusCode(500);
+                }
             }
             catch (Exception e)
             {

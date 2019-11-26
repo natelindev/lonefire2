@@ -9,6 +9,34 @@ public static class GuidHelper
         Guid.TryParse(value, out Guid result);
         return result;
     }
+    public static bool IsGuid(this string value)
+    {
+        return Guid.TryParse(value, out _);
+    }
+
+    public static bool IsBase64String(this string base64)
+    {
+        Span<byte> buffer = new Span<byte>(new byte[base64.Length]);
+        return Convert.TryFromBase64String(base64, buffer, out _);
+    }
+
+    public static bool IsBase64UrlString(this string base64)
+    {
+        if (base64.Length % 4 == 1)
+            return false;
+
+        Dictionary<string, string> urlFriendlyReverse = new Dictionary<string, string>
+        {
+            { "-", "+" },
+            { "_", "/" }
+        };
+
+        Span<byte> buffer = new Span<byte>(new byte[base64.Length]);
+        return Convert
+                .TryFromBase64String(
+                base64.MultipleReplace(urlFriendlyReverse)
+                      .PadRight(base64.Length + (4 - base64.Length % 4) % 4, '='), buffer, out _);
+    }
 
     public static string MultipleReplace(this string text, Dictionary<string, string> replacements)
     {
@@ -21,20 +49,20 @@ public static class GuidHelper
     }
 
     // shorten guid with url friendliness and not losing any information
-    public static string ToBase64Url(this Guid guid)
+    public static string Base64UrlEncode(this Guid guid)
     {
         Dictionary<string, string> urlFriendly = new Dictionary<string, string>
         {
             { "+", "-" }, // base64will never have - and _ so it's safe to use them
             { "/", "_" }, 
-            { "=", "" } // uuid is 128 bit so we don't need = at the end of base64
+            { "=", "" } // we don't use = at the end of base64 to shorten it
         };
         var result = Convert.ToBase64String(guid.ToByteArray()).MultipleReplace(urlFriendly);
         return result;
     }
 
     // reverse transformation
-    public static Guid FromBase64Url(this string base64string)
+    public static Guid Base64UrlDecode(this string base64)
     {
         Dictionary<string, string> urlFriendlyReverse = new Dictionary<string, string>
         {
@@ -42,11 +70,10 @@ public static class GuidHelper
             { "_", "/" }
         };
 
-        // guid to base64 string will always be 24 characters exactly
         return new Guid(
-            Convert.FromBase64String(base64string
+            Convert.FromBase64String(base64
                                         .MultipleReplace(urlFriendlyReverse)
-                                        .PadRight(24, '='))
+                                        .PadRight(base64.Length + (4 - base64.Length % 4) % 4, '='))
         );
     }
 }
