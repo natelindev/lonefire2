@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Drawing;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
-using lonefire.Models.UtilModels;
+using lonefire.Models.HelperModels;
 
 namespace lonefire.Models
 {

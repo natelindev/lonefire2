@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace lonefire.Models.UtilModels
+namespace lonefire.Models.HelperModels
 {
     public class Status
     {

@@ -6,7 +6,7 @@ using Askmethat.Aspnet.JsonLocalizer.Localizer;
 using lonefire.Authorization;
 using lonefire.Data;
 using lonefire.Models;
-using lonefire.Models.UtilModels;
+using lonefire.Models.HelperModels;
 using lonefire.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

@@ -9,7 +9,7 @@ using lonefire.Authorization;
 using lonefire.Data;
 using lonefire.Extensions;
 using lonefire.Models;
-using lonefire.Models.UtilModels;
+using lonefire.Models.HelperModels;
 using lonefire.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -19,6 +19,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.WebUtilities;
+using System.ComponentModel.DataAnnotations;
 
 namespace lonefire.Controllers
 {
@@ -100,7 +101,6 @@ namespace lonefire.Controllers
                 {
                     // base64 only
                     id = title.Base64UrlDecode();
-
                 } 
                 else if (title.IsGuid())
                 {
@@ -156,10 +156,12 @@ namespace lonefire.Controllers
         // GET: /Article/{id}/Comments
         [HttpGet("{id}/Comments")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetRelatedArticles(Guid id)
+        public async Task<IActionResult> GetRelatedArticles([RegularExpression(Constants.base64UrlRegex)]string idBase64)
         {
+            Guid id = idBase64.Base64UrlDecode();
             try
             {
+
                 var article = await _context.Article.Where(a => a.Id == id).FirstOrDefaultAsync();
                 if (article == null)
                 {
@@ -181,10 +183,11 @@ namespace lonefire.Controllers
         // GET: /Article/{id}/related
         [HttpGet("{id}/related")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetRelatedArticles(Guid id, int number)
+        public async Task<IActionResult> GetRelatedArticles([RegularExpression(Constants.base64UrlRegex)] string idBase64, int number)
         {
             //Randomly pick articles
             //TODO: Actually implement the article recommendation algorithm
+            Guid id = idBase64.Base64UrlDecode();
             try
             {
                 var originArticle = await _context.Article.Where(a => a.Id == id).FirstOrDefaultAsync();
@@ -259,8 +262,9 @@ namespace lonefire.Controllers
         // POST: /Article/{id}/like
         [HttpPost("{id}/like")]
         [AllowAnonymous]
-        public async Task<IActionResult> Like(Guid id)
+        public async Task<IActionResult> Like([RegularExpression(Constants.base64UrlRegex)] string idBase64)
         {
+            Guid id = idBase64.Base64UrlDecode();
             try
             {
                 var userId = _userManager.GetUserId(User).ToGuid();
@@ -354,8 +358,9 @@ namespace lonefire.Controllers
 
         // DELETE: Article/{id}
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete([RegularExpression(Constants.base64UrlRegex)] string idBase64)
         {
+            Guid id = idBase64.Base64UrlDecode();
             var article = await _context.Article.FirstOrDefaultAsync(a => a.Id == id);
 
             var isAuthorized = await _aus.AuthorizeAsync(

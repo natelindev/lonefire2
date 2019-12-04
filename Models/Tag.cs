@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using lonefire.Models.UtilModels;
+using lonefire.Models.HelperModels;
 
 namespace lonefire.Models
 {

@@ -1,4 +1,4 @@
-namespace lonefire.Models.UtilModels
+namespace lonefire.Models.HelperModels
 {
     public class SystemErrorModel
     {

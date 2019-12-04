@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
-using lonefire.Models.UtilModels;
+using lonefire.Models.HelperModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace lonefire.Models
