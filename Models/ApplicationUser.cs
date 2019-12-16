@@ -21,6 +21,8 @@ namespace lonefire.Models
         [StringLength(1024)]
         public string DescriptionZh { get; set; }
 
+        public bool Public { get; set; }
+
         public Guid? AvatarId { get; set; }
 
         public DateTimeOffset RegisterTime { get; set; }

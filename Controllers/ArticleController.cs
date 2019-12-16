@@ -27,7 +27,7 @@ namespace lonefire.Controllers
     [Produces(MediaTypeNames.Application.Json)]
     [ApiController]
     [Route("[controller]")]
-    public class ArticleController : Controller
+    public class ArticleController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
         private readonly IAuthorizationService _aus;
