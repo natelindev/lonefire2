@@ -12,6 +12,9 @@ namespace lonefire.Models
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
+        [NotMapped]
+        public string IdBase64 { get => Id.Base64UrlEncode(); }
+
         public Guid? ParentId { get; set; }
         public Guid? ArticleId { get; set; }
 

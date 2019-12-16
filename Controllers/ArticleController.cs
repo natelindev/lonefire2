@@ -97,7 +97,7 @@ namespace lonefire.Controllers
                 
                 Guid? id = null;
                 Article article = null;
-                if (title.IsBase64UrlString())
+                if (title.Length == 22 && title.IsBase64UrlString())
                 {
                     // base64 only
                     id = title.Base64UrlDecode();
@@ -107,10 +107,10 @@ namespace lonefire.Controllers
                     // raw guid
                     id = title.ToGuid();
                 }
-                else if (title.Split('-').Last().IsBase64UrlString())
+                else if (title.Length > 22 && title.Substring(title.Length-22, 22).IsBase64UrlString())
                 {
                     // title-base64guid
-                    id = title.Split('-').Last().Base64UrlDecode();
+                    id = title.Substring(title.Length - 22, 22).Base64UrlDecode();
                 }
 
                 // use id

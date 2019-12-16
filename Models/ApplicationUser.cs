@@ -8,6 +8,9 @@ namespace lonefire.Models
 {
     public class ApplicationUser : IdentityUser<Guid>
     {
+        [NotMapped]
+        public string IdBase64 { get => Id.Base64UrlEncode(); }
+
         [StringLength(128)]
         public string Name { get; set; }
         [StringLength(128)]

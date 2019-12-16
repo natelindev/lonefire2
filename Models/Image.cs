@@ -13,6 +13,9 @@ namespace lonefire.Models
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
+        [NotMapped]
+        public string IdBase64 { get => Id.Base64UrlEncode(); }
+
         [StringLength(512)]
         public string Path { get; set; }
 
