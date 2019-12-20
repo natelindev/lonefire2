@@ -1,4 +1,5 @@
-﻿using System;
+﻿using lonefire.Data;
+using System;
 using System.Collections.Generic;
 
 public static class GuidHelper
@@ -12,6 +13,25 @@ public static class GuidHelper
     public static bool IsGuid(this string value)
     {
         return Guid.TryParse(value, out _);
+    }
+
+    public static Guid EnsureGuid(this string value)
+    {
+        Guid result;
+        // check if its base64url encoding
+        if (value.IsBase64UrlString())
+        {
+            result = value.Base64UrlDecode();
+        } 
+        else if (value.IsBase64String())
+        {
+            result = new Guid(Convert.FromBase64String(value));
+        }
+        else
+        {
+            Guid.TryParse(value, out result);
+        }
+        return result;
     }
 
     public static bool IsBase64String(this string base64)

@@ -20,7 +20,7 @@ using Microsoft.Extensions.Logging;
 
 namespace lonefire.Controllers
 {
-    [Authorize]
+    [Authorize(Constants.AdministratorsRole)]
     [Produces(MediaTypeNames.Application.Json)]
     [ApiController]
     [Route("[controller]")]
@@ -79,6 +79,7 @@ namespace lonefire.Controllers
 
         // GET: /User/a
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Get([RegularExpression(Constants.base64UrlRegex)] string idBase64)
         {
             Guid id = idBase64.Base64UrlDecode();
