@@ -97,19 +97,19 @@ namespace lonefire.Controllers
                 
                 Guid? id = null;
                 Article article = null;
+                // base64 only
                 if (title.Length == 22 && title.IsBase64UrlString())
                 {
-                    // base64 only
                     id = title.Base64UrlDecode();
-                } 
+                }
+                // raw guid
                 else if (title.IsGuid())
                 {
-                    // raw guid
                     id = title.ToGuid();
                 }
+                // title-base64guid
                 else if (title.Length > 22 && title.Substring(title.Length-22, 22).IsBase64UrlString())
                 {
-                    // title-base64guid
                     id = title.Substring(title.Length - 22, 22).Base64UrlDecode();
                 }
 
@@ -131,7 +131,7 @@ namespace lonefire.Controllers
 
                     if (article == null)
                     {
-                        return NoContent();
+                        return NotFound();
                     }
                     article.ViewCount++;
                     await _context.SaveChangesAsync();
@@ -161,8 +161,8 @@ namespace lonefire.Controllers
             Guid id = idBase64.Base64UrlDecode();
             try
             {
-
-                var article = await _context.Article.Where(a => a.Id == id).FirstOrDefaultAsync();
+                var userId = _userManager.GetUserId(User).ToGuid();
+                var article = await _context.Article.Where(a => (a.StatusValue == Status.Approved || a.OwnerId == userId) && a.Id == id).FirstOrDefaultAsync();
                 if (article == null)
                 {
                     return NotFound();
@@ -174,7 +174,7 @@ namespace lonefire.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"Get aritlce comments for {id} failed {e.Message}");
+                _logger.LogError($"Get comments for aritlce {id} failed {e.Message}");
                 _notifier.Notify(_localizer["Get aritlce comments failed"]);
                 return StatusCode(500);
             }
@@ -185,19 +185,19 @@ namespace lonefire.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> GetRelatedArticles([RegularExpression(Constants.base64UrlRegex)] string idBase64, int number)
         {
-            //Randomly pick articles
-            //TODO: Actually implement the article recommendation algorithm
             Guid id = idBase64.Base64UrlDecode();
             try
             {
-                var originArticle = await _context.Article.Where(a => a.Id == id).FirstOrDefaultAsync();
+                var userId = _userManager.GetUserId(User).ToGuid();
+                var originArticle = await _context.Article.Where(a => (a.StatusValue == Status.Approved || a.OwnerId == userId) && a.Id == id).FirstOrDefaultAsync();
                 if (originArticle == null)
                 {
                     return NotFound();
                 }
-
-                var userId = _userManager.GetUserId(User).ToGuid();
                 string title = originArticle.Title ?? originArticle.TitleZh;
+
+                //Randomly pick articles
+                //TODO: Actually implement the article recommendation algorithm
                 var random = new Random();
                 var aritlces = await _context.Article
                     .Where(a => a.Title != title && a.TitleZh != title && (a.StatusValue == Status.Approved || a.OwnerId == userId))
@@ -291,8 +291,9 @@ namespace lonefire.Controllers
 
         // PATCH: /Article/{id}
         [HttpPatch("{id}")]
-        public async Task<IActionResult> Patch(Guid id, [FromBody] Article article)
+        public async Task<IActionResult> Patch([RegularExpression(Constants.base64UrlRegex)] string idBase64, [FromBody] Article article)
         {
+            Guid id = idBase64.Base64UrlDecode();
             var articleToUpdate = await _context.Article.FirstOrDefaultAsync(a => a.Id == id);
 
             if (articleToUpdate == null)
