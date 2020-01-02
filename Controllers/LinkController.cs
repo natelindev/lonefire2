@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Globalization;
-using System.Linq;
-using System.Net.Mime;
-using System.Threading.Tasks;
-using Askmethat.Aspnet.JsonLocalizer.Localizer;
+﻿using Askmethat.Aspnet.JsonLocalizer.Localizer;
 using lonefire.Data;
 using lonefire.Models;
 using lonefire.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Globalization;
+using System.Linq;
+using System.Net.Mime;
+using System.Threading.Tasks;
 
 namespace lonefire.Controllers
 {
@@ -23,7 +22,7 @@ namespace lonefire.Controllers
     [Route("[controller]")]
     public class LinkController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;   
+        private readonly ApplicationDbContext _context;
         private readonly INotifier _notifier;
         private readonly ILogger<ArticleController> _logger;
         private readonly IJsonStringLocalizer _localizer;
@@ -157,7 +156,7 @@ namespace lonefire.Controllers
             try
             {
                 var link = await _context.Link.Where(l => l.Id == id).FirstOrDefaultAsync();
-                if(link == null)
+                if (link == null)
                 {
                     return NotFound();
                 }

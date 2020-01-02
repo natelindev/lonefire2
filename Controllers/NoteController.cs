@@ -1,20 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using System.Globalization;
-using System.Net.Mime;
-using Askmethat.Aspnet.JsonLocalizer.Localizer;
+﻿using Askmethat.Aspnet.JsonLocalizer.Localizer;
 using lonefire.Data;
 using lonefire.Models;
+using lonefire.Models.HelperModels;
 using lonefire.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Identity;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using lonefire.Models.HelperModels;
+using System.Globalization;
+using System.Linq;
+using System.Net.Mime;
+using System.Threading.Tasks;
 
 namespace lonefire.Controllers
 {
