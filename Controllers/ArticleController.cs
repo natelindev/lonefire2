@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Net.Mime;
-using System.Threading.Tasks;
-using Askmethat.Aspnet.JsonLocalizer.Localizer;
+﻿using Askmethat.Aspnet.JsonLocalizer.Localizer;
 using lonefire.Authorization;
 using lonefire.Data;
-using lonefire.Extensions;
 using lonefire.Models;
 using lonefire.Models.HelperModels;
 using lonefire.Services;
@@ -16,10 +9,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.WebUtilities;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
+using System.Linq;
+using System.Net.Mime;
+using System.Threading.Tasks;
 
 namespace lonefire.Controllers
 {
@@ -94,7 +91,7 @@ namespace lonefire.Controllers
             try
             {
                 var userId = _userManager.GetUserId(User).ToGuid();
-                
+
                 Guid? id = null;
                 Article article = null;
                 // base64 only
@@ -108,7 +105,7 @@ namespace lonefire.Controllers
                     id = title.ToGuid();
                 }
                 // title-base64guid
-                else if (title.Length > 22 && title.Substring(title.Length-22, 22).IsBase64UrlString())
+                else if (title.Length > 22 && title.Substring(title.Length - 22, 22).IsBase64UrlString())
                 {
                     id = title.Substring(title.Length - 22, 22).Base64UrlDecode();
                 }

@@ -1,20 +1,18 @@
-﻿using System;
-using System.Linq;
-using System.Net.Mime;
-using System.Threading.Tasks;
-using Askmethat.Aspnet.JsonLocalizer.Localizer;
+﻿using Askmethat.Aspnet.JsonLocalizer.Localizer;
 using lonefire.Authorization;
 using lonefire.Data;
 using lonefire.Models;
-using lonefire.Models.HelperModels;
 using lonefire.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Linq;
+using System.Net.Mime;
+using System.Threading.Tasks;
 
 namespace lonefire.Controllers
 {
@@ -189,7 +187,7 @@ namespace lonefire.Controllers
             {
                 if (await TryUpdateModelAsync(commentToUpdate, "",
                  c => c.ParentId, c => c.Content, c => c.ContentZh,
-                 c => c.Owner, c => c.Website, c => c.Email,c => c.LikeCount
+                 c => c.Owner, c => c.Website, c => c.Email, c => c.LikeCount
                 ))
                 {
                     try

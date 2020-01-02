@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Net.Mime;
-using System.Threading.Tasks;
-using Askmethat.Aspnet.JsonLocalizer.Localizer;
+﻿using Askmethat.Aspnet.JsonLocalizer.Localizer;
 using lonefire.Data;
 using lonefire.Models;
 using lonefire.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Globalization;
+using System.Linq;
+using System.Net.Mime;
+using System.Threading.Tasks;
 
 namespace lonefire.Controllers
 {
@@ -22,7 +22,7 @@ namespace lonefire.Controllers
     [Route("[controller]")]
     public class TagController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;   
+        private readonly ApplicationDbContext _context;
         private readonly INotifier _notifier;
         private readonly ILogger<ArticleController> _logger;
         private readonly IJsonStringLocalizer _localizer;
@@ -65,8 +65,9 @@ namespace lonefire.Controllers
         // GET: /Tag/{id}
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public async Task<IActionResult> Get(Guid id)
+        public async Task<IActionResult> Get([RegularExpression(Constants.base64UrlRegex)] string idBase64)
         {
+            Guid id = idBase64.Base64UrlDecode();
             try
             {
                 var tag = await _context.Tag.FirstOrDefaultAsync(t => t.Id == id);
@@ -105,12 +106,13 @@ namespace lonefire.Controllers
 
         // POST /Tag
         [HttpPost("{id}/Add")]
-        public async Task<IActionResult> Post(Guid id)
+        public async Task<IActionResult> Post([RegularExpression(Constants.base64UrlRegex)] string idBase64)
         {
+            Guid id = idBase64.Base64UrlDecode();
             try
             {
                 var tag = await _context.Tag.Where(t => t.Id == id).FirstOrDefaultAsync();
-                if(tag == null)
+                if (tag == null)
                 {
                     return NotFound();
                 }
@@ -130,8 +132,10 @@ namespace lonefire.Controllers
 
         // PUT /Tag/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id, [Bind("TagName,TagNameZh,Description,DescriptionZh")] Tag tag)
+        public async Task<IActionResult> Put([RegularExpression(Constants.base64UrlRegex)] string idBase64, [Bind("TagName,TagNameZh,Description,DescriptionZh")] Tag tag)
         {
+            Guid id = idBase64.Base64UrlDecode();
+            tag.Id = id;
             try
             {
                 _context.Tag.Update(tag);
@@ -141,15 +145,16 @@ namespace lonefire.Controllers
             catch (Exception e)
             {
                 _logger.LogError($"Put tag {tag.TagName ?? tag.TagNameZh} failed {e.Message}");
-                _notifier.Notify(_localizer["Update tag failed"]);
+                _notifier.Notify(_localizer["Put tag failed"]);
                 return StatusCode(500);
             }
         }
 
         // PATCH /Tag/5
         [HttpPatch("{id}")]
-        public async Task<IActionResult> Patch(Guid id, [FromBody] Tag tag)
+        public async Task<IActionResult> Patch([RegularExpression(Constants.base64UrlRegex)] string idBase64, [FromBody] Tag tag)
         {
+            Guid id = idBase64.Base64UrlDecode();
             var tagToUpdate = await _context.Tag.FirstOrDefaultAsync(a => a.Id == id);
             if (await TryUpdateModelAsync(tagToUpdate, "",
                  t => t.TagName, t => t.TagNameZh, t => t.Description, t => t.DescriptionZh
@@ -172,12 +177,13 @@ namespace lonefire.Controllers
 
         // DELETE /Tag/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete([RegularExpression(Constants.base64UrlRegex)] string idBase64)
         {
+            Guid id = idBase64.Base64UrlDecode();
             try
             {
                 var tag = await _context.Tag.Where(t => t.Id == id).FirstOrDefaultAsync();
-                if(tag == null)
+                if (tag == null)
                 {
                     return NotFound();
                 }

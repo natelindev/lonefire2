@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.Net.Mime;
@@ -65,8 +66,9 @@ namespace lonefire.Controllers
         // GET: /Link/{id}
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public async Task<IActionResult> Get(Guid id)
+        public async Task<IActionResult> Get([RegularExpression(Constants.base64UrlRegex)] string idBase64)
         {
+            Guid id = idBase64.Base64UrlDecode();
             try
             {
                 var link = await _context.Link.FirstOrDefaultAsync(l => l.Id == id);
@@ -105,8 +107,9 @@ namespace lonefire.Controllers
 
         // PUT /Link/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id, [Bind("Url,Description,DescriptionZh,IconUrl")] Link link)
+        public async Task<IActionResult> Put([RegularExpression(Constants.base64UrlRegex)] string idBase64, [Bind("Url,Description,DescriptionZh,IconUrl")] Link link)
         {
+            Guid id = idBase64.Base64UrlDecode();
             try
             {
                 _context.Link.Update(link);
@@ -123,8 +126,9 @@ namespace lonefire.Controllers
 
         // PATCH /Link/5
         [HttpPatch("{id}")]
-        public async Task<IActionResult> Patch(Guid id, [FromBody] Link link)
+        public async Task<IActionResult> Patch([RegularExpression(Constants.base64UrlRegex)] string idBase64, [FromBody] Link link)
         {
+            Guid id = idBase64.Base64UrlDecode();
             var linkToUpdate = await _context.Link.FirstOrDefaultAsync(a => a.Id == id);
             if (await TryUpdateModelAsync(linkToUpdate, "",
                  l => l.Url, l => l.Description, l => l.DescriptionZh, l => l.IconUrl
@@ -147,8 +151,9 @@ namespace lonefire.Controllers
 
         // DELETE /Link/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete([RegularExpression(Constants.base64UrlRegex)] string idBase64)
         {
+            Guid id = idBase64.Base64UrlDecode();
             try
             {
                 var link = await _context.Link.Where(l => l.Id == id).FirstOrDefaultAsync();

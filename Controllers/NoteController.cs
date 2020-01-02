@@ -70,8 +70,9 @@ namespace lonefire.Controllers
         // GET: /Note/{id}
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public async Task<IActionResult> Get(Guid id)
+        public async Task<IActionResult> Get([RegularExpression(Constants.base64UrlRegex)] string idBase64)
         {
+            Guid id = idBase64.Base64UrlDecode();
             try
             {
                 var note = await _context.Note.FirstOrDefaultAsync(n => n.Id == id);
@@ -140,8 +141,9 @@ namespace lonefire.Controllers
 
         // PUT /Note/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id, [Bind("NoteName,NoteNameZh,Description,DescriptionZh")] Note note)
+        public async Task<IActionResult> Put([RegularExpression(Constants.base64UrlRegex)] string idBase64, [Bind("NoteName,NoteNameZh,Description,DescriptionZh")] Note note)
         {
+            Guid id = idBase64.Base64UrlDecode();
             try
             {
                 _context.Note.Update(note);
@@ -158,8 +160,9 @@ namespace lonefire.Controllers
 
         // PATCH /Note/5
         [HttpPatch("{id}")]
-        public async Task<IActionResult> Patch(Guid id, [FromBody] Note note)
+        public async Task<IActionResult> Patch([RegularExpression(Constants.base64UrlRegex)] string idBase64, [FromBody] Note note)
         {
+            Guid id = idBase64.Base64UrlDecode();
             var noteToUpdate = await _context.Note.FirstOrDefaultAsync(n => n.Id == id);
             if (await TryUpdateModelAsync(noteToUpdate, "",
                  n => n.Title, n => n.TitleZh, n => n.Content, n => n.ContentZh
@@ -182,8 +185,9 @@ namespace lonefire.Controllers
 
         // DELETE /Note/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete([RegularExpression(Constants.base64UrlRegex)] string idBase64)
         {
+            Guid id = idBase64.Base64UrlDecode();
             try
             {
                 var note = await _context.Note.Where(n => n.Id == id).FirstOrDefaultAsync();
