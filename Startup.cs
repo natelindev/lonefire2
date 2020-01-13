@@ -19,6 +19,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 
 namespace lonefire
 {
@@ -138,6 +141,15 @@ namespace lonefire
             });
 
             services.AddControllers().AddControllersAsServices();
+
+            services.AddControllersWithViews();
+            services.AddControllersWithViews();
+
+            // In production, the React files will be served from this directory
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "Frontend/build";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -169,10 +181,23 @@ namespace lonefire
 
             app.UseRequestLocalization();
 
+            app.UseStaticFiles();
+            // app.UseSpaStaticFiles();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<NotificationHub>("/hub");
+            });
+
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "Frontend";
+
+                if (env.IsDevelopment())
+                {
+                    spa.UseReactDevelopmentServer(npmScript: "start");
+                }
             });
         }
     }

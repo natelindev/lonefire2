@@ -89,7 +89,7 @@ namespace lonefire.Controllers
 
         // POST /Image
         [HttpPost]
-        public async Task<IActionResult> Post([Bind("Url,Description,DescriptionZh,IconUrl")] Image image)
+        public async Task<IActionResult> Post([Bind("Url,Description,DescriptionZh,IconUrl")] Image image,IFormFile imageFile)
         {
             try
             {
@@ -107,7 +107,7 @@ namespace lonefire.Controllers
 
         // PUT /Image/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put([RegularExpression(Constants.base64UrlRegex)] string idBase64, [Bind("Url,Description,DescriptionZh,IconUrl")] Image image)
+        public async Task<IActionResult> Put([RegularExpression(Constants.base64UrlRegex)] string idBase64, [Bind("Url,Description,DescriptionZh,IconUrl")] Image image, IFormFile imageFile)
         {
             Guid id = idBase64.Base64UrlDecode();
             try
