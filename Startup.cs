@@ -143,7 +143,6 @@ namespace lonefire
             services.AddControllers().AddControllersAsServices();
 
             services.AddControllersWithViews();
-            services.AddControllersWithViews();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -181,8 +180,7 @@ namespace lonefire
 
             app.UseRequestLocalization();
 
-            app.UseStaticFiles();
-            // app.UseSpaStaticFiles();
+            app.UseSpaStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {
