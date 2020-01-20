@@ -62,8 +62,8 @@ namespace lonefire.Controllers
             }
         }
 
-        // GET: /Tag/{id}
-        [HttpGet("{id}")]
+        // GET: /Tag/{idBase64}
+        [HttpGet("{idBase64}")]
         [AllowAnonymous]
         public async Task<IActionResult> Get([RegularExpression(Constants.base64UrlRegex)] string idBase64)
         {
@@ -80,7 +80,7 @@ namespace lonefire.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"Get tag {id} failed {e.Message}");
+                _logger.LogError($"Get tag {idBase64} failed {e.Message}");
                 _notifier.Notify(_localizer["Get tag failed"]);
                 return StatusCode(500);
             }
@@ -105,7 +105,7 @@ namespace lonefire.Controllers
         }
 
         // POST /Tag
-        [HttpPost("{id}/Add")]
+        [HttpPost("{idBase64}/Add")]
         public async Task<IActionResult> Post([RegularExpression(Constants.base64UrlRegex)] string idBase64)
         {
             Guid id = idBase64.Base64UrlDecode();
@@ -124,14 +124,14 @@ namespace lonefire.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"Add tag count to {id} failed {e.Message}");
+                _logger.LogError($"Add tag count to {idBase64} failed {e.Message}");
                 _notifier.Notify(_localizer["Add tag count failed"]);
                 return StatusCode(500);
             }
         }
 
         // PUT /Tag/5
-        [HttpPut("{id}")]
+        [HttpPut("{idBase64}")]
         public async Task<IActionResult> Put([RegularExpression(Constants.base64UrlRegex)] string idBase64, [Bind("TagName,TagNameZh,Description,DescriptionZh")] Tag tag)
         {
             Guid id = idBase64.Base64UrlDecode();
@@ -151,11 +151,11 @@ namespace lonefire.Controllers
         }
 
         // PATCH /Tag/5
-        [HttpPatch("{id}")]
+        [HttpPatch("{idBase64}")]
         public async Task<IActionResult> Patch([RegularExpression(Constants.base64UrlRegex)] string idBase64, [FromBody] Tag tag)
         {
             Guid id = idBase64.Base64UrlDecode();
-            var tagToUpdate = await _context.Tag.FirstOrDefaultAsync(a => a.Id == id);
+            var tagToUpdate = await _context.Tag.FirstOrDefaultAsync(t => t.Id == id);
             if (await TryUpdateModelAsync(tagToUpdate, "",
                  t => t.TagName, t => t.TagNameZh, t => t.Description, t => t.DescriptionZh
                 ))
@@ -167,7 +167,7 @@ namespace lonefire.Controllers
                 }
                 catch (Exception e)
                 {
-                    _logger.LogError($"Patch tag {id} failed {e.Message}");
+                    _logger.LogError($"Patch tag {idBase64} failed {e.Message}");
                     _notifier.Notify(_localizer["Update tag failed"]);
                     return StatusCode(500);
                 }
@@ -176,7 +176,7 @@ namespace lonefire.Controllers
         }
 
         // DELETE /Tag/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{idBase64}")]
         public async Task<IActionResult> Delete([RegularExpression(Constants.base64UrlRegex)] string idBase64)
         {
             Guid id = idBase64.Base64UrlDecode();
@@ -194,7 +194,7 @@ namespace lonefire.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"Delete tag {id} failed {e.Message}");
+                _logger.LogError($"Delete tag {idBase64} failed {e.Message}");
                 _notifier.Notify(_localizer["Delete tag failed"]);
                 return StatusCode(500);
             }

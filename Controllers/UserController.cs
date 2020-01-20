@@ -77,8 +77,8 @@ namespace lonefire.Controllers
             }
         }
 
-        // GET: /User/a
-        [HttpGet]
+        // GET: /User/{idBase64}
+        [HttpGet("{idBase64}")]
         [AllowAnonymous]
         public async Task<IActionResult> Get([RegularExpression(Constants.base64UrlRegex)] string idBase64)
         {
@@ -97,8 +97,104 @@ namespace lonefire.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"Get user {id} Failed {e.Message}");
+                _logger.LogError($"Get user {idBase64} Failed {e.Message}");
                 _notifier.Notify(_localizer["Get user Failed"]);
+                return StatusCode(500);
+            }
+        }
+
+        // GET: /User/{idBase64}/Backup
+        [HttpGet("{idBase64}/Backup")]
+        public async Task<IActionResult> Backup([RegularExpression(Constants.base64UrlRegex)] string idBase64)
+        {
+            // zip all user uploaded content
+            // export user data from db
+            // download the zip
+            Guid id = idBase64.Base64UrlDecode();
+            try
+            {
+                var user = await _context.Users.Where(u => u.Public)
+                                    .FirstOrDefaultAsync();
+
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(user);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Get user {idBase64} Failed {e.Message}");
+                _notifier.Notify(_localizer["Get user Failed"]);
+                return StatusCode(500);
+            }
+        }
+
+        // POST /User
+        [HttpPost]
+        public async Task<IActionResult> Post([Bind("Name,NameZh,Description,DescriptionZh")] ApplicationUser user)
+        {
+            try
+            {
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
+                return Created($"/User/{user.Id}", user);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Post user {user.Name ?? user.NameZh} failed {e.Message}");
+                _notifier.Notify(_localizer["Create user failed"]);
+                return StatusCode(500);
+            }
+        }
+
+        // PATCH /User/{idBase64}
+        [HttpPatch("{idBase64}")]
+        public async Task<IActionResult> Patch([RegularExpression(Constants.base64UrlRegex)] string idBase64, [FromBody] Tag user)
+        {
+            Guid id = idBase64.Base64UrlDecode();
+            var userToUpdate = await _context.Tag.FirstOrDefaultAsync(u => u.Id == id);
+            if (await TryUpdateModelAsync(userToUpdate, "",
+                 u => u.TagName, u => u.TagNameZh, u => u.Description, u => u.DescriptionZh
+                ))
+            {
+                try
+                {
+                    await _context.SaveChangesAsync();
+                    return NoContent();
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError($"Patch user {idBase64} failed {e.Message}");
+                    _notifier.Notify(_localizer["Update user failed"]);
+                    return StatusCode(500);
+                }
+            }
+            return BadRequest();
+        }
+
+        // DELETE /User/{idBase64}
+        [HttpDelete("{idBase64}")]
+        public async Task<IActionResult> Delete([RegularExpression(Constants.base64UrlRegex)] string idBase64)
+        {
+            Guid id = idBase64.Base64UrlDecode();
+            try
+            {
+                var user = await _context.Users.Where(u => u.Id == id).FirstOrDefaultAsync();
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                _context.Users.Remove(user);
+                await _context.SaveChangesAsync();
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Delete user {idBase64} failed {e.Message}");
+                _notifier.Notify(_localizer["Delete user failed"]);
                 return StatusCode(500);
             }
         }

@@ -63,8 +63,8 @@ namespace lonefire.Controllers
             }
         }
 
-        // GET: /Image/{id}
-        [HttpGet("{id}")]
+        // GET: /Image/{idBase64}
+        [HttpGet("{idBase64}")]
         [AllowAnonymous]
         public async Task<IActionResult> Get([RegularExpression(Constants.base64UrlRegex)] string idBase64)
         {
@@ -81,7 +81,7 @@ namespace lonefire.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"Get image {id} failed {e.Message}");
+                _logger.LogError($"Get image {idBase64} failed {e.Message}");
                 _notifier.Notify(_localizer["Get image failed"]);
                 return StatusCode(500);
             }
@@ -105,8 +105,8 @@ namespace lonefire.Controllers
             }
         }
 
-        // PUT /Image/5
-        [HttpPut("{id}")]
+        // PUT /Image/{idBase64}
+        [HttpPut("{idBase64}")]
         public async Task<IActionResult> Put([RegularExpression(Constants.base64UrlRegex)] string idBase64, [Bind("Url,Description,DescriptionZh,IconUrl")] Image image, IFormFile imageFile)
         {
             Guid id = idBase64.Base64UrlDecode();
@@ -125,7 +125,7 @@ namespace lonefire.Controllers
         }
 
         // PATCH /Image/5
-        [HttpPatch("{id}")]
+        [HttpPatch("{idBase64}")]
         public async Task<IActionResult> Patch([RegularExpression(Constants.base64UrlRegex)] string idBase64, [FromBody] Image image)
         {
             Guid id = idBase64.Base64UrlDecode();
@@ -141,7 +141,7 @@ namespace lonefire.Controllers
                 }
                 catch (Exception e)
                 {
-                    _logger.LogError($"Patch image {id} failed {e.Message}");
+                    _logger.LogError($"Patch image {idBase64} failed {e.Message}");
                     _notifier.Notify(_localizer["Update image failed"]);
                     return StatusCode(500);
                 }
@@ -149,8 +149,8 @@ namespace lonefire.Controllers
             return BadRequest();
         }
 
-        // DELETE /Image/5
-        [HttpDelete("{id}")]
+        // DELETE /Image/{idBase64}
+        [HttpDelete("{idBase64}")]
         public async Task<IActionResult> Delete([RegularExpression(Constants.base64UrlRegex)] string idBase64)
         {
             Guid id = idBase64.Base64UrlDecode();
@@ -168,7 +168,7 @@ namespace lonefire.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"Delete image {id} failed {e.Message}");
+                _logger.LogError($"Delete image {idBase64} failed {e.Message}");
                 _notifier.Notify(_localizer["Delete image failed"]);
                 return StatusCode(500);
             }

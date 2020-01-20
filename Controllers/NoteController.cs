@@ -67,8 +67,8 @@ namespace lonefire.Controllers
             }
         }
 
-        // GET: /Note/{id}
-        [HttpGet("{id}")]
+        // GET: /Note/{idBase64}
+        [HttpGet("{idBase64}")]
         [AllowAnonymous]
         public async Task<IActionResult> Get([RegularExpression(Constants.base64UrlRegex)] string idBase64)
         {
@@ -85,7 +85,7 @@ namespace lonefire.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"Get note {id} failed {e.Message}");
+                _logger.LogError($"Get note {idBase64} failed {e.Message}");
                 _notifier.Notify(_localizer["Get note failed"]);
                 return StatusCode(500);
             }
@@ -109,8 +109,8 @@ namespace lonefire.Controllers
             }
         }
 
-        // POST: /Note/{id}/like
-        [HttpPost("{id}/like")]
+        // POST: /Note/{idBase64}/like
+        [HttpPost("{idBase64}/like")]
         [AllowAnonymous]
         public async Task<IActionResult> Like([RegularExpression(Constants.base64UrlRegex)] string idBase64)
         {
@@ -133,14 +133,14 @@ namespace lonefire.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"Like note {id} Failed {e.Message}");
+                _logger.LogError($"Like note {idBase64} Failed {e.Message}");
                 _notifier.Notify(_localizer["Like note failed"]);
                 return StatusCode(500);
             }
         }
 
         // PUT /Note/5
-        [HttpPut("{id}")]
+        [HttpPut("{idBase64}")]
         public async Task<IActionResult> Put([RegularExpression(Constants.base64UrlRegex)] string idBase64, [Bind("NoteName,NoteNameZh,Description,DescriptionZh")] Note note)
         {
             Guid id = idBase64.Base64UrlDecode();
@@ -159,7 +159,7 @@ namespace lonefire.Controllers
         }
 
         // PATCH /Note/5
-        [HttpPatch("{id}")]
+        [HttpPatch("{idBase64}")]
         public async Task<IActionResult> Patch([RegularExpression(Constants.base64UrlRegex)] string idBase64, [FromBody] Note note)
         {
             Guid id = idBase64.Base64UrlDecode();
@@ -175,7 +175,7 @@ namespace lonefire.Controllers
                 }
                 catch (Exception e)
                 {
-                    _logger.LogError($"Patch note {id} failed {e.Message}");
+                    _logger.LogError($"Patch note {idBase64} failed {e.Message}");
                     _notifier.Notify(_localizer["Update note failed"]);
                     return StatusCode(500);
                 }
@@ -184,7 +184,7 @@ namespace lonefire.Controllers
         }
 
         // DELETE /Note/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{idBase64}")]
         public async Task<IActionResult> Delete([RegularExpression(Constants.base64UrlRegex)] string idBase64)
         {
             Guid id = idBase64.Base64UrlDecode();
@@ -202,7 +202,7 @@ namespace lonefire.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"Delete note {id} failed {e.Message}");
+                _logger.LogError($"Delete note {idBase64} failed {e.Message}");
                 _notifier.Notify(_localizer["Delete note failed"]);
                 return StatusCode(500);
             }

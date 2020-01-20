@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
@@ -73,11 +74,12 @@ namespace lonefire.Controllers
             }
         }
 
-        // GET: /Comment/{id}
-        [HttpGet("{id}")]
+        // GET: /Comment/{idBase64}
+        [HttpGet("{idBase64}")]
         [AllowAnonymous]
-        public async Task<IActionResult> Get(Guid id)
+        public async Task<IActionResult> Get([RegularExpression(Constants.base64UrlRegex)] string idBase64)
         {
+            Guid id = idBase64.Base64UrlDecode();
             try
             {
                 var userId = _userManager.GetUserId(User).ToGuid();
@@ -92,7 +94,7 @@ namespace lonefire.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"Get comment {id} failed {e.StackTrace}");
+                _logger.LogError($"Get comment {idBase64} failed {e.StackTrace}");
                 _notifier.Notify(_localizer["Get comment failed"]);
                 return StatusCode(500);
             }
@@ -133,11 +135,12 @@ namespace lonefire.Controllers
             }
         }
 
-        // POST: /Comment/{id}/like
-        [HttpPost("{id}/like")]
+        // POST: /Comment/{idBase64}/like
+        [HttpPost("{idBase64}/like")]
         [AllowAnonymous]
-        public async Task<IActionResult> Like(Guid id)
+        public async Task<IActionResult> Like([RegularExpression(Constants.base64UrlRegex)] string idBase64)
         {
+            Guid id = idBase64.Base64UrlDecode();
             try
             {
                 var userId = _userManager.GetUserId(User).ToGuid();
@@ -156,16 +159,17 @@ namespace lonefire.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"Like comment {id} Failed {e.Message}");
+                _logger.LogError($"Like comment {idBase64} Failed {e.Message}");
                 _notifier.Notify(_localizer["Like comment failed"]);
                 return StatusCode(500);
             }
         }
 
-        // PATCH: /Comment/{id}
-        [HttpPatch("{id}")]
-        public async Task<IActionResult> Patch(Guid id, [FromBody] Comment comment)
+        // PATCH: /Comment/{idBase64}
+        [HttpPatch("{idBase64}")]
+        public async Task<IActionResult> Patch([RegularExpression(Constants.base64UrlRegex)] string idBase64, [FromBody] Comment comment)
         {
+            Guid id = idBase64.Base64UrlDecode();
             var commentToUpdate = await _context.Comment.FirstOrDefaultAsync(c => c.Id == id);
 
             if (commentToUpdate == null)
@@ -197,7 +201,7 @@ namespace lonefire.Controllers
                     }
                     catch (Exception e)
                     {
-                        _logger.LogError($"Patch comment {id} failed {e.Message}");
+                        _logger.LogError($"Patch comment {idBase64} failed {e.Message}");
                         _notifier.Notify(_localizer["Update comment failed"]);
                         return StatusCode(500);
                     }
@@ -217,7 +221,7 @@ namespace lonefire.Controllers
                     }
                     catch (Exception e)
                     {
-                        _logger.LogError($"Patch comment {id} failed {e.Message}");
+                        _logger.LogError($"Patch comment {idBase64} failed {e.Message}");
                         _notifier.Notify(_localizer["Update comment failed"]);
                         return StatusCode(500);
                     }
@@ -228,10 +232,11 @@ namespace lonefire.Controllers
 
         // PUT not supported, as it would break Comment connection
 
-        // DELETE: Comment/{id}
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        // DELETE: Comment/{idBase64}
+        [HttpDelete("{idBase64}")]
+        public async Task<IActionResult> Delete([RegularExpression(Constants.base64UrlRegex)] string idBase64)
         {
+            Guid id = idBase64.Base64UrlDecode();
             var comment = await _context.Comment.FirstOrDefaultAsync(c => c.Id == id);
 
             var isAuthorized = await _aus.AuthorizeAsync(

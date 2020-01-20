@@ -62,8 +62,8 @@ namespace lonefire.Controllers
             }
         }
 
-        // GET: /Link/{id}
-        [HttpGet("{id}")]
+        // GET: /Link/{idBase64}
+        [HttpGet("{idBase64}")]
         [AllowAnonymous]
         public async Task<IActionResult> Get([RegularExpression(Constants.base64UrlRegex)] string idBase64)
         {
@@ -80,7 +80,7 @@ namespace lonefire.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"Get link {id} failed {e.Message}");
+                _logger.LogError($"Get link {idBase64} failed {e.Message}");
                 _notifier.Notify(_localizer["Get link failed"]);
                 return StatusCode(500);
             }
@@ -104,8 +104,8 @@ namespace lonefire.Controllers
             }
         }
 
-        // PUT /Link/5
-        [HttpPut("{id}")]
+        // PUT /Link/{idBase64}
+        [HttpPut("{idBase64}")]
         public async Task<IActionResult> Put([RegularExpression(Constants.base64UrlRegex)] string idBase64, [Bind("Url,Description,DescriptionZh,IconUrl")] Link link)
         {
             Guid id = idBase64.Base64UrlDecode();
@@ -123,8 +123,8 @@ namespace lonefire.Controllers
             }
         }
 
-        // PATCH /Link/5
-        [HttpPatch("{id}")]
+        // PATCH /Link/{idBase64}
+        [HttpPatch("{idBase64}")]
         public async Task<IActionResult> Patch([RegularExpression(Constants.base64UrlRegex)] string idBase64, [FromBody] Link link)
         {
             Guid id = idBase64.Base64UrlDecode();
@@ -140,7 +140,7 @@ namespace lonefire.Controllers
                 }
                 catch (Exception e)
                 {
-                    _logger.LogError($"Patch link {id} failed {e.Message}");
+                    _logger.LogError($"Patch link {idBase64} failed {e.Message}");
                     _notifier.Notify(_localizer["Update link failed"]);
                     return StatusCode(500);
                 }
@@ -148,8 +148,8 @@ namespace lonefire.Controllers
             return BadRequest();
         }
 
-        // DELETE /Link/5
-        [HttpDelete("{id}")]
+        // DELETE /Link/{idBase64}
+        [HttpDelete("{idBase64}")]
         public async Task<IActionResult> Delete([RegularExpression(Constants.base64UrlRegex)] string idBase64)
         {
             Guid id = idBase64.Base64UrlDecode();
@@ -167,7 +167,7 @@ namespace lonefire.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"Delete link {id} failed {e.Message}");
+                _logger.LogError($"Delete link {idBase64} failed {e.Message}");
                 _notifier.Notify(_localizer["Delete link failed"]);
                 return StatusCode(500);
             }

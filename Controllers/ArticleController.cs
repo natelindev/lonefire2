@@ -137,7 +137,7 @@ namespace lonefire.Controllers
                 }
                 catch (Exception e)
                 {
-                    _logger.LogError($"Get article {id} failed {e.Message}");
+                    _logger.LogError($"Get article {id?.Base64UrlEncode()} failed {e.Message}");
                     _notifier.Notify(_localizer["Get article failed"]);
                     return StatusCode(500);
                 }
@@ -150,8 +150,8 @@ namespace lonefire.Controllers
             }
         }
 
-        // GET: /Article/{id}/Comments
-        [HttpGet("{id}/Comments")]
+        // GET: /Article/{idBase64}/Comments
+        [HttpGet("{idBase64}/Comments")]
         [AllowAnonymous]
         public async Task<IActionResult> GetRelatedArticles([RegularExpression(Constants.base64UrlRegex)]string idBase64)
         {
@@ -171,14 +171,14 @@ namespace lonefire.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"Get comments for aritlce {id} failed {e.Message}");
+                _logger.LogError($"Get comments for aritlce {idBase64} failed {e.Message}");
                 _notifier.Notify(_localizer["Get aritlce comments failed"]);
                 return StatusCode(500);
             }
         }
 
-        // GET: /Article/{id}/related
-        [HttpGet("{id}/related")]
+        // GET: /Article/{idBase64}/related
+        [HttpGet("{idBase64}/related")]
         [AllowAnonymous]
         public async Task<IActionResult> GetRelatedArticles([RegularExpression(Constants.base64UrlRegex)] string idBase64, int number)
         {
@@ -204,7 +204,7 @@ namespace lonefire.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"Get related articles for {id} failed {e.Message}");
+                _logger.LogError($"Get related articles for {idBase64} failed {e.Message}");
                 _notifier.Notify(_localizer["Get related articles failed"]);
                 return StatusCode(500);
             }
@@ -256,8 +256,8 @@ namespace lonefire.Controllers
             }
         }
 
-        // POST: /Article/{id}/like
-        [HttpPost("{id}/like")]
+        // POST: /Article/{idBase64}/like
+        [HttpPost("{idBase64}/like")]
         [AllowAnonymous]
         public async Task<IActionResult> Like([RegularExpression(Constants.base64UrlRegex)] string idBase64)
         {
@@ -280,14 +280,14 @@ namespace lonefire.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"Like article {id} Failed {e.Message}");
+                _logger.LogError($"Like article {idBase64} Failed {e.Message}");
                 _notifier.Notify(_localizer["Like article failed"]);
                 return StatusCode(500);
             }
         }
 
-        // PATCH: /Article/{id}
-        [HttpPatch("{id}")]
+        // PATCH: /Article/{idBase64}
+        [HttpPatch("{idBase64}")]
         public async Task<IActionResult> Patch([RegularExpression(Constants.base64UrlRegex)] string idBase64, [FromBody] Article article)
         {
             Guid id = idBase64.Base64UrlDecode();
@@ -323,7 +323,7 @@ namespace lonefire.Controllers
                     }
                     catch (Exception)
                     {
-                        _logger.LogError($"Patch article {id} failed");
+                        _logger.LogError($"Patch article {idBase64} failed");
                         _notifier.Notify(_localizer["Update article failed"]);
                         return StatusCode(500);
                     }
@@ -343,7 +343,7 @@ namespace lonefire.Controllers
                     }
                     catch (Exception e)
                     {
-                        _logger.LogError($"Patch article {id} failed {e.Message}");
+                        _logger.LogError($"Patch article {idBase64} failed {e.Message}");
                         _notifier.Notify(_localizer["Update article failed"]);
                         return StatusCode(500);
                     }
@@ -354,8 +354,8 @@ namespace lonefire.Controllers
 
         // PUT not supported, as it would break Tag, Image, Comment connection
 
-        // DELETE: Article/{id}
-        [HttpDelete("{id}")]
+        // DELETE: Article/{idBase64}
+        [HttpDelete("{idBase64}")]
         public async Task<IActionResult> Delete([RegularExpression(Constants.base64UrlRegex)] string idBase64)
         {
             Guid id = idBase64.Base64UrlDecode();
@@ -402,7 +402,7 @@ namespace lonefire.Controllers
                 }
                 catch (Exception e)
                 {
-                    _logger.LogError($"Delete article {id} failed {e.Message}");
+                    _logger.LogError($"Delete article {idBase64} failed {e.Message}");
                     _notifier.Notify(_localizer["Delete article failed"]);
                     return StatusCode(500);
                 }

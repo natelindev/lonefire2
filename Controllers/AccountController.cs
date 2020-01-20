@@ -57,12 +57,10 @@ namespace lonefire.Controllers
 
             // Lockout enabled
             var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: true);
-            DateTimeOffset? endTime = null;
             if (result.Succeeded)
             {
 
                 ApplicationUser user = await _userManager.FindByNameAsync(model.UserName);
-                endTime = user.LockoutEnd;
 
                 // Record LastLoginTime Time
                 if (user != null)
@@ -76,6 +74,9 @@ namespace lonefire.Controllers
             }
             if (result.IsLockedOut)
             {
+                ApplicationUser user = await _userManager.FindByNameAsync(model.UserName);
+                DateTimeOffset? endTime = user.LockoutEnd;
+
                 _logger.LogWarning($"User {model.UserName} attempted to login while locked out.");
                 return StatusCode(423, new
                 {
@@ -88,7 +89,6 @@ namespace lonefire.Controllers
             _logger.LogWarning($"User {model.UserName} failed to login.");
             return BadRequest(_localizer["Invalid credentials"]);
         }
-
 
         [HttpPost]
         [AllowAnonymous]
