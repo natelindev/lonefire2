@@ -10,7 +10,7 @@ export default () => (
     <div className="text-muted text-titillium">
       <div className="d-flex mx-auto justify-content-center">
         Made by Nathaniel with
-        <span role="img" aria-label="love">
+        <span id="love" role="img" aria-label="love">
           ❤️
         </span>
         and effort

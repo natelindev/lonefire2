@@ -16,6 +16,7 @@ import Logo from './Logo';
 import { Link } from 'react-router-dom';
 import './Navbar.scoped.scss';
 import SearchBar from './SearchBar';
+import GradientButton from './GradientButton';
 
 export default class NavMenu extends React.PureComponent<{}, { isOpen: boolean }> {
   public state = {
@@ -30,7 +31,7 @@ export default class NavMenu extends React.PureComponent<{}, { isOpen: boolean }
         <NavbarBrand tag={Link} to="/">
           Nathaniel's Dev Area
         </NavbarBrand>
-        <Collapse isOpen={isOpen} navbar>
+        <Collapse isOpen={isOpen} className="flex-grow-0" navbar>
           <Nav>
             <NavItem>
               <NavLink>作品集</NavLink>
@@ -38,10 +39,6 @@ export default class NavMenu extends React.PureComponent<{}, { isOpen: boolean }
             <NavItem>
               <NavLink>论文</NavLink>
             </NavItem>
-          </Nav>
-        </Collapse>
-        <Collapse isOpen={isOpen} navbar>
-          <Nav>
             <NavItem>
               <NavLink>动态</NavLink>
             </NavItem>
@@ -56,11 +53,19 @@ export default class NavMenu extends React.PureComponent<{}, { isOpen: boolean }
                 <DropdownItem>友链</DropdownItem>
                 <DropdownItem>留言板</DropdownItem>
                 <DropdownItem>时间线</DropdownItem>
-                <DropdownItem>管理</DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
-            <NavItem>
+          </Nav>
+        </Collapse>
+        <Collapse isOpen={isOpen} navbar className="ml-auto mr-0 justify-content-end flex-grow-1">
+          <Nav className="flex-grow-1 justify-content-end">
+            <NavItem className="searchBar">
               <SearchBar />
+            </NavItem>
+            <NavItem>
+              <GradientButton className="ml-2" colorA="#5CC6EE" colorB="#3232FF">
+                登录
+              </GradientButton>
             </NavItem>
           </Nav>
         </Collapse>

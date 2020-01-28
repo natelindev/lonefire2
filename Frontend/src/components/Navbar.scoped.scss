@@ -155,3 +155,12 @@
     }
   }
 }
+
+.nav-item.searchBar {
+  flex-grow: 0;
+  transition: all 0.15s;
+
+  &:focus-within {
+    flex-grow: 1;
+  }
+}

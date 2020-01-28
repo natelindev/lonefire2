@@ -1,23 +1,20 @@
 import * as React from 'react';
 
-type LogoProps = {
-  size: string;
+export interface LogoProps {
+  size?: string;
   height?: string;
   width?: string;
-};
-export default class Logo extends React.PureComponent<LogoProps> {
-  static defaultProps = {
-    size: '2rem'
-  };
-  public render() {
-    const { size, height, width } = this.props;
-    return (
-      <img
-        className="logo"
-        style={{ maxHeight: size || height, maxWidth: size || width }}
-        src="logo.svg"
-        alt="logo"
-      ></img>
-    );
-  }
 }
+
+export default (props: LogoProps) => (
+  <img
+    className="logo"
+    style={{
+      maxHeight: props.size || props.height || '2rem',
+      maxWidth: props.size || props.width || '2rem',
+      margin: '0.3rem'
+    }}
+    src="logo.svg"
+    alt="logo"
+  ></img>
+);
