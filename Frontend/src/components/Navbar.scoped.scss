@@ -158,7 +158,8 @@
 
 .nav-item.searchBar {
   flex-grow: 0;
-  transition: all 0.15s;
+  transition: flex-grow 0.12s;
+  text-transform: none;
 
   &:focus-within {
     flex-grow: 1;

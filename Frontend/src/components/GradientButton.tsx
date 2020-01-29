@@ -4,7 +4,7 @@ import { Button } from 'reactstrap';
 export interface GradientButtonProps extends React.Props<any> {
   children?: React.ReactNode;
   className?: string;
-  style?: any;
+  style?: React.CSSProperties;
   colorA: string;
   colorB: string;
 }
@@ -16,7 +16,7 @@ const isBright = (hexColor: string) => {
 
 export default class GradientButton extends React.Component<GradientButtonProps> {
   public render() {
-    const { colorA, colorB, children, className, style } = this.props;
+    const { colorA, colorB, children, className, style, ...rest } = this.props;
     return (
       <Button
         color="primary"
@@ -27,6 +27,7 @@ export default class GradientButton extends React.Component<GradientButtonProps>
           color: isBright(colorA) && isBright(colorB) ? '#000000' : '#ffffff',
           ...style
         }}
+        {...rest}
       >
         {children}
       </Button>

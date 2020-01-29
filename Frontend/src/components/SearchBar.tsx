@@ -6,12 +6,12 @@ export default class SearchBar extends React.PureComponent<{}> {
   public render() {
     return (
       <InputGroup>
-        <Input placeholder="搜索..." />
-        <InputGroupAddon addonType="append">
+        <InputGroupAddon addonType="prepend">
           <InputGroupText>
             <i className="material-icons">search</i>
           </InputGroupText>
         </InputGroupAddon>
+        <Input placeholder="搜索..." />
       </InputGroup>
     );
   }

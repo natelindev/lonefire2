@@ -40,9 +40,6 @@ export default class NavMenu extends React.PureComponent<{}, { isOpen: boolean }
               <NavLink>论文</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink>动态</NavLink>
-            </NavItem>
-            <NavItem>
               <NavLink>关于</NavLink>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
@@ -50,6 +47,7 @@ export default class NavMenu extends React.PureComponent<{}, { isOpen: boolean }
                 更多
               </DropdownToggle>
               <DropdownMenu right>
+                <DropdownItem>动态</DropdownItem>
                 <DropdownItem>友链</DropdownItem>
                 <DropdownItem>留言板</DropdownItem>
                 <DropdownItem>时间线</DropdownItem>
@@ -69,7 +67,7 @@ export default class NavMenu extends React.PureComponent<{}, { isOpen: boolean }
             </NavItem>
           </Nav>
         </Collapse>
-        <NavbarToggler />
+        <NavbarToggler className="animated--toggler" />
       </Navbar>
     );
   }
