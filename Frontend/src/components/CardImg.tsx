@@ -1,16 +1,27 @@
 import * as React from 'react';
-import { CardImg } from 'reactstrap';
+import { CardImg, CardImgOverlay } from 'reactstrap';
 
 export interface CardImgProps extends React.HTMLAttributes<HTMLElement> {
   [key: string]: any;
+  children?: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
-  left?: boolean;
+  top?: boolean;
+  bottom?: boolean;
+  src?: string;
+  width?: string;
+  height?: string;
+  alt?: string;
 }
 
 export default class CustomCardImg extends React.Component<CardImgProps> {
   public render() {
-    const { className, left, ...rest } = this.props;
-    return <CardImg className={`${className ?? ''} card-img-left`} {...rest}></CardImg>;
+    const { className, children, left, right, ...rest } = this.props;
+    return (
+      <React.Fragment>
+        <CardImg className={className} {...rest} />
+        {children ? <CardImgOverlay>{children}</CardImgOverlay> : null}
+      </React.Fragment>
+    );
   }
 }
