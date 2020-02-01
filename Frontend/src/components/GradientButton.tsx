@@ -1,5 +1,8 @@
+/** @jsx jsx */
 import * as React from 'react';
 import { Button } from 'reactstrap';
+import { css, jsx } from '@emotion/core';
+import './GradientButton.scoped.scss';
 
 export interface GradientButtonProps extends React.Props<any> {
   children?: React.ReactNode;
@@ -16,20 +19,21 @@ const isBright = (hexColor: string) => {
 
 export default class GradientButton extends React.Component<GradientButtonProps> {
   public render() {
-    const { colorA, colorB, children, className, style, ...rest } = this.props;
+    const { colorA, colorB, children, className, ...rest } = this.props;
     return (
       <Button
         color="primary"
-        className={className}
-        style={{
-          border: 'none',
-          background: `linear-gradient(45deg, ${colorA} 0%, ${colorB} 90%)`,
-          color: isBright(colorA) && isBright(colorB) ? '#000000' : '#ffffff',
-          ...style
-        }}
+        className={`${className ?? ''} gradient-button`}
+        css={css`
+          background-image: linear-gradient(45deg, ${colorA} 10%, ${colorB} 90%);
+          color: ${isBright(colorA) && isBright(colorB) ? '#000000' : '#ffffff'};
+          &::before {
+            background-image: linear-gradient(45deg, ${colorA} 35%, ${colorB} 75%);
+          }
+        `}
         {...rest}
       >
-        {children}
+        <div className="btn-content">{children}</div>
       </Button>
     );
   }

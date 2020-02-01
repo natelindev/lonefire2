@@ -1,0 +1,28 @@
+.gradient-button {
+  position: relative;
+  border: none;
+  transition: opacity ease-in-out 0.5s;
+
+  .btn-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  &::before {
+    border-radius: inherit;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: '';
+    transition: opacity ease-in-out 0.5s;
+    opacity: 0;
+  }
+
+  &:hover {
+    &::before {
+      opacity: 1;
+    }
+  }
+}

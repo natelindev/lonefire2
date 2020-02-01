@@ -80,16 +80,10 @@ export const right = () => (
 );
 
 export const hover = () => (
-  <Card style={{ maxWidth: '300px' }}>
-    <figure className="effect-bubba">
-      <img src="https://via.placeholder.com/300" alt="img02" />
-      <figcaption>
-        <h2>
-          Fresh <span>Bubba</span>
-        </h2>
-        <p>Bubba likes to appear out of thin air.</p>
-        <a href="#">View more</a>
-      </figcaption>
-    </figure>
+  <Card hoverEffect style={{ maxWidth: '300px' }}>
+    <CardImg src="https://via.placeholder.com/300" alt="img02">
+      <h2 className="title mx-auto">Example card</h2>
+      <p className="text">Bubba likes to appear out of thin air.</p>
+    </CardImg>
   </Card>
 );

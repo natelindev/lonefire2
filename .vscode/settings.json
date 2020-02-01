@@ -1,14 +1,15 @@
 {
-    "cSpell.words": [
-        "Footbar",
-        "Interop",
-        "browserslist",
-        "craco",
-        "esnext",
-        "flowtype",
-        "fontawesome",
-        "fortawesome",
-        "navbrand",
-        "reactstrap"
-    ]
+  "cSpell.words": [
+    "Footbar",
+    "Interop",
+    "browserslist",
+    "craco",
+    "csstype",
+    "esnext",
+    "flowtype",
+    "fontawesome",
+    "fortawesome",
+    "navbrand",
+    "reactstrap"
+  ]
 }

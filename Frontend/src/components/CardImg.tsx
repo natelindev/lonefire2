@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { CardImg, CardImgOverlay } from 'reactstrap';
+import './CardImg.scoped.scss';
 
 export interface CardImgProps extends React.HTMLAttributes<HTMLElement> {
   [key: string]: any;
