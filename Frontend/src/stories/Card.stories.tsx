@@ -1,16 +1,18 @@
 import React from 'react';
+import { Canvas } from 'react-three-fiber';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import Card from '../components/Card';
 import { CardTitle, CardText, CardSubtitle, Button, CardBody } from 'reactstrap';
 import CardImg from '../components/CardImg';
+import CardTilt from '../components/CardTilt';
 export default { title: 'Card' };
 
 export const top = () => (
-  <Card style={{ maxWidth: '200px' }}>
+  <Card style={{ maxWidth: '300px' }}>
     <CardImg
-      style={{ maxWidth: '200px' }}
+      style={{ maxWidth: '300px' }}
       top
-      src="https://placeholder.pics/svg/200"
+      src="https://placeholder.pics/svg/300"
       alt="Card image cap"
     />
     <CardBody>
@@ -26,7 +28,7 @@ export const top = () => (
 );
 
 export const bottom = () => (
-  <Card style={{ maxWidth: '200px' }}>
+  <Card style={{ maxWidth: '300px' }}>
     <CardBody>
       <CardTitle>Card title</CardTitle>
       <CardSubtitle>Card subtitle</CardSubtitle>
@@ -36,16 +38,16 @@ export const bottom = () => (
       </CardText>
       <Button>Button</Button>
     </CardBody>
-    <CardImg bottom src="https://placeholder.pics/svg/200" alt="Card image cap" />
+    <CardImg bottom src="https://placeholder.pics/svg/300" alt="Card image cap" />
   </Card>
 );
 
 export const left = () => (
   <Card lr>
     <CardImg
-      style={{ maxWidth: '200px' }}
+      style={{ maxWidth: '300px' }}
       left
-      src="https://placeholder.pics/svg/200"
+      src="https://placeholder.pics/svg/300"
       alt="Card image cap"
     />
     <CardBody>
@@ -72,9 +74,9 @@ export const right = () => (
       <Button>Button</Button>
     </CardBody>
     <CardImg
-      style={{ maxWidth: '200px' }}
+      style={{ maxWidth: '300px' }}
       right
-      src="https://placeholder.pics/svg/200"
+      src="https://placeholder.pics/svg/300"
       alt="Card image cap"
     />
   </Card>
@@ -82,7 +84,7 @@ export const right = () => (
 
 export const bubba = () => (
   <Card hoverEffect="bubba" style={{ maxWidth: '300px' }}>
-    <CardImg src="https://via.placeholder.com/300" alt="img02">
+    <CardImg src="https://placeholder.pics/svg/300" alt="img02">
       <h2 className="title mx-auto">Example card</h2>
       <p className="text">Bubba likes to appear out of thin air.</p>
     </CardImg>
@@ -91,9 +93,18 @@ export const bubba = () => (
 
 export const tilt = () => (
   <Card hoverEffect="tilt" style={{ maxWidth: '300px' }}>
-    <CardImg src="https://via.placeholder.com/300" alt="img02">
+    <CardImg src="https://placeholder.pics/svg/300" alt="img02">
       <h2 className="title mx-auto">Example card</h2>
       <p className="text">Perspective change on hover</p>
     </CardImg>
   </Card>
+);
+
+export const box = () => (
+  <Canvas>
+    <ambientLight />
+    <pointLight position={[10, 10, 10]} />
+    <CardTilt position={[-1.2, 0, 0]} />
+    <CardTilt position={[1.2, 0, 0]} />
+  </Canvas>
 );
