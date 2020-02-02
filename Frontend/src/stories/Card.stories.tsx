@@ -24,6 +24,7 @@ export const top = () => (
     </CardBody>
   </Card>
 );
+
 export const bottom = () => (
   <Card style={{ maxWidth: '200px' }}>
     <CardBody>
@@ -79,11 +80,20 @@ export const right = () => (
   </Card>
 );
 
-export const hover = () => (
-  <Card hoverEffect style={{ maxWidth: '300px' }}>
+export const bubba = () => (
+  <Card hoverEffect="bubba" style={{ maxWidth: '300px' }}>
     <CardImg src="https://via.placeholder.com/300" alt="img02">
       <h2 className="title mx-auto">Example card</h2>
       <p className="text">Bubba likes to appear out of thin air.</p>
+    </CardImg>
+  </Card>
+);
+
+export const tilt = () => (
+  <Card hoverEffect="tilt" style={{ maxWidth: '300px' }}>
+    <CardImg src="https://via.placeholder.com/300" alt="img02">
+      <h2 className="title mx-auto">Example card</h2>
+      <p className="text">Perspective change on hover</p>
     </CardImg>
   </Card>
 );

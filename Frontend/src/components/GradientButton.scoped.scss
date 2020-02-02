@@ -1,7 +1,7 @@
 .gradient-button {
   position: relative;
   border: none;
-  transition: opacity ease-in-out 0.5s;
+  transition: opacity linear 0.3s;
 
   .btn-content {
     position: relative;
@@ -16,7 +16,7 @@
     right: 0;
     bottom: 0;
     content: '';
-    transition: opacity ease-in-out 0.5s;
+    transition: opacity linear 0.3s;
     opacity: 0;
   }
 

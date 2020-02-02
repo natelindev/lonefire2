@@ -9,6 +9,8 @@ export interface CardImgProps extends React.HTMLAttributes<HTMLElement> {
   style?: React.CSSProperties;
   top?: boolean;
   bottom?: boolean;
+  left?: boolean;
+  right?: boolean;
   src?: string;
   width?: string;
   height?: string;
@@ -17,10 +19,15 @@ export interface CardImgProps extends React.HTMLAttributes<HTMLElement> {
 
 export default class CustomCardImg extends React.Component<CardImgProps> {
   public render() {
-    const { className, children, left, right, ...rest } = this.props;
+    const { children, className, left, right, ...rest } = this.props;
     return (
       <React.Fragment>
-        <CardImg className={className} {...rest} />
+        <CardImg
+          className={`${className ?? ''} ${left ? ' card-img-left' : ''} ${
+            right ? ' card-img-right' : ''
+          }`}
+          {...rest}
+        />
         {children ? <CardImgOverlay>{children}</CardImgOverlay> : null}
       </React.Fragment>
     );
