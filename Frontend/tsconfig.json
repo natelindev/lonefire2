@@ -15,7 +15,7 @@
     "noEmit": true,
     "jsx": "preserve",
     "lib": ["es2020", "dom"],
-    "skipLibCheck": false
+    "skipLibCheck": true
   },
   "include": ["src"]
 }

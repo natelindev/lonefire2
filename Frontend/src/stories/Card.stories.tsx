@@ -92,12 +92,17 @@ export const bubba = () => (
 );
 
 export const tilt = () => (
-  <Card hoverEffect="tilt" style={{ maxWidth: '300px' }}>
-    <CardImg src="https://placeholder.pics/svg/300" alt="img02">
-      <h2 className="title mx-auto">Example card</h2>
-      <p className="text">Perspective change on hover</p>
-    </CardImg>
-  </Card>
+  <Canvas
+    camera={{
+      fov: 75,
+      aspect: window.innerWidth / window.innerHeight,
+      near: 0.1,
+      far: 1000,
+      position: [0, 0, 15]
+    }}
+  >
+    <CardTilt></CardTilt>
+  </Canvas>
 );
 
 export const box = () => (

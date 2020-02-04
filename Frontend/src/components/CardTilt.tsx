@@ -1,28 +1,40 @@
 import React, { useRef, useState } from 'react';
-import { useFrame } from 'react-three-fiber';
+import { Canvas, useFrame } from 'react-three-fiber';
+import { DoubleSide } from 'three';
 
 export default function Box(props: any) {
   // This reference will give us direct access to the mesh
   const mesh: any = useRef();
-
   // Set up state for the hovered and active state
   const [hovered, setHover] = useState(false);
-  const [active, setActive] = useState(false);
+  const mouseTolerance = 0.2;
+
+  let centerX = window.innerWidth * 0.5;
+  let centerY = window.innerHeight * 0.5;
+  let clientX = centerX;
+  let clientY = centerY;
 
   // Rotate mesh every frame, this is outside of React without overhead
-  useFrame(() => (mesh.current.rotation.x = mesh.current.rotation.y += 0.01));
+  useFrame(() => {
+    document.onmousemove = e => {
+      clientX = e.clientX;
+      clientY = e.clientY;
+    };
+    mesh.current.rotation.y = ((clientX - centerX) / centerX) * mouseTolerance;
+    mesh.current.rotation.x = ((clientY - centerY) / centerY) * mouseTolerance;
+  });
 
   return (
     <mesh
       {...props}
       ref={mesh}
-      scale={active ? [1.5, 1.5, 1.5] : [1, 1, 1]}
-      onClick={e => setActive(!active)}
-      onPointerOver={e => setHover(true)}
+      onPointerOver={e => {
+        setHover(true);
+      }}
       onPointerOut={e => setHover(false)}
     >
-      <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
-      <meshStandardMaterial attach="material" color={hovered ? 'hotpink' : 'orange'} />
+      <planeBufferGeometry attach="geometry" args={[20, 20, 32]} />
+      <meshBasicMaterial attach="material" color={0xffff00} side={DoubleSide} />
     </mesh>
   );
 }

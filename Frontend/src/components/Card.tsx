@@ -4,7 +4,7 @@ import './Card.scoped.scss';
 
 export interface CardProps extends React.HTMLAttributes<HTMLElement> {
   [key: string]: any;
-  hoverEffect?: 'bubba' | 'tilt' | undefined | null | '';
+  hoverEffect?: 'bubba' | undefined | null | '';
   children?: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
