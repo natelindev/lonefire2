@@ -4,7 +4,7 @@ import 'material-design-icons/iconfont/material-icons.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Route } from 'react-router';
 import Layout from './components/Layout';
-import Home from './components/Home';
+import Home from './view/Home';
 import Counter from './components/Counter';
 import FetchData from './components/FetchData';
 
