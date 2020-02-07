@@ -26,7 +26,7 @@ export default class NavMenu extends React.PureComponent<{}, { isOpen: boolean }
   public render() {
     const { isOpen } = this.state;
     return (
-      <Navbar color="light" light expand="md">
+      <Navbar className="" color="light" light expand="md">
         <Logo />
         <NavbarBrand tag={Link} to="/">
           Nathaniel's Dev Area

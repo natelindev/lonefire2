@@ -1,3 +1,13 @@
+.navbar {
+  box-shadow: 0 0.1rem 0.1rem rgba(0, 0, 0, 0.2);
+  .dropdown-menu.show {
+    box-shadow: 0rem 0.1rem 0.1rem rgba(0, 0, 0, 0.2);
+    .dropdown-item:hover {
+      background-color: rgba(92, 198, 238, 0.2);
+    }
+  }
+}
+
 /* Animated toggler*/
 
 .animated--toggler .icon-bar {
