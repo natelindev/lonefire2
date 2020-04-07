@@ -13,18 +13,16 @@ export interface CardProps extends React.HTMLAttributes<HTMLElement> {
   colorB?: string;
 }
 
-export default class CustomCard<T = { [key: string]: any }> extends React.Component<CardProps> {
-  public render() {
-    const { children, className, lr, hoverEffect, ...rest } = this.props;
-    return (
-      <Card
-        className={`${className ?? ''}${hoverEffect ? ` card-${hoverEffect}` : ''}${
-          lr ? ' lr' : ''
+export default (props: CardProps) =>  {
+  const { children, className, lr, hoverEffect, ...rest } = props;
+  return (
+    <Card
+      className={`${className ?? ''}${hoverEffect ? ` card-${hoverEffect}` : ''}${
+        lr ? ' lr' : ''
         }`}
-        {...rest}
-      >
-        {children}
-      </Card>
-    );
-  }
+      {...rest}
+    >
+      {children}
+    </Card>
+  );
 }

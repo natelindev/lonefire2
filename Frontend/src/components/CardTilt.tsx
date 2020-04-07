@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useThree, useFrame } from 'react-three-fiber';
 import { DoubleSide } from 'three';
 
-export default function Box(props: any) {
+export default (props: any) => {
   // This reference will give us direct access to the mesh
   const mesh: any = useRef();
   // Set up state for the hovered and active state
@@ -60,4 +60,4 @@ export default function Box(props: any) {
       <meshBasicMaterial attach="material" color={0xffff00} side={DoubleSide} />
     </mesh>
   );
-}
+};

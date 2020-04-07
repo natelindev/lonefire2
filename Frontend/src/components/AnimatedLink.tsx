@@ -8,7 +8,7 @@ interface IAnimatedLinkProps {
   style?: React.CSSProperties;
 }
 
-const AnimatedLink: React.FunctionComponent<IAnimatedLinkProps> = props => {
+export default (props: IAnimatedLinkProps) => {
   const { className, children, ...rest } = props;
   return (
     <a className={`${className ?? ''} animated-link`} {...rest}>
@@ -17,4 +17,3 @@ const AnimatedLink: React.FunctionComponent<IAnimatedLinkProps> = props => {
   );
 };
 
-export default AnimatedLink;

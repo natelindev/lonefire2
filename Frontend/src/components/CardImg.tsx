@@ -17,19 +17,17 @@ export interface CardImgProps extends React.HTMLAttributes<HTMLElement> {
   alt?: string;
 }
 
-export default class CustomCardImg extends React.Component<CardImgProps> {
-  public render() {
-    const { children, className, left, right, ...rest } = this.props;
-    return (
-      <React.Fragment>
-        <CardImg
-          className={`${className ?? ''} ${left ? ' card-img-left' : ''} ${
-            right ? ' card-img-right' : ''
+export default (props: CardImgProps)=> {
+  const { children, className, left, right, ...rest } = props;
+  return (
+    <React.Fragment>
+      <CardImg
+        className={`${className ?? ''} ${left ? ' card-img-left' : ''} ${
+          right ? ' card-img-right' : ''
           }`}
-          {...rest}
-        />
-        {children ? <CardImgOverlay>{children}</CardImgOverlay> : null}
-      </React.Fragment>
-    );
-  }
+        {...rest}
+      />
+      {children ? <CardImgOverlay>{children}</CardImgOverlay> : null}
+    </React.Fragment>
+  );
 }
