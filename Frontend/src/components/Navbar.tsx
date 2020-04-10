@@ -18,13 +18,13 @@ import './Navbar.scoped.scss';
 import SearchBar from './SearchBar';
 import GradientButton from './GradientButton';
 
-export default (props: { isOpen: boolean }) => (
+export default () => (
   <Navbar className="" color="light" light expand="md">
     <Logo />
     <NavbarBrand tag={Link} to="/">
       Nathaniel's Dev Area
     </NavbarBrand>
-    <Collapse isOpen={props.isOpen} className="flex-grow-0" navbar>
+    <Collapse isOpen={false} className="flex-grow-0" navbar>
       <Nav>
         <NavItem>
           <NavLink>作品集</NavLink>
@@ -48,7 +48,7 @@ export default (props: { isOpen: boolean }) => (
         </UncontrolledDropdown>
       </Nav>
     </Collapse>
-    <Collapse isOpen={isOpen} navbar className="ml-auto mr-0 justify-content-end flex-grow-1">
+    <Collapse isOpen={false} navbar className="ml-auto mr-0 justify-content-end flex-grow-1">
       <Nav className="flex-grow-1 justify-content-end">
         <NavItem className="searchBar">
           <SearchBar />
