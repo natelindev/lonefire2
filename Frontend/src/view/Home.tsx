@@ -1,8 +1,12 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import Card from '../components/Card';
 
 const Home = () => (
   <div>
+    <Card className="border-draw-within mx-auto" width="20rem">
+      <h1 className="mx-auto">Nathaniel's Dev Area</h1>
+    </Card>
     <h1>Hello, world!</h1>
     <p>Welcome to your new single-page application, built with:</p>
     <ul>
