@@ -9,7 +9,9 @@ export default () => (
 
     <div className="text-muted text-titillium">
       <div className="d-flex mx-auto justify-content-center">
-        <div className="d-flex">© 2020 Nathaniel's Dev Area. All rights reserved.</div>
+        <div className="d-flex">
+          © 2019-{new Date().getFullYear()} Nathaniel's Dev Area. All rights reserved.
+        </div>
       </div>
       <div className="d-flex mx-auto justify-content-center">
         Made by Nathaniel with

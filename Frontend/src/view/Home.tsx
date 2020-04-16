@@ -1,11 +1,19 @@
-import * as React from 'react';
+/** @jsx jsx */
 import { connect } from 'react-redux';
 import Card from '../components/Card';
+import { css, jsx } from '@emotion/core';
 
 const Home = () => (
   <div>
-    <Card className="border-draw-within mx-auto" width="20rem">
-      <h1 className="mx-auto">Nathaniel's Dev Area</h1>
+    <Card
+      className="border-draw-within mx-auto my-2"
+      width="20rem"
+      css={css`
+        font-family: 'Economica', sans-serif;
+      `}
+      href="/"
+    >
+      <h1 className="mx-auto my-4">Nathaniel's Dev Area</h1>
     </Card>
     <h1>Hello, world!</h1>
     <p>Welcome to your new single-page application, built with:</p>
