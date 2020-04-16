@@ -2231,6 +2231,11 @@
   dependencies:
     source-map "^0.6.1"
 
+"@types/webfontloader@1.6.29":
+  version "1.6.29"
+  resolved "https://registry.npmjs.org/@types/webfontloader/-/webfontloader-1.6.29.tgz#c6b5f6eb8ca31d0aae6b02b6c1300349dd93ea8e"
+  integrity sha512-wobuM+LvpkzU296NsFVRGDAFWw3X2XEhrLHuvV+VGSbok6aOxQcymmopUFwNB69qy5oudHt9lYC0JF+z+DxFLw==
+
 "@types/webpack-env@^1.15.0":
   version "1.15.0"
   resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.15.0.tgz#bd9956d5044b1fb43e869a9ba9148862ff98d9fd"
@@ -10498,6 +10503,11 @@ prettier@1.16.3:
   version "1.16.3"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.16.3.tgz#8c62168453badef702f34b45b6ee899574a6a65d"
   integrity sha512-kn/GU6SMRYPxUakNXhpP0EedT/KmaPzr0H5lIsDogrykbaxOpOfAFfk5XA7DZrJyMAv1wlMV3CPcZruGXVVUZw==
+
+prettier@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.npmjs.org/prettier/-/prettier-2.0.4.tgz#2d1bae173e355996ee355ec9830a7a1ee05457ef"
+  integrity sha512-SVJIQ51spzFDvh4fIbCLvciiDMCrRhlN3mbZvv/+ycjvmF5E73bKdGfU8QDLNmjYJf+lsGnDBC4UUnvTe5OO0w==
 
 pretty-bytes@^5.1.0:
   version "5.3.0"
