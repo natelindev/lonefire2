@@ -2,28 +2,19 @@
 import { connect } from 'react-redux';
 import Card from '../components/Card';
 import { css, jsx } from '@emotion/core';
-import HoverIntent from '../components/HoverIntent';
-
-const WarppedCard = HoverIntent(Card);
 
 const Home = () => (
   <div>
-    <WarppedCard
+    <Card
       className="border-draw-within mx-auto my-2"
       width="20rem"
       css={css`
         font-family: 'Economica', sans-serif;
       `}
       href="/"
-      onEnter={() => {
-        alert('detected');
-      }}
-      onLeave={() => {
-        alert('detected');
-      }}
     >
       <h1 className="mx-auto my-4">Nathaniel's Dev Area</h1>
-    </WarppedCard>
+    </Card>
     <h1>Hello, world!</h1>
     <p>Welcome to your new single-page application, built with:</p>
     <ul>

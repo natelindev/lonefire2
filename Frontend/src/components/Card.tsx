@@ -1,7 +1,9 @@
 /** @jsx jsx */
-import React, { useState } from 'react';
+import React, { useRef, useImperativeHandle } from 'react';
 import { Card } from 'reactstrap';
 import { css, jsx } from '@emotion/core';
+import { useHoverIntent } from '../hooks/hoverIntent';
+
 import './Card.scoped.scss';
 
 export interface CardProps extends React.HTMLAttributes<HTMLElement> {
@@ -18,21 +20,23 @@ export interface CardProps extends React.HTMLAttributes<HTMLElement> {
   href?: string;
 }
 
-export default React.forwardRef((props: CardProps, ref: React.Ref<Card>) => {
+export default React.forwardRef((props: CardProps, ref: React.Ref<HTMLElement | null>) => {
   const { children, className, lr, hoverEffect, width, height, href, ...rest } = props;
-  const [isEntering, setIsEntering] = useState(false);
-  const [isLeaving, setIsLeaving] = useState(false);
+  const element = useRef<HTMLElement>(null);
+  const isHovering = useHoverIntent(element);
+  useImperativeHandle(ref, () => element.current, [element]);
+
   return (
     <Card
       className={`${className ?? ''}${hoverEffect ? ` card-${hoverEffect}` : ''}${lr ? ' lr' : ''}${
-        isLeaving ? ' active' : ''
-      }${isEntering ? ' temp' : ''}`}
+        isHovering ? ' temp' : ' active'
+      }`}
       css={css`
         max-width: ${width};
         max-height: ${height};
       `}
       {...rest}
-      innerRef={ref}
+      innerRef={element}
     >
       {children}
       {href ? (

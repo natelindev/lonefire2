@@ -1,14 +1,11 @@
 /** @jsx jsx */
-import HoverIntent from '../components/HoverIntent';
 import Card from '../components/Card';
 import { css, jsx } from '@emotion/core';
 
 export default { title: 'HoverIntent' };
 
-const WarppedCard = HoverIntent(Card);
-
 export const hoverIntent = () => (
-  <WarppedCard
+  <Card
     className="border-draw-within mx-auto my-2"
     width="20rem"
     css={css`
@@ -25,5 +22,5 @@ export const hoverIntent = () => (
     }}
   >
     <h1 className="mx-auto my-4">Nathaniel's Dev Area</h1>
-  </WarppedCard>
+  </Card>
 );
