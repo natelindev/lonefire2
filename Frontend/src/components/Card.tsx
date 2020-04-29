@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import React, { useRef, useImperativeHandle } from 'react';
+import React from 'react';
 import { Card } from 'reactstrap';
 import { css, jsx } from '@emotion/core';
 import { useHoverIntent } from '../hooks/hoverIntent';
@@ -22,9 +22,7 @@ export interface CardProps extends React.HTMLAttributes<HTMLElement> {
 
 export default React.forwardRef((props: CardProps, ref: React.Ref<HTMLElement | null>) => {
   const { children, className, lr, hoverEffect, width, height, href, ...rest } = props;
-  const element = useRef<HTMLElement>(null);
-  const isHovering = useHoverIntent(element);
-  useImperativeHandle(ref, () => element.current, [element]);
+  const [isHovering, intentRef] = useHoverIntent(ref);
 
   return (
     <Card
@@ -36,7 +34,7 @@ export default React.forwardRef((props: CardProps, ref: React.Ref<HTMLElement | 
         max-height: ${height};
       `}
       {...rest}
-      innerRef={element}
+      innerRef={intentRef}
     >
       {children}
       {href ? (
