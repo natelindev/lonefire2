@@ -2,6 +2,7 @@ import * as React from 'react';
 import Navbar from './Navbar';
 import Footbar from './Footbar';
 import './Layout.scss';
+import ScrollToTop from './ScrollToTop';
 
 export default (props: { children?: React.ReactNode }) => (
   <React.Fragment>
@@ -10,9 +11,7 @@ export default (props: { children?: React.ReactNode }) => (
     </header>
     <main id="page-top">
       {props.children}
-      <a className="scroll-to-top rounded z-1" href="#page-top">
-        <i className="fas fa-angle-up" />
-      </a>
+      <ScrollToTop />
     </main>
     <footer>
       <Footbar />
