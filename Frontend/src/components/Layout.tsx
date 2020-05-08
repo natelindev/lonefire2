@@ -9,7 +9,7 @@ export default (props: { children?: React.ReactNode }) => (
     <header>
       <Navbar />
     </header>
-    <main id="page-top">
+    <main>
       {props.children}
       <ScrollToTop />
     </main>

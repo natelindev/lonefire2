@@ -16,6 +16,13 @@ const Home = () => (
     >
       <h1 className="mx-auto my-4">Nathaniel's Dev Area</h1>
     </Card>
+    <Card
+      css={css`
+        height: 1000rem;
+      `}
+    >
+      <h1 className="mx-auto my-4">some text</h1>
+    </Card>
   </div>
 );
 
