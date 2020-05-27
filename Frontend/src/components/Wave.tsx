@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import * as React from 'react';
+import React from 'react';
 import './Wave.scoped.scss';
 import { css, jsx } from '@emotion/core';
 

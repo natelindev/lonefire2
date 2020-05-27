@@ -1,7 +1,7 @@
-/** @jsx jsx */
+import React from 'react';
 import { connect } from 'react-redux';
 import Card from '../components/Card';
-import { css, jsx } from '@emotion/core';
+import { css } from '@emotion/core';
 
 const Home = () => (
   <div>

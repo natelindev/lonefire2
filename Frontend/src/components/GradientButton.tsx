@@ -1,7 +1,6 @@
-/** @jsx jsx */
 import * as React from 'react';
 import { Button } from 'reactstrap';
-import { css, jsx } from '@emotion/core';
+import { css } from '@emotion/core';
 import './GradientButton.scoped.scss';
 
 export interface GradientButtonProps extends React.Props<any> {

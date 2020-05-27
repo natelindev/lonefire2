@@ -1,7 +1,6 @@
-/** @jsx jsx */
 import React from 'react';
 import { Card } from 'reactstrap';
-import { css, jsx } from '@emotion/core';
+import { css } from '@emotion/core';
 import { useHoverIntent } from 'react-use-hoverintent';
 import './Card.scoped.scss';
 

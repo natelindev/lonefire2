@@ -1,6 +1,5 @@
-/** @jsx jsx */
 import { Card, CardImgOverlay, CardBody } from 'reactstrap';
-import { css, jsx } from '@emotion/core';
+import { css } from '@emotion/core';
 
 export interface ArticleCardProps {
   title: string;

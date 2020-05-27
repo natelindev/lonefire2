@@ -1,4 +1,3 @@
-/** @jsx jsx */
 import Card from '../components/Card';
 import { css, jsx } from '@emotion/core';
 
