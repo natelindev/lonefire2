@@ -1,16 +1,16 @@
 import { useState, useEffect, useRef, useImperativeHandle } from 'react';
 
-export function useHoverIntent(
-  ref: React.Ref<HTMLElement | null>,
-  options: { sensitivity: number; interval: number; timeout: number } = {
-    sensitivity: 6,
-    interval: 100,
-    timeout: 0,
-  }
-) {
+interface optionType {
+  ref?: React.Ref<HTMLElement | null>;
+  sensitivity?: number;
+  interval?: number;
+  timeout?: number;
+}
+
+export function useHoverIntent(options: optionType) {
+  const { ref, sensitivity = 6, interval = 100, timeout = 0 } = options;
   const intentRef = useRef<HTMLElement>(null);
   const [isHovering, setIsHovering] = useState(false);
-  useImperativeHandle(ref, () => intentRef.current, [intentRef]);
 
   let x = 0,
     y = 0,
@@ -31,12 +31,12 @@ export function useHoverIntent(
     if (timer) {
       clearTimeout(timer);
     }
-    if (Math.sqrt((pX - x) * (pX - x) + (pY - y) * (pY - y)) < options.sensitivity) {
+    if (Math.abs(pX - x) + Math.abs(pY - y) < sensitivity) {
       return setIsHovering(true);
     } else {
       pX = x;
       pY = y;
-      timer = window.setTimeout(() => compare(e), options.interval);
+      timer = window.setTimeout(() => compare(e), interval);
     }
   };
   const dispatchOver = (e: MouseEvent) => {
@@ -52,7 +52,7 @@ export function useHoverIntent(
       if (intentRef.current) {
         intentRef.current.addEventListener('mousemove', tracker, false);
       }
-      timer = window.setTimeout(() => compare(e), options.interval);
+      timer = window.setTimeout(() => compare(e), interval);
     }
   };
   const dispatchOut = (e: MouseEvent) => {
@@ -63,7 +63,7 @@ export function useHoverIntent(
       intentRef.current.removeEventListener('mousemove', tracker, false);
     }
     if (isHovering) {
-      timer = window.setTimeout(() => delay(e), options.timeout);
+      timer = window.setTimeout(() => delay(e), timeout);
     }
   };
 
@@ -81,6 +81,8 @@ export function useHoverIntent(
       }
     };
   });
+
+  useImperativeHandle(ref, () => intentRef.current, [intentRef]);
 
   return [isHovering, intentRef];
 }

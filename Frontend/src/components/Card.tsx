@@ -2,8 +2,7 @@
 import React from 'react';
 import { Card } from 'reactstrap';
 import { css, jsx } from '@emotion/core';
-import { useHoverIntent } from '../hooks/hoverIntent';
-
+import { useHoverIntent } from 'react-use-hoverintent';
 import './Card.scoped.scss';
 
 export interface CardProps extends React.HTMLAttributes<HTMLElement> {
@@ -22,7 +21,7 @@ export interface CardProps extends React.HTMLAttributes<HTMLElement> {
 
 export default React.forwardRef((props: CardProps, ref: React.Ref<HTMLElement | null>) => {
   const { children, className, lr, hoverEffect, width, height, href, ...rest } = props;
-  const [isHovering, intentRef] = useHoverIntent(ref);
+  const [isHovering, intentRef] = useHoverIntent({ ref });
 
   return (
     <Card
