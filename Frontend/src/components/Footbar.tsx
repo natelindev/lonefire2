@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Social from './Social';
 import Logo from './Logo';
-import './Footbar.scoped.scss';
+import { css } from '@emotion/core';
 
 export default () => (
   <div className="d-flex bg-smoke justify-content-around align-items-center flex-wrap flex-sm-nowrap py-4">
@@ -15,7 +15,13 @@ export default () => (
       </div>
       <div className="d-flex mx-auto justify-content-center">
         Made by Nathaniel with
-        <span id="love" role="img" aria-label="love">
+        <span
+          role="img"
+          aria-label="love"
+          css={css`
+            margin-left: 0.3rem;
+          `}
+        >
           ❤️
         </span>
         and effort

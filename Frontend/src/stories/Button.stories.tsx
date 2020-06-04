@@ -1,5 +1,4 @@
 import React from 'react';
-import 'bootstrap-css-only/css/bootstrap.min.css';
 import GradientButton from '../components/GradientButton';
 export default { title: 'Button' };
 

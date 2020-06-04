@@ -1,6 +1,6 @@
 import React from 'react';
 import './Wave.scoped.scss';
-import { css, jsx } from '@emotion/core';
+import { css } from '@emotion/core';
 
 export interface WaveProps extends React.Props<any> {
   [key: string]: any;
