@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useThree, useFrame } from 'react-three-fiber';
 import { DoubleSide } from 'three';
 
-export default (props: any) => {
+const CardTilt = (props: any) => {
   // This reference will give us direct access to the mesh
   const mesh: any = useRef();
   // Set up state for the hovered and active state
@@ -17,7 +17,7 @@ export default (props: any) => {
     <mesh
       {...props}
       ref={mesh}
-      onPointerOver={e => {
+      onPointerOver={(e) => {
         const t = clock.getElapsedTime();
         while (
           mesh.current.scale.x < 1.5 ||
@@ -32,7 +32,7 @@ export default (props: any) => {
         const { offsetTop, offsetLeft, offsetWidth, offsetHeight } = e.currentTarget;
         setCenter({ x: offsetLeft + offsetWidth * 0.5, y: offsetTop + offsetHeight * 0.5 });
       }}
-      onPointerOut={e => {
+      onPointerOut={(e) => {
         setHover(false);
         const t = clock.getElapsedTime();
         while (mesh.current.rotation.y > 0 || mesh.current.rotation.x > 0) {
@@ -49,7 +49,7 @@ export default (props: any) => {
           }
         }
       }}
-      onPointerMove={e => {
+      onPointerMove={(e) => {
         if (hovered) {
           mesh.current.rotation.y = ((e.clientX - center.x) / center.x) * mouseTolerance;
           mesh.current.rotation.x = ((e.clientY - center.y) / center.y) * mouseTolerance;
@@ -61,3 +61,5 @@ export default (props: any) => {
     </mesh>
   );
 };
+
+export default CardTilt;

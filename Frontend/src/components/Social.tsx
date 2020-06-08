@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './Social.scoped.scss';
 
-export default () => (
+const Social: React.SFC = () => (
   <div className="social-wrapper-links">
     <a
       className="social-link social-link--github"
@@ -129,3 +129,5 @@ export default () => (
     </a>
   </div>
 );
+
+export default Social;

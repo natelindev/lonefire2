@@ -2,7 +2,7 @@ import React from 'react';
 import { useScrollPosition } from '../hooks/scrollPosition';
 import './ScrollToTop.scoped.scss';
 
-export default () => {
+const ScrollToTop = (): React.ReactElement => {
   const scrollPosition = useScrollPosition();
   return (
     <div
@@ -19,3 +19,5 @@ export default () => {
     </div>
   );
 };
+
+export default ScrollToTop;

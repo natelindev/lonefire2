@@ -23,21 +23,19 @@ class FetchData extends React.PureComponent<WeatherForecastProps> {
 
   public render() {
     return (
-      <React.Fragment>
+      <>
         <h1 id="tabelLabel">Weather forecast</h1>
         <p>
-          This component demonstrates fetching data from the server and working
-          with URL parameters.
+          This component demonstrates fetching data from the server and working with URL parameters.
         </p>
         {this.renderForecastsTable()}
         {this.renderPagination()}
-      </React.Fragment>
+      </>
     );
   }
 
   private ensureDataFetched() {
-    const startDateIndex =
-      parseInt(this.props.match.params.startDateIndex, 10) || 0;
+    const startDateIndex = parseInt(this.props.match.params.startDateIndex, 10) || 0;
     this.props.requestWeatherForecasts(startDateIndex);
   }
 
@@ -53,16 +51,14 @@ class FetchData extends React.PureComponent<WeatherForecastProps> {
           </tr>
         </thead>
         <tbody>
-          {this.props.forecasts.map(
-            (forecast: WeatherForecastsStore.WeatherForecast) => (
-              <tr key={forecast.date}>
-                <td>{forecast.date}</td>
-                <td>{forecast.temperatureC}</td>
-                <td>{forecast.temperatureF}</td>
-                <td>{forecast.summary}</td>
-              </tr>
-            )
-          )}
+          {this.props.forecasts.map((forecast: WeatherForecastsStore.WeatherForecast) => (
+            <tr key={forecast.date}>
+              <td>{forecast.date}</td>
+              <td>{forecast.temperatureC}</td>
+              <td>{forecast.temperatureF}</td>
+              <td>{forecast.summary}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     );
@@ -74,17 +70,11 @@ class FetchData extends React.PureComponent<WeatherForecastProps> {
 
     return (
       <div className="d-flex justify-content-between">
-        <Link
-          className="btn btn-outline-secondary btn-sm"
-          to={`/fetch-data/${prevStartDateIndex}`}
-        >
+        <Link className="btn btn-outline-secondary btn-sm" to={`/fetch-data/${prevStartDateIndex}`}>
           Previous
         </Link>
         {this.props.isLoading && <span>Loading...</span>}
-        <Link
-          className="btn btn-outline-secondary btn-sm"
-          to={`/fetch-data/${nextStartDateIndex}`}
-        >
+        <Link className="btn btn-outline-secondary btn-sm" to={`/fetch-data/${nextStartDateIndex}`}>
           Next
         </Link>
       </div>

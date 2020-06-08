@@ -4,17 +4,25 @@ import Footbar from './Footbar';
 import './Layout.scss';
 import ScrollToTop from './ScrollToTop';
 
-export default (props: { children?: React.ReactNode }) => (
-  <React.Fragment>
-    <header>
-      <Navbar />
-    </header>
-    <main>
-      {props.children}
-      <ScrollToTop />
-    </main>
-    <footer>
-      <Footbar />
-    </footer>
-  </React.Fragment>
-);
+interface LayoutProps {
+  children?: React.ReactNode;
+}
+
+const Layout: React.SFC<LayoutProps> = (props: LayoutProps) => {
+  const { children } = props;
+  return (
+    <>
+      <header>
+        <Navbar />
+      </header>
+      <main>
+        {children}
+        <ScrollToTop />
+      </main>
+      <footer>
+        <Footbar />
+      </footer>
+    </>
+  );
+};
+export default Layout;

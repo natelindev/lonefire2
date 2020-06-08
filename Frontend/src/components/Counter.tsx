@@ -6,29 +6,32 @@ import * as CounterStore from '../store/Counter';
 
 type CounterProps = CounterStore.CounterState &
   typeof CounterStore.actionCreators &
-  RouteComponentProps<{}>;
+  RouteComponentProps<Record<string, string | undefined>>;
 
-const Counter = (props: CounterProps) => (
-  <React.Fragment>
-    <h1>Counter</h1>
+const Counter = (props: CounterProps) => {
+  const { count, increment } = props;
+  return (
+    <>
+      <h1>Counter</h1>
 
-    <p>This is a simple example of a React component.</p>
+      <p>This is a simple example of a React component.</p>
 
-    <p aria-live="polite">
-      Current count: <strong>{props.count}</strong>
-    </p>
+      <p aria-live="polite">
+        Current count: <strong>{count}</strong>
+      </p>
 
-    <button
-      type="button"
-      className="btn btn-primary btn-lg"
-      onClick={() => {
-        props.increment();
-      }}
-    >
-      Increment
-    </button>
-  </React.Fragment>
-);
+      <button
+        type="button"
+        className="btn btn-primary btn-lg"
+        onClick={() => {
+          increment();
+        }}
+      >
+        Increment
+      </button>
+    </>
+  );
+};
 
 export default connect(
   (state: ApplicationState) => state.counter,

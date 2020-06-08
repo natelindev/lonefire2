@@ -29,7 +29,7 @@ export type KnownAction = IncrementCountAction | DecrementCountAction;
 
 export const actionCreators = {
   increment: () => ({ type: 'INCREMENT_COUNT' } as IncrementCountAction),
-  decrement: () => ({ type: 'DECREMENT_COUNT' } as DecrementCountAction)
+  decrement: () => ({ type: 'DECREMENT_COUNT' } as DecrementCountAction),
 };
 
 // ----------------

@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import {
   Collapse,
-  Navbar,
+  Navbar as BsNavBar,
   NavbarBrand,
   NavItem,
   NavLink,
@@ -10,19 +10,19 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  NavbarToggler
+  NavbarToggler,
 } from 'reactstrap';
-import Logo from './Logo';
 import { Link } from 'react-router-dom';
+import Logo from './Logo';
 import './Navbar.scoped.scss';
 import SearchBar from './SearchBar';
 import GradientButton from './GradientButton';
 
-export default () => (
-  <Navbar className="" color="light" light expand="md">
+const Navbar: React.SFC = () => (
+  <BsNavBar color="light" light expand="md">
     <Logo />
     <NavbarBrand tag={Link} to="/">
-      Nathaniel's Dev Area
+      Nathaniel&#39;s Dev Area
     </NavbarBrand>
     <Collapse isOpen={false} className="flex-grow-0" navbar>
       <Nav>
@@ -61,5 +61,7 @@ export default () => (
       </Nav>
     </Collapse>
     <NavbarToggler className="animated--toggler" />
-  </Navbar>
+  </BsNavBar>
 );
+
+export default Navbar;

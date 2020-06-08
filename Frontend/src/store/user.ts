@@ -31,7 +31,7 @@ export type KnownAction = LoginAction | LogoutAction;
 
 export const actionCreators = {
   login: () => ({ type: 'LOGIN' } as LoginAction),
-  logout: () => ({ type: 'LOGOUT' } as LogoutAction)
+  logout: () => ({ type: 'LOGOUT' } as LogoutAction),
 };
 
 // ----------------
@@ -45,7 +45,7 @@ export const reducer: Reducer<UserState> = (
     return {
       loggedIn: false,
       userName: '',
-      role: 'nobody'
+      role: 'nobody',
     };
   }
 
@@ -54,14 +54,14 @@ export const reducer: Reducer<UserState> = (
     case 'LOGIN':
       return {
         loggedIn: true,
-        userName: 'getUserName', //TODO: Get user name here
-        role: 'role' //TODO:Get user role here
+        userName: 'getUserName', // TODO: Get user name here
+        role: 'role', // TODO:Get user role here
       };
     case 'LOGOUT':
       return {
         loggedIn: false,
         userName: '',
-        role: 'nobody'
+        role: 'nobody',
       };
     default:
       return state;

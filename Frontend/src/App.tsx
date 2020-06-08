@@ -10,10 +10,12 @@ import Home from './view/Home';
 import Counter from './components/Counter';
 import FetchData from './components/FetchData';
 
-export default () => (
+const App: React.SFC = () => (
   <Layout>
     <Route exact path="/" component={Home} />
     <Route path="/counter" component={Counter} />
     <Route path="/fetch-data/:startDateIndex?" component={FetchData} />
   </Layout>
 );
+
+export default App;

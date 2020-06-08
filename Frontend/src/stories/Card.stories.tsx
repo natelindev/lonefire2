@@ -1,13 +1,14 @@
 import React from 'react';
 import { Canvas } from 'react-three-fiber';
 import 'bootstrap-css-only/css/bootstrap.min.css';
-import Card from '../components/Card';
 import { CardTitle, CardText, CardSubtitle, Button, CardBody } from 'reactstrap';
+import Card from '../components/Card';
 import CardImg from '../components/CardImg';
 import CardTilt from '../components/CardTilt';
-export default { title: 'Card' };
 
-export const top = () => (
+export default { title: 'card' };
+
+export const top = (): React.ReactElement => (
   <Card style={{ maxWidth: '300px' }}>
     <CardImg
       style={{ maxWidth: '300px' }}
@@ -19,7 +20,7 @@ export const top = () => (
       <CardTitle>Card title</CardTitle>
       <CardSubtitle>Card subtitle</CardSubtitle>
       <CardText>
-        Some quick example text to build on the card title and make up the bulk of the card's
+        Some quick example text to build on the card title and make up the bulk of the card&#39;s
         content.
       </CardText>
       <Button>Button</Button>
@@ -27,13 +28,13 @@ export const top = () => (
   </Card>
 );
 
-export const bottom = () => (
+export const bottom = (): React.ReactElement => (
   <Card style={{ maxWidth: '300px' }}>
     <CardBody>
       <CardTitle>Card title</CardTitle>
       <CardSubtitle>Card subtitle</CardSubtitle>
       <CardText>
-        Some quick example text to build on the card title and make up the bulk of the card's
+        Some quick example text to build on the card title and make up the bulk of the card&#39;s
         content.
       </CardText>
       <Button>Button</Button>
@@ -42,7 +43,7 @@ export const bottom = () => (
   </Card>
 );
 
-export const left = () => (
+export const left = (): React.ReactElement => (
   <Card lr>
     <CardImg
       style={{ maxWidth: '300px' }}
@@ -54,7 +55,7 @@ export const left = () => (
       <CardTitle>Card title</CardTitle>
       <CardSubtitle>Card subtitle</CardSubtitle>
       <CardText>
-        Some quick example text to build on the card title and make up the bulk of the card's
+        Some quick example text to build on the card title and make up the bulk of the card&#39;s
         content.
       </CardText>
       <Button>Button</Button>
@@ -62,13 +63,13 @@ export const left = () => (
   </Card>
 );
 
-export const right = () => (
+export const right = (): React.ReactElement => (
   <Card lr>
     <CardBody>
       <CardTitle>Card title</CardTitle>
       <CardSubtitle>Card subtitle</CardSubtitle>
       <CardText>
-        Some quick example text to build on the card title and make up the bulk of the card's
+        Some quick example text to build on the card title and make up the bulk of the card&#39;s
         content.
       </CardText>
       <Button>Button</Button>
@@ -82,7 +83,7 @@ export const right = () => (
   </Card>
 );
 
-export const bubba = () => (
+export const bubba = (): React.ReactElement => (
   <Card hoverEffect="bubba" style={{ maxWidth: '300px' }}>
     <CardImg src="https://placeholder.pics/svg/300" alt="img02">
       <h2 className="title mx-auto">Example card</h2>
@@ -91,21 +92,21 @@ export const bubba = () => (
   </Card>
 );
 
-export const tilt = () => (
+export const tilt = (): React.ReactElement => (
   <Canvas
     camera={{
       fov: 75,
       aspect: window.innerWidth / window.innerHeight,
       near: 0.1,
       far: 1000,
-      position: [0, 0, 15]
+      position: [0, 0, 15],
     }}
   >
-    <CardTilt></CardTilt>
+    <CardTilt />
   </Canvas>
 );
 
-export const box = () => (
+export const box = (): React.ReactElement => (
   <Canvas>
     <ambientLight />
     <pointLight position={[10, 10, 10]} />

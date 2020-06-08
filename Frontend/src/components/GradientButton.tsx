@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React from 'react';
 import { Button } from 'reactstrap';
 import { css } from '@emotion/core';
 import './GradientButton.scoped.scss';
 
-export interface GradientButtonProps extends React.Props<any> {
+export interface GradientButtonProps {
   children?: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
@@ -16,7 +16,7 @@ const isBright = (hexColor: string) => {
   return (r * 299 + g * 587 + b * 114) / 1000 >= 128;
 };
 
-export default (props: GradientButtonProps) => {
+const GradientButton: React.SFC<GradientButtonProps> = (props: GradientButtonProps) => {
   const { colorA, colorB, children, className, ...rest } = props;
   return (
     <Button
@@ -34,3 +34,5 @@ export default (props: GradientButtonProps) => {
     </Button>
   );
 };
+
+export default GradientButton;
