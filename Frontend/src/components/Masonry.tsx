@@ -1,8 +1,29 @@
-import React, { useRef } from 'react';
-import Bricks from 'bricks.js';
+import React, { useRef, useEffect } from 'react';
+import Bricks, { SizeDetail } from 'bricks.js';
 
-export default function Masonry() {
-  const masonryContainer = useRef(null);
+interface MasonryProps {
+  packed: string;
+  sizes: SizeDetail[];
+  position?: boolean;
+  children?: React.ReactNode;
+}
 
-  return <div ref={masonryContainer} />;
+export default function Masonry(props: MasonryProps): React.ReactElement {
+  const { packed, sizes, children, position } = props;
+  const masonryContainer = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const instance = Bricks({
+      container: masonryContainer.current as Node,
+      packed,
+      sizes,
+      position,
+    });
+    instance.resize(true);
+    if (children) {
+      instance.pack();
+    }
+    return () => {};
+  }, [packed, sizes, children, position]);
+
+  return <div ref={masonryContainer}>{children}</div>;
 }

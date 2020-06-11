@@ -12,5 +12,6 @@
     "fortawesome",
     "navbrand",
     "reactstrap"
-  ]
+  ],
+  "eslint.workingDirectories": ["./Frontend"]
 }
