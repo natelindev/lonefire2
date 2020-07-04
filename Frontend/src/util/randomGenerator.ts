@@ -58,7 +58,7 @@ export function rng<T extends RngOption>(
       ) as ReturnType;
       break;
     default:
-      throw new Error('Invalid Option');
+      throw new Error(`Invalid options passed in: ${option}`);
   }
   return result;
 }

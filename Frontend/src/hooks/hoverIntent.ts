@@ -1,23 +1,23 @@
-import { useState, useEffect, useRef, useImperativeHandle } from 'react';
+import { useState, useEffect, useRef, useImperativeHandle, RefObject } from 'react';
 
-interface optionType {
+interface OptionType {
   ref?: React.Ref<HTMLElement | null>;
   sensitivity?: number;
   interval?: number;
   timeout?: number;
 }
 
-export function useHoverIntent(options: optionType) {
+export function useHoverIntent(options: OptionType): [boolean, RefObject<HTMLElement>] {
   const { ref, sensitivity = 6, interval = 100, timeout = 0 } = options;
   const intentRef = useRef<HTMLElement>(null);
   const [isHovering, setIsHovering] = useState(false);
 
-  let x = 0,
-    y = 0,
-    pX = 0,
-    pY = 0,
-    timer = 0;
-  const delay = (e: MouseEvent) => {
+  let x = 0;
+  let y = 0;
+  let pX = 0;
+  let pY = 0;
+  let timer = 0;
+  const delay = () => {
     if (timer) {
       clearTimeout(timer);
     }
@@ -33,11 +33,11 @@ export function useHoverIntent(options: optionType) {
     }
     if (Math.abs(pX - x) + Math.abs(pY - y) < sensitivity) {
       return setIsHovering(true);
-    } else {
-      pX = x;
-      pY = y;
-      timer = window.setTimeout(() => compare(e), interval);
     }
+    pX = x;
+    pY = y;
+    timer = window.setTimeout(() => compare(e), interval);
+    return undefined;
   };
   const dispatchOver = (e: MouseEvent) => {
     if (timer) {
@@ -55,7 +55,7 @@ export function useHoverIntent(options: optionType) {
       timer = window.setTimeout(() => compare(e), interval);
     }
   };
-  const dispatchOut = (e: MouseEvent) => {
+  const dispatchOut = () => {
     if (timer) {
       clearTimeout(timer);
     }
@@ -63,7 +63,7 @@ export function useHoverIntent(options: optionType) {
       intentRef.current.removeEventListener('mousemove', tracker, false);
     }
     if (isHovering) {
-      timer = window.setTimeout(() => delay(e), timeout);
+      timer = window.setTimeout(() => delay(), timeout);
     }
   };
 

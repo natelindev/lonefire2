@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Card from '../components/Card';
+
 import { css } from '@emotion/core';
+
+import Card from '../components/Card';
 
 const Home = () => (
   <div>
@@ -14,7 +16,7 @@ const Home = () => (
       `}
       href="/"
     >
-      <h1 className="mx-auto my-4">Nathaniel's Dev Area</h1>
+      <h1 className="mx-auto my-4">Nathaniel&#39;s Dev Area</h1>
     </Card>
   </div>
 );

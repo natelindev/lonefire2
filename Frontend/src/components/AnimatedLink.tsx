@@ -1,5 +1,6 @@
-import * as React from 'react';
 import './AnimatedLink.scoped.scss';
+
+import * as React from 'react';
 
 interface AnimatedLinkProps {
   [key: string]: any;
@@ -8,7 +9,7 @@ interface AnimatedLinkProps {
   style?: React.CSSProperties;
 }
 
-const AnmiatedLink: React.SFC<AnimatedLinkProps> = (props: AnimatedLinkProps) => {
+const AnimatedLink: React.SFC<AnimatedLinkProps> = (props: AnimatedLinkProps) => {
   const { className, children, ...rest } = props;
   return (
     <a className={`${className ?? ''} animated-link`} {...rest}>
@@ -17,4 +18,4 @@ const AnmiatedLink: React.SFC<AnimatedLinkProps> = (props: AnimatedLinkProps) =>
   );
 };
 
-export default AnmiatedLink;
+export default AnimatedLink;
