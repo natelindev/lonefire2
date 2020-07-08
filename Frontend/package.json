@@ -72,7 +72,7 @@
     "build": "craco build",
     "test": "cross-env CI=true craco test test --env=jsdom",
     "eject": "react-scripts eject",
-    "lint": "eslint ./src/**/*.ts ./src/**/*.tsx",
+    "lint": "eslint ./src/**/*.ts ./src/**/*.tsx --quiet",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public"
   },
