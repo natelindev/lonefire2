@@ -1,4 +1,10 @@
-import { useState, useEffect, useRef, useImperativeHandle, RefObject } from 'react';
+import {
+  RefObject,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 
 interface OptionType {
   ref?: React.Ref<HTMLElement | null>;
@@ -7,7 +13,9 @@ interface OptionType {
   timeout?: number;
 }
 
-export function useHoverIntent(options: OptionType): [boolean, RefObject<HTMLElement>] {
+export function useHoverIntent(
+  options: OptionType,
+): [boolean, RefObject<HTMLElement>] {
   const { ref, sensitivity = 6, interval = 100, timeout = 0 } = options;
   const intentRef = useRef<HTMLElement>(null);
   const [isHovering, setIsHovering] = useState(false);

@@ -1,11 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import { css } from '@emotion/core';
 
 import Card from '../components/Card';
 
-const Home = () => (
+const Home = (): React.ReactElement => (
   <div>
     <Card
       className="border-draw-within mx-auto my-2"
@@ -21,4 +20,4 @@ const Home = () => (
   </div>
 );
 
-export default connect()(Home);
+export default Home;

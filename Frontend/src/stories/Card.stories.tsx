@@ -1,7 +1,15 @@
+import 'bootstrap-css-only/css/bootstrap.min.css';
+
 import React from 'react';
 import { Canvas } from 'react-three-fiber';
-import 'bootstrap-css-only/css/bootstrap.min.css';
-import { CardTitle, CardText, CardSubtitle, Button, CardBody } from 'reactstrap';
+import {
+  Button,
+  CardBody,
+  CardSubtitle,
+  CardText,
+  CardTitle,
+} from 'reactstrap';
+
 import Card from '../components/Card';
 import CardImg from '../components/CardImg';
 import CardTilt from '../components/CardTilt';
@@ -20,8 +28,8 @@ export const top = (): React.ReactElement => (
       <CardTitle>Card title</CardTitle>
       <CardSubtitle>Card subtitle</CardSubtitle>
       <CardText>
-        Some quick example text to build on the card title and make up the bulk of the card&#39;s
-        content.
+        Some quick example text to build on the card title and make up the bulk
+        of the card&#39;s content.
       </CardText>
       <Button>Button</Button>
     </CardBody>
@@ -34,12 +42,16 @@ export const bottom = (): React.ReactElement => (
       <CardTitle>Card title</CardTitle>
       <CardSubtitle>Card subtitle</CardSubtitle>
       <CardText>
-        Some quick example text to build on the card title and make up the bulk of the card&#39;s
-        content.
+        Some quick example text to build on the card title and make up the bulk
+        of the card&#39;s content.
       </CardText>
       <Button>Button</Button>
     </CardBody>
-    <CardImg bottom src="https://placeholder.pics/svg/300" alt="Card image cap" />
+    <CardImg
+      bottom
+      src="https://placeholder.pics/svg/300"
+      alt="Card image cap"
+    />
   </Card>
 );
 
@@ -55,8 +67,8 @@ export const left = (): React.ReactElement => (
       <CardTitle>Card title</CardTitle>
       <CardSubtitle>Card subtitle</CardSubtitle>
       <CardText>
-        Some quick example text to build on the card title and make up the bulk of the card&#39;s
-        content.
+        Some quick example text to build on the card title and make up the bulk
+        of the card&#39;s content.
       </CardText>
       <Button>Button</Button>
     </CardBody>
@@ -69,8 +81,8 @@ export const right = (): React.ReactElement => (
       <CardTitle>Card title</CardTitle>
       <CardSubtitle>Card subtitle</CardSubtitle>
       <CardText>
-        Some quick example text to build on the card title and make up the bulk of the card&#39;s
-        content.
+        Some quick example text to build on the card title and make up the bulk
+        of the card&#39;s content.
       </CardText>
       <Button>Button</Button>
     </CardBody>

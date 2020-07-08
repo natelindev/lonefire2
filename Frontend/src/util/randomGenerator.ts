@@ -29,8 +29,12 @@ export function rng<T extends RngOption>(
   option: T,
   max: number,
   min = 0,
-  length: number
-): T extends RngOption.string ? string : T extends RngOption.array ? number[] : number {
+  length: number,
+): T extends RngOption.string
+  ? string
+  : T extends RngOption.array
+  ? number[]
+  : number {
   type ReturnType = T extends RngOption.string
     ? string
     : T extends RngOption.array
@@ -42,8 +46,9 @@ export function rng<T extends RngOption>(
       result = (Math.random() * (max - min) + min) as ReturnType;
       break;
     case RngOption.integer:
-      result = (Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) +
-        Math.ceil(min)) as ReturnType;
+      result = (Math.floor(
+        Math.random() * (Math.floor(max) - Math.ceil(min) + 1),
+      ) + Math.ceil(min)) as ReturnType;
       break;
     case RngOption.string:
       result = Array(max)
@@ -54,7 +59,9 @@ export function rng<T extends RngOption>(
     case RngOption.array:
       result = Array.from(
         { length },
-        () => Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) + Math.ceil(min)
+        () =>
+          Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) +
+          Math.ceil(min),
       ) as ReturnType;
       break;
     default:

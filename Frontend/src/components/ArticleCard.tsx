@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardImgOverlay, CardBody } from 'reactstrap';
+import { Card, CardBody, CardImgOverlay } from 'reactstrap';
 
 export interface ArticleCardProps {
   title: string;
@@ -49,12 +49,15 @@ const ArticleCard: React.SFC<ArticleCardProps> = (props: ArticleCardProps) => {
           <h4 className="mx-auto text-economica">{title}</h4>
         </div>
         <div className="text-titillium d-flex my-3 flex-wrap flex-grow-1 text-break">
-          After a day of diligently copying from Stackoverflow and Google searches, you finally
-          ready to build...
+          After a day of diligently copying from Stackoverflow and Google
+          searches, you finally ready to build...
         </div>
         <div className="d-flex align-self-center text-economica justify-content-between">
           <div className="mt-auto mb-2"> 2020-04-03 </div>
-          <a className="btn border-draw-within mx-2 z-2" href="/Article/View/54">
+          <a
+            className="btn border-draw-within mx-2 z-2"
+            href="/Article/View/54"
+          >
             阅读更多
           </a>
           <div className="mt-auto mb-2">

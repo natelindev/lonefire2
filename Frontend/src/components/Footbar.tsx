@@ -1,7 +1,9 @@
 import * as React from 'react';
+
 import { css } from '@emotion/core';
-import Social from './Social';
+
 import Logo from './Logo';
+import Social from './Social';
 
 const Footbar: React.SFC = () => (
   <div className="d-flex bg-smoke justify-content-around align-items-center flex-wrap flex-sm-nowrap py-4">
@@ -10,7 +12,8 @@ const Footbar: React.SFC = () => (
     <div className="text-muted text-titillium">
       <div className="d-flex mx-auto justify-content-center">
         <div className="d-flex">
-          © 2019-{new Date().getFullYear()} Nathaniel&#39;s Dev Area. All rights reserved.
+          © 2019-{new Date().getFullYear()} Nathaniel&#39;s Dev Area. All rights
+          reserved.
         </div>
       </div>
       <div className="d-flex mx-auto justify-content-center">
@@ -23,7 +26,7 @@ const Footbar: React.SFC = () => (
           `}
         >
           ❤️
-        </span>
+        </span>{' '}
         and effort
       </div>
     </div>

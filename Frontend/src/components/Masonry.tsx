@@ -1,5 +1,5 @@
-import React, { useRef, useEffect } from 'react';
 import Bricks, { SizeDetail } from 'bricks.js';
+import React, { useEffect, useRef } from 'react';
 
 interface MasonryProps {
   packed: string;
