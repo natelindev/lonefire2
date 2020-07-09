@@ -70,7 +70,7 @@
     "dev": "craco start",
     "start": "craco start",
     "build": "craco build",
-    "test": "cross-env CI=true craco test test --env=jsdom",
+    "test": "cross-env CI=true craco test test --env=jsdom --passWithNoTests",
     "eject": "react-scripts eject",
     "lint": "eslint ./src/**/*.ts ./src/**/*.tsx --quiet",
     "storybook": "start-storybook -p 9009 -s public",
